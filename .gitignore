@@ -1,3 +1,22 @@
+
+# Compiled binaries
+/bin
+*.bin
+
+# Personal data
+credentials.*
+
+# This project unique files and folders
+esp32c3.svd
+esp32s2.svd
+esp32.svd
+debug.cfg
+debug_custom.json
+Graphical Materials
+
+# macOS system files
+.DS_Store
+
 # Prerequisites
 *.d
 
