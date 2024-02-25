@@ -22,20 +22,14 @@
 #define HOME_SLEEP_TIME         1800000                               // in milliseconds, 30 minutes
 #define DEAD_BATTERY_SLEEP      7200000                               // in milliseconds, 2 HOURS
 
-#define SPI_SCK_PIN             6                                     // also known as SCL pin
+#define SPI_SCK_PIN             12                                    // also known as SCL pin
 #define SPI_MISO_PIN            -1                                    // NOT USED IN THIS PROJECT
-#define SPI_MOSI_PIN            7                                     // also known as SDA pin, as SPI_D pin or as DIN pin
+#define SPI_MOSI_PIN            11                                    // also known as SDA pin, as SPI_D pin or as DIN pin
 #define SPI_SS_PIN              10                                    // also known as CS pin
-#define DC_PIN                  0
-#define RST_PIN                 18                                    // also known as RES pin
-#define BUSY_PIN                19
+#define DC_PIN                  ?
+#define RST_PIN                 ?                                    // also known as RES pin
+#define BUSY_PIN                ?
 #define ENABLE_GxEPD2_GFX       0
-#define GxEPD2_DISPLAY_CLASS    GxEPD2_BW
-#define GxEPD2_DRIVER_CLASS     GxEPD2_290_T94_V2
-#define GxEPD2_BW_IS_GxEPD2_BW  true
-#define IS_GxEPD2_BW(x)         IS_GxEPD(GxEPD2_BW_IS_, x)
-#define MAX_DISPLAY_BUFFER_SIZE 65536ul
-#define MAX_HEIGHT(EPD)         (EPD::HEIGHT <= MAX_DISPLAY_BUFFER_SIZE / (EPD::WIDTH / 8) ? EPD::HEIGHT : MAX_DISPLAY_BUFFER_SIZE / (EPD::WIDTH / 8))
 
 #endif
  
