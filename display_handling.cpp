@@ -67,7 +67,7 @@ void  IRAM_ATTR ft_display_battery_state(void)
     uint16_t  x;
 
     ft_display_bitmap(badge_bitmap_low_battery);
-    output = String(globals.battery) + "%";
+    output = String(g.battery) + "%";
     display.getTextBounds(output, 0, 0, &text_x, &text_y, &text_width, &text_height);
   // center bounding box by transposition of origin:
     x = ((display.width() - text_width) / 2) - text_x + 60;
@@ -100,10 +100,10 @@ void  ft_run_slideshow(long* p_cycle_length)
 {
     ft_display_bitmap_with_refresh(badge_bitmap_slide_6_logo);
     ft_delay(8000);
-    if (globals.battery <= 20)
+    if (g.battery <= 20)
     {
         ft_display_battery_state();
-        *p_cycle_length = *p_cycle_length + 8000 * (21 - globals.battery);
+        *p_cycle_length = *p_cycle_length + 8000 * (21 - g.battery);
         ft_delay(8000);
     }
     ft_display_bitmap(badge_bitmap_slide_4_github);

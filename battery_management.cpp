@@ -69,15 +69,15 @@ short  ft_battery_check(void)
     }
     while (i < 10)
     {
-        globals.battery += ceil((adc1_get_raw(ADC1_CHANNEL_0) - min) / coeff);
+        g.battery += ceil((adc1_get_raw(ADC1_CHANNEL_0) - min) / coeff);
         i++;
     }
-    globals.battery = globals.battery / i;                                            // counting average of i samples
-    if (globals.battery <= 0)
-        globals.battery = 0;
-    if (globals.battery >= 100)
-        globals.battery = 100;
-    return (globals.battery);
+    g.battery = g.battery / i;                                            // counting average of i samples
+    if (g.battery <= 0)
+        g.battery = 0;
+    if (g.battery >= 100)
+        g.battery = 100;
+    return (g.battery);
 }
 
 void IRAM_ATTR ft_battery_init(void)
