@@ -11,11 +11,15 @@
 
 extern GxEPD2_3C<GxEPD2_750c_Z08, GxEPD2_750c_Z08::HEIGHT> display; // GDEY075Z08 800x480
 
-extern RTC_DATA_ATTR bool    g_eeprom_state;
-extern RTC_DATA_ATTR uint8_t g_hour;
-extern RTC_DATA_ATTR uint8_t g_minute;
-extern RTC_DATA_ATTR uint8_t g_day;
-extern RTC_DATA_ATTR uint8_t g_month;
+struct RTC_GlobalsManagement {
+    bool    eeprom_state;
+    bool    ota_active;
+    uint8_t hour;
+    uint8_t minute;
+    uint8_t day;
+    uint8_t month;
+};
+extern struct RTC_GlobalsManagement rtc_g;
 
 struct GlobalsManagement {
     uint8_t battery;
