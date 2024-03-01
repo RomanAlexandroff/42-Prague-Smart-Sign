@@ -19,12 +19,12 @@ void IRAM_ATTR  ft_eeprom_init(void)
     {
         i = 1;
         DEBUG_PRINTF("\nEEPROM is successfully initialised.\n", "");
-        g_eeprom_state = true;
+        rtc_g.eeprom_state = true;
         return;
     }
     i = 1;
     DEBUG_PRINTF("\nEEPROM was not initialised. Reading and Writing data is unavailable this session.\n", "");
-    g_eeprom_state = false;
+    rtc_g.eeprom_state = false;
 }
 
 void IRAM_ATTR ft_battery_state(const int address)
@@ -32,7 +32,7 @@ void IRAM_ATTR ft_battery_state(const int address)
     unsigned short battery;
     unsigned short result;  
 
-    if (!g_eeprom_state)
+    if (!rtc_g.eeprom_state)
         return;
     #ifdef DEBUG
         if (address == MAX_STATE_ADDR)
@@ -57,7 +57,7 @@ short  ft_battery_check(void)
     float coeff;
 
     i = 0;
-    if (!g_eeprom_state)
+    if (!rtc_g.eeprom_state)
     {
         min = BATTERY_DEFAULT_MIN;
         coeff = BATTERY_DEFAULT_COEFF;

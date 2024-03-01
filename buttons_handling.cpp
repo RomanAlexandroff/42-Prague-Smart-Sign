@@ -14,7 +14,9 @@ void IRAM_ATTR  isr_diagnostics(void)
 void IRAM_ATTR  isr_ota(void)
 {
     DEBUG_PRINTF("  ---- OTA Button was pressed\n", "");
-    ft_ota_init();
+    rtc_g.ota_active = !rtc_g.ota_active;
+    if (rtc_g.active)
+        ft_ota_init();
 }
 
 void IRAM_ATTR  isr_reboot(void)

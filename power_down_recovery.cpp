@@ -19,7 +19,7 @@ void  ft_power_down_recovery(void)
         case ESP_RST_POWERON:
             ft_display_bitmap_with_refresh(boot_up_screen_img);
             ft_battery_state(MAX_STATE_ADDR);
-            g_cycle_counter = 0;
+            rtc_g.ota_active = false;
             DEBUG_PRINTF("\nReset reason: Power-on or Brown-out reset\n", "");
             DEBUG_PRINTF("Power-down Recovery was performed.\n", "");
             ft_delay(3000);
@@ -27,6 +27,7 @@ void  ft_power_down_recovery(void)
             break;
         case ESP_RST_SW:
             DEBUG_PRINTF("\nReset reason: Software reset\n", "");
+            rtc_g.ota_active = false;
             break;
         case ESP_RST_PANIC:
             DEBUG_PRINTF("\nReset reason: Panic/exception reset\n", "");

@@ -6,14 +6,19 @@ static void  ft_ota_waiting_loop(void)
     int i;
 
     i = 0;
-    DEBUG_PRINTF("\nThe OTA Waiting Loop is running...\n", "");
+    DEBUG_PRINTF("\nOTA initialised. Waiting for update...\n", "");
     while (i < WAIT_FOR_OTA_LIMIT)
     {
         ArduinoOTA.handle();
         ft_delay(500);
         i++;
+        if (!rtc_g.ota_active)
+        {
+            DEBUG_PRINTF("\nOTA canceled without an update: USER TOUCH PAD\n", "");
+            return;
+        }
     }
-    DEBUG_PRINTF("\nThe OTA Waiting Loop exited without an update: TIME OUT\n", "");
+    DEBUG_PRINTF("\nOTA canceled without an update: AUTOMATIC TIME OUT\n", "");
 }
 
 void  ft_ota_init(void)

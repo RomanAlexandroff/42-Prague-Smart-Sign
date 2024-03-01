@@ -66,9 +66,9 @@ void  ft_get_time(void)
         WiFi.mode(WIFI_OFF);
         return;
     }
-    g_hour = time_info.tm_hour;
-    g_minute = time_info.tm_min;
-    g_day = time_info.tm_mday;
-    g_month = time_info.tm_mon;
+    rtc_g.hour = time_info.tm_hour;
+    rtc_g.minute = time_info.tm_min;
+    rtc_g.day = time_info.tm_mday;
+    rtc_g.month = time_info.tm_mon;
 }
  
