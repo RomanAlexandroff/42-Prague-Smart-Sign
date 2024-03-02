@@ -82,7 +82,7 @@ short  ft_battery_check(void)
 
 void IRAM_ATTR ft_battery_init(void)
 {
-    adc1_config_width(ADC_WIDTH_12Bit);
+    adc1_config_width(ADC_WIDTH_BIT_13);
     adc1_config_channel_atten(ADC1_CHANNEL_0, ADC_ATTEN_11db);
 }
  
