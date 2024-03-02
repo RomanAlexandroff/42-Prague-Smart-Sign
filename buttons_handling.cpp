@@ -4,6 +4,7 @@
 void IRAM_ATTR  isr_warning(void)
 {
     DEBUG_PRINTF("  ---- Warning Button was pressed\n", "");
+    rtc_g.warning_active = !rtc_g.warning_active;
 }
 
 void IRAM_ATTR  isr_diagnostics(void)
@@ -15,7 +16,7 @@ void IRAM_ATTR  isr_ota(void)
 {
     DEBUG_PRINTF("  ---- OTA Button was pressed\n", "");
     rtc_g.ota_active = !rtc_g.ota_active;
-    if (rtc_g.active)
+    if (rtc_g.ota_active)
         ft_ota_init();
 }
 

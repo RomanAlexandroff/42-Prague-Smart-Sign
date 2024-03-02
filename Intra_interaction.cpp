@@ -14,7 +14,7 @@ void  ft_fetch_data(void)
     }
     if (!client.connect("https://api.intra.42.fr", 442))
     {
-        DEBUG_PRINT("Intra server connection FAILED");
+        DEBUG_PRINTF("Intra server connection FAILED", "");
         return;
     }
 
