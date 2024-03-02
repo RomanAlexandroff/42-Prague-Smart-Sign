@@ -1,12 +1,12 @@
 
-#ifndef 42-PRAGUE-SMART-SIGN_H
-# define 42-PRAGUE-SMART-SIGN_H
+#ifndef _42_PRAGUE_SMART_SIGN_H
+# define _42_PRAGUE_SMART_SIGN_H
 
 # include <Arduino.h>
-# include <WiFi.h>
-# include <esp_wifi.h>
-# include <ESPmDNS.h>
+# include <WiFiClientSecure.h>            // Wi-Fi connection, HTTPS requests
+//# include <esp_wifi.h>
 # include <WiFiUdp.h>
+# include <ESPmDNS.h>
 # include <ArduinoOTA.h>
 # include "EEPROM.h"                      // saves data even without electricity
 # include <Wire.h>                        // manages SPI connections for the display
@@ -35,6 +35,7 @@ static void     ft_ota_waiting_loop(void);
 void            ft_go_to_sleep(uint64_t time_in_millis);
 void IRAM_ATTR  ft_delay(uint64_t time_in_millis);
 void            ft_wifi_connect(void);
+void            ft_get_time(void);
 
 #endif
  
