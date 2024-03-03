@@ -91,7 +91,8 @@ When contributing, please adhere to the existing code style and follow the estab
 
 # define SECRET          "x-xxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 # define UID             "x-xxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-# define CAMPUS_ID       56                  // 42 Prague
+# define CAMPUS_ID       "56"                // 42 Prague
+# define CLUSTER_ID      "xx"                // your cluster number
 
 # define TIME_ZONE       2                   // according to the GMT standart
 
