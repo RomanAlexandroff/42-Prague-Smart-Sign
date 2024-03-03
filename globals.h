@@ -10,7 +10,6 @@
 # include "constants.h"
 
 extern GxEPD2_3C<GxEPD2_750c_Z08, GxEPD2_750c_Z08::HEIGHT> display; // GDEY075Z08 800x480
-extern WiFiClientSecure client;
 
 struct RTC_GlobalsManagement {
     bool    eeprom_state;

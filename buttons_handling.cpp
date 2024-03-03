@@ -5,6 +5,8 @@ void IRAM_ATTR  isr_warning(void)
 {
     DEBUG_PRINTF("  ---- Warning Button was pressed\n", "");
     rtc_g.warning_active = !rtc_g.warning_active;
+    if (rtc_g.warning_active)
+        ft_display_exam_sign();
 }
 
 void IRAM_ATTR  isr_diagnostics(void)
