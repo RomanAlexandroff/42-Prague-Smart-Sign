@@ -74,5 +74,6 @@ void  ft_get_time(void)
     rtc_g.minute = time_info.tm_min;
     rtc_g.day = time_info.tm_mday;
     rtc_g.month = time_info.tm_mon;
+    rtc_g.year = 1900 + time_info.tm_mon;
 }
  

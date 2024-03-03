@@ -12,13 +12,14 @@
 extern GxEPD2_3C<GxEPD2_750c_Z08, GxEPD2_750c_Z08::HEIGHT> display; // GDEY075Z08 800x480
 
 struct RTC_GlobalsManagement {
-    bool    eeprom_state;
-    bool    warning_active;
-    bool    ota_active;
-    uint8_t hour;
-    uint8_t minute;
-    uint8_t day;
-    uint8_t month;
+    bool     eeprom_state;
+    bool     warning_active;
+    bool     ota_active;
+    uint8_t  hour;
+    uint8_t  minute;
+    uint8_t  day;
+    uint8_t  month;
+    uint16_t year;
 };
 extern struct RTC_GlobalsManagement rtc_g;
 
