@@ -2,7 +2,7 @@
 #ifndef _42_PRAGUE_SMART_SIGN_H
 # define _42_PRAGUE_SMART_SIGN_H
 
-# include <Arduino.h>
+# include <Arduino.h>                     // String variables manipulations
 # include <WiFiClientSecure.h>            // Wi-Fi connection, HTTPS requests
 //# include <esp_wifi.h>
 # include <WiFiUdp.h>
@@ -36,6 +36,7 @@ void            ft_go_to_sleep(uint64_t time_in_millis);
 void IRAM_ATTR  ft_delay(uint64_t time_in_millis);
 void            ft_wifi_connect(void);
 void            ft_get_time(void);
+void            ft_fetch_exams(void);
 
 #endif
  
