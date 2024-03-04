@@ -1,26 +1,56 @@
 
 #include "42-Prague-Smart-Sign.h"
 
-static void  ft_clean_data(String line, String* p_exam_begin, String* p_exam_end)
+// isEmpty() проверяет String переменные по количеству знаков; если знаков нет, он возвращает true
+
+// indexOf() ищет указанные слова или фразы в Stringе и возвращает индекс первого появления. Если ничего не найдено, возвращает -1.
+
+// substring() извлекает часть строки. Требуется начальный индекс и индекс окончания (исключительно - то есть символ по индексу
+// окончания не будет включён в результат). Возвращает новую строку, которая содержит извлеченную часть.
+
+// length() проверяет String переменные по количеству знаков и выдаёт количество знаков в формате int
+
+
+static void  ft_clean_data(String server_message, String* p_exam_begin, String* p_exam_end)
 {
+    int message_length;
+
+    message_length = server_message.length();
+    if (!message_length)
+    {
+        DEBUG_PRINTF("\nError. Server message is empty.\n", "");
+        return;
+    }
+    if (message_length == 2)
+    {
+        DEBUG_PRINTF("\nAs of now, no exams are planned for today\n", "");
+        rtc_g.exam_state = false;
+        return;
+    }
+    rtc_g.exam_state = true;
     while (client.available())
     {
-        line = client.readStringUntil('\n');
-        if (line.startsWith("\"begin_at\":\"")) 
+        server_message = client.readStringUntil('\n');
+        if (server_message.startsWith("\"begin_at\":\"")) 
         {
-            *p_exam_begin = line.substring(24, 28);
+            *p_exam_begin = server_message.substring(24, 28);
             DEBUG_PRINTF("Exam starts at: " + *p_exam_begin);
         }
-                if (line.startsWith("\"end_at\":\"")) 
+        if (server_message.startsWith("\"end_at\":\"")) 
         {
-            *p_exam_end = line.substring(24, 28);
+            *p_exam_end = server_message.substring(24, 28);
             DEBUG_PRINTF("Exam ends at: " + *p_exam_end);
+            break;
+        }
+        if (server_message.startsWith("}]")) 
+        {
+            DEBUG_PRINTF("Data search finished");
             break;
         }
     }
 }
 
-static void  ft_get_data_load(const String token, String* p_line)
+static void  ft_get_data_load(const String token, String* p_server_message)
 {
     String  query;
 
@@ -34,8 +64,8 @@ static void  ft_get_data_load(const String token, String* p_line)
     DEBUG_PRINTF("Request for Exam Data sent\n", "");
     while (client.connected())
     {
-        *p_line = client.readStringUntil('\n');
-        if (*p_line == "\r")
+        *p_server_message = client.readStringUntil('\n');
+        if (*p_server_message == "\r")
         {
             DEBUG_PRINTF("Headers received\n", "");
             break;
@@ -46,7 +76,7 @@ static void  ft_get_data_load(const String token, String* p_line)
 static void  ft_get_token(const String* p_token)
 {
     String  data;
-    String  line;
+    String  server_message;
 
     data = "grant_type=client_credentials&client_id=" + UID + "&client_secret=" + SECRET;
     client.print(String("POST /oauth/token HTTP/1.1\r\n" +
@@ -57,8 +87,8 @@ static void  ft_get_token(const String* p_token)
     DEBUG_PRINTF("Request for an Access Token sent\n", "");
     while (client.connected())
     {
-        line = client.readStringUntil('\n');
-        if (line == "\r")
+        server_message = client.readStringUntil('\n');
+        if (server_message == "\r")
         {
             DEBUG_PRINTF("Headers received\n", "");
             break;
@@ -66,10 +96,10 @@ static void  ft_get_token(const String* p_token)
     }
     while (client.available())
     {
-        line = client.readStringUntil('\n');
-        if (line.startsWith("{\"access_token\":\"")) 
+        server_message = client.readStringUntil('\n');
+        if (server_message.startsWith("{\"access_token\":\"")) 
         {
-            *p_token = line.substring(17, 80);
+            *p_token = server_message.substring(17, 80);
             DEBUG_PRINTF("Access Token: " + *p_token);
             break;
         }
@@ -78,7 +108,7 @@ static void  ft_get_token(const String* p_token)
 
 void  ft_fetch_exams(void)
 {
-    String        line;
+    String        server_message;
     const String  token;
     String        exam_begin;
     String        exam_end;
@@ -99,8 +129,8 @@ void  ft_fetch_exams(void)
         return;
     }
     ft_get_token(&token);
-    ft_get_data_load(token, &line);
-    ft_clean_data(line, &exam_begin, &exam_end);
+    ft_get_data_load(token, &server_message);
+    ft_clean_data(server_message, &exam_begin, &exam_end);
     client.stop();
 }
  
