@@ -19,7 +19,7 @@ void  ft_cluster_number_mode(unsigned int* p_sleep_length)
     RTC_DATA_ATTR static bool display_cluster;
 
     ft_wifi_connect();          // по рассписанию в режиме номера кластера И за 1 час до экзамена в режиме экзамена
-    ft_get_time();              // только по рассписанию в режиме номера кластера            
+    ft_get_time();              // по рассписанию в режиме номера кластера И постоянно в режиме экзамена
     ft_fetch_exams();           // по рассписанию в режиме номера кластера И за 1 час до экзамена в режиме экзамена
     if (rtc_g.exam_state)
     {
