@@ -1,7 +1,7 @@
 
 #include "42-Prague-Smart-Sign.h"
 
-static void  setup(void)
+static void  setup(void)                            // Настраиваем всё, что нужно при любом включении
 {
     #ifdef DEBUG
         Serial.begin(115200);
@@ -16,16 +16,16 @@ static void  setup(void)
     ft_buttons_init();                              // активируем кнопки управления
 }
 
-static void  ft_pathfinder(void)                    // решаем в каком режиме будем работать: Экзамен или Номер Кластера
+static void  ft_pathfinder(void)                    // Решаем в каком режиме будем работать: Экзамен или Номер Кластера
 {
     unsigned int  sleep_length;
 
     if (rtc_g.exam_state)
-        ft_exam_mode(&sleep_length);                // режим Экзамен отвечает только за отрезок времени 1 час до начала экзамена и до конца экзамена
+        ft_exam_mode(&sleep_length);                // режим Экзамен отвечает за отрезок времени от "1 час до начала экзамена" до "конец экзамена"
     else
         ft_cluster_number_mode(&sleep_length);      // за всё остальное время отвечает режим Номер Кластера
-    ft_go_to_sleep(sleep_length);
-    DEBUG_PRINTF("This message will never be printed out", "");
+    ft_go_to_sleep(sleep_length);                   // Каким бы путём ни прошла программа за время своей работы, она всегда окончится ЗДЕСЬ
+    DEBUG_PRINTF("  ---- This message will never be printed out", "");
 }
 
 void  loop(void) { /* NOTHING IS HERE */ }
