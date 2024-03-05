@@ -16,6 +16,7 @@ struct RTC_GlobalsManagement {
     bool     warning_active;
     bool     ota_active;
     bool     exam_state;
+    uint8_t  exams_number;
     uint8_t  hour;
     uint8_t  minute;
     uint8_t  day;
