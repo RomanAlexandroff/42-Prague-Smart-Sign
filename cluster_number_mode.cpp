@@ -1,11 +1,6 @@
 
 #include "42-Prague-Smart-Sign.h"
 
-static unsigned int  ft_time_till_exam(void)                                      // counts time till 1 hour before the exam
-{                                                                                 // because there should be 1 hour time for warning
-    return ((exam_begin - rtc_g.hour - 1) * 3600000 - (rtc_g.minute * 60000));
-}
-
 static unsigned int  ft_time_till_wakeup(void)                                    // counts exact time till the next wakeup
 {
     if (rtc_g.hour == 18)
@@ -22,10 +17,10 @@ void  ft_cluster_number_mode(unsigned int* p_sleep_length)                      
     ft_get_time();                                                                // ...в Интернете узнаём актуальную дату и время...
     ft_fetch_exams();                                                             // ...в Интре узнаём экзамены на актуальную дату и во сколько начало и конец
     if (rtc_g.exam_state)                                                         // Если мы узнали, что экзамен сегодня есть, то...
-    {                                                                             // ...добавляем к номеру кластера точное время начала экзамена...
+    {                                                                                                             // ...добавляем к номеру кластера точное время начала экзамена...
         ft_display_bitmap_with_refresh(/*HERE SHOULD BE THE CLUSTER NUMBER WITH EXAM TIME WARNING BITMAP*/);
-        *p_sleep_length = ft_time_till_exam();                                    // ...отсчитываем оставшееся время (миллисекунды) до "1 час до начала экзамена"...
-        return;                                                                   // ...и засыпаем так, чтобы проснуться ровно за 1 час до начала экзамена
+        *p_sleep_length = ft_time_till_event(rtc_g.exam_start_hour - 1, rtc_g.exam_start_minutes);                 // ...отсчитываем оставшееся время (миллисекунды) до "1 час до начала экзамена"...
+        return;                                                                                                   // ...и засыпаем так, чтобы проснуться ровно за 1 час до начала экзамена
     }                                                                             // После сна мы перейдём в режим Экзамен
     else                                                                          // Если мы узнали, что экзамена сегодня нет, то...
         *p_sleep_length = ft_time_till_wakeup();                                  // ... рассчитываем время (миллисекунды) так, чтобы проспать ровно 3 часа
