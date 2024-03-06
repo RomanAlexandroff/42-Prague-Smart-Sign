@@ -13,14 +13,14 @@
 
 
 
-static uint8_t  ft_number_of_exams(String* p_server_message)                            // Считаем количество экзаменов упомянутых в сообщении сервера
+static uint8_t  ft_number_of_exams(String server_message)                            // Считаем количество экзаменов упомянутых в сообщении сервера
 {
     int8_t  i;
     uint8_t count;
 
     i = -1;
     count = 0;
-    while ((i = *p_server_message.indexOf("begin_at", i + 1)) != -1)
+    while ((i = server_message.indexOf("begin_at", i + 1)) != -1)
         count++;
     return (count);
 }
@@ -42,10 +42,10 @@ static void  ft_clean_data(String server_message)                               
         return;
     }
     rtc_g.exam_state = true;
-    rtc_g.exams_number = ft_number_of_exams(&server_message);                             // Считаем количество экзаменов упомянутых в сообщении сервера
+    rtc_g.exams_number = ft_number_of_exams(server_message);                             // Считаем количество экзаменов упомянутых в сообщении сервера
     while (client.available())
     {
-        server_message = client.readStringUntil();                                        // читаем сообщение сервера до самого конца
+        server_message = client.readString();                                        // читаем сообщение сервера до самого конца
         if (server_message.startsWith("\"begin_at\":\"")) 
         {
             rtc_g.exam_start_hour = server_message.substring(24, 26).toInt() + TIME_ZONE;
@@ -66,57 +66,58 @@ static void  ft_clean_data(String server_message)                               
     }
 }
 
-static void  ft_get_data_load(const String token, String* p_server_message)                // Запрашиваем и получаем данные экзаменов
+static void  ft_get_data_load(String token, String* p_server_message)                // Запрашиваем и получаем данные экзаменов
 {
     String  query;
 
-    query = "/exams?filter[location]=" + CLUSTER_ID + "&range[begin_at]=" +                // формируем запрос на конкретную информацию...
-            rtc_g.year + "-" + rtc_g.month + "-" + rtc_g.day + "T05:00:00.000Z," +         // об экзаменах об экзаменах в конкретном кластере
-            rtc_g.year + "-" + rtc_g.month + "-" + rtc_g.day + "T22:00:00.000Z";
-    client.print(String("GET /v2/campus/" + CAMPUS_ID + query + " HTTP/1.1\r\n" +          // отсылаем запрос
+    query = "/exams?filter[location]=" + String(CLUSTER_ID) + "&range[begin_at]=" +                             // формируем запрос на конкретную информацию...
+            String(rtc_g.year) + "-" + String(rtc_g.month) + "-" + String(rtc_g.day) + "T05:00:00.000Z," +      // об экзаменах об экзаменах в конкретном кластере
+            String(rtc_g.year) + "-" + String(rtc_g.month) + "-" + String(rtc_g.day) + "T22:00:00.000Z";
+    client.print("GET /v2/campus/" + String(CAMPUS_ID) + query + " HTTP/1.1\r\n" +                               // отсылаем запрос
                "Host: api.intra.42.fr\r\n" +
                "Authorization: Bearer " + token + "\r\n" +
-               "Connection: close\r\n\r\n"));
+               "Connection: close\r\n\r\n");
     DEBUG_PRINTF("Request for Exam Data sent\n", "");
     while (client.connected())
     {
-        *p_server_message = client.readStringUntil();                                      // прописываем сообщение сервера в переменную server_message
-        if (*p_server_message.length() > 0)                                                // убеждаемся что мы получили какой-то ответ
+        *p_server_message = client.readString();                                            // прописываем сообщение сервера в переменную server_message
+        if (p_server_message->length() > 0)                                                 // убеждаемся что мы получили какой-то ответ
         {
-            DEBUG_PRINTF("Response received: \n%s\n\n", *p_server_message.c_str());        // выписываем ответ в серийный монитор на случай...
-            break;                                                                         // если нужна будет визуальная проверка
+            DEBUG_PRINTF("Response received: \n%s\n\n", p_server_message->c_str());         // выписываем ответ в серийный монитор на случай...
+            break;                                                                          // если нужна будет визуальная проверка
         }
     }
 }
 
-static void  ft_get_token(const String* p_token)                                            // Запрашиваем и получаем токен безопасности
+static void  ft_get_token(String* p_token)                                            // Запрашиваем и получаем токен безопасности
 {
     String  data;
-    String  server_message;
+    String  server_reply;
 
-    data = "grant_type=client_credentials&client_id=" + UID + "&client_secret=" + SECRET;   // формируем запрос о токене серверу
-    client.print(String("POST /oauth/token HTTP/1.1\r\n" +                                  // авторизируемся через oAuth портал сервера
+    data = "grant_type=client_credentials&client_id=" +
+           String(UID) + "&client_secret=" + String(SECRET);                                // формируем запрос о токене серверу
+    client.print("POST /oauth/token HTTP/1.1\r\n" +                                         // авторизируемся через oAuth портал сервера
                "Host: api.intra.42.fr\r\n" +
                "Content-Type: application/x-www-form-urlencoded\r\n" +
-               "Content-Length: " + data.length() + "\r\n" +
-               "Connection: close\r\n\r\n" + data));                                        // отправляем запрос серверу
+               "Content-Length: " + String(data.length()) + "\r\n" +
+               "Connection: close\r\n\r\n" + data);                                        // отправляем запрос серверу
     DEBUG_PRINTF("Request for an Access Token sent\n", "");
     while (client.connected())
     {
-        server_message = client.readStringUntil();                                          // убеждаемся что мы получили какой-то ответ
-        if (server_message.length() > 0)
+        server_reply = client.readString();                                                 // убеждаемся что мы получили какой-то ответ
+        if (server_reply.length() > 0)
         {
-            DEBUG_PRINTF("Response received: \n%s\n\n", server_message.c_str());            // выписываем ответ в серийный монитор на случай...
+            DEBUG_PRINTF("Response received: \n%s\n\n", server_reply.c_str());              // выписываем ответ в серийный монитор на случай...
             break;                                                                          // если нужна будет визуальная проверка
         }
     }
     while (client.available())
     {
-        server_message = client.readStringUntil();
-        if (server_message.startsWith("{\"access_token\":\""))                              // ищем в полученном ответе расположение токена 
+        server_reply = client.readString();
+        if (server_reply.startsWith("{\"access_token\":\""))                              // ищем в полученном ответе расположение токена 
         {
-            *p_token = server_message.substring(17, 80);                                    // выделяем токен из сообщения
-            DEBUG_PRINTF("Access Token: " + *p_token);
+            *p_token = server_reply.substring(17, 80);                                    // выделяем токен из сообщения
+            DEBUG_PRINTF("Access Token: %s\n\n", p_token->c_str());
             break;
         }
     }
@@ -125,7 +126,7 @@ static void  ft_get_token(const String* p_token)                                
 void  ft_fetch_exams(void)                                              // Получаем данные о экзаменах
 {
     String        server_message;
-    const String  token;
+    String        token;
 
     if (WiFi.status() != WL_CONNECTED)                                  // убеждаемся что мы подключены к вай-фай
         WiFi.reconnect();
@@ -136,10 +137,9 @@ void  ft_fetch_exams(void)                                              // По�
         WiFi.mode(WIFI_OFF);
         return;
     }
-    WiFiClientSecure client;                                            // запускаем клиента безопасного соединения
     if (!client.connect("https://api.intra.42.fr", 443))                // подключаемся к удалённому серверу
     {
-        DEBUG_PRINTF("Intra server connection FAILED\n", "");
+        DEBUG_PRINTF("Intra server connection FAILED\n", "");           // ! Здесь нехватает обработки ошибки - сообщение об этом нужно вывести на экран !
         return;
     }
     ft_get_token(&token);                                               // запрашиваем токен безопасности с которым сможем получить данные с сервера

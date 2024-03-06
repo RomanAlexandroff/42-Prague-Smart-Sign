@@ -1,7 +1,7 @@
 
 #include "42-Prague-Smart-Sign.h"
 
-static void  setup(void)                            // Настраиваем всё, что нужно при любом включении
+void  setup(void)                            // Настраиваем всё, что нужно при любом включении
 {
     #ifdef DEBUG
         Serial.begin(115200);

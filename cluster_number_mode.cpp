@@ -7,6 +7,7 @@ static unsigned int  ft_time_till_wakeup(void)                                  
         return (12 * 3600000 - (rtc_g.minute * 60000));                           // 12 hours till next wakeup
     if (rtc_g.hour % 3 == 0 && rtc_g.hour >= 6 && rtc_g.hour <= 15)
         return (3 * 3600000 - (rtc_g.minute * 60000));                            // 3 hours till next wakeup
+    return (10);                                                                  // the programm will never reach here. This return is here only to make compiler happy.
 }
 
 void  ft_cluster_number_mode(unsigned int* p_sleep_length)                        // Начинаем работу в режиме Номера Кластера и первым делом проверяем...

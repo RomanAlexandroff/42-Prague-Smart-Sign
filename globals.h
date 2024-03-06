@@ -6,10 +6,12 @@
 # include <GxEPD2_3C.h>
 # include <GxEPD2_7C.h>
 # include <Adafruit_GFX.h>
+# include <Fonts/FreeSansBold24pt7b.h>
 # include "credentials.h"
 # include "constants.h"
 
 extern GxEPD2_3C<GxEPD2_750c_Z08, GxEPD2_750c_Z08::HEIGHT> display; // GDEY075Z08 800x480
+extern WiFiClientSecure client;
 
 struct RTC_GlobalsManagement {
     bool     eeprom_state;

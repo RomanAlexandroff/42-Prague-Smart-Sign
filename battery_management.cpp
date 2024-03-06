@@ -43,6 +43,7 @@ static bool ft_result_chech(const int address, uint16_t result, uint16_t old_max
         else
             return (true); 
     }
+    return (false);                                                                       // the program will never reach here. It is only to make compiler happy
 }
 
 void IRAM_ATTR ft_battery_state(const int address)
