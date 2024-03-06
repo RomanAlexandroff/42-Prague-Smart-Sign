@@ -11,6 +11,9 @@
 
 // length() проверяет String переменные по количеству знаков и выдаёт количество знаков в формате int
 
+// in this file there are some strings that are implicitly defined as String() with no aparent reason... The answer is here: 
+// https://stackoverflow.com/questions/23936246/error-invalid-operands-of-types-const-char-35-and-const-char-2-to-binar
+
 
 
 static uint8_t  ft_number_of_exams(String server_message)                            // Считаем количество экзаменов упомянутых в сообщении сервера
@@ -97,7 +100,7 @@ static void  ft_get_token(String* p_token)                                      
     data = "grant_type=client_credentials&client_id=" +
            String(UID) + "&client_secret=" + String(SECRET);                                // формируем запрос о токене серверу
     client.print("POST /oauth/token HTTP/1.1\r\n" +                                         // авторизируемся через oAuth портал сервера
-               "Host: api.intra.42.fr\r\n" +
+               String("Host: api.intra.42.fr\r\n") +
                "Content-Type: application/x-www-form-urlencoded\r\n" +
                "Content-Length: " + String(data.length()) + "\r\n" +
                "Connection: close\r\n\r\n" + data);                                        // отправляем запрос серверу
