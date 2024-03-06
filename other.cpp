@@ -77,7 +77,7 @@ void  ft_get_time(void)
     rtc_g.year = 1900 + time_info.tm_mon;
 }
 
-unsigned int  ft_time_till_event(uint8_t hours, uint8_t minutes;)                 // counts exact time till events with 1 minute precision
+unsigned int  ft_time_till_event(uint8_t hours, uint8_t minutes)                  // counts exact time till events with 1 minute precision
 {
     unsigned int result;
 
