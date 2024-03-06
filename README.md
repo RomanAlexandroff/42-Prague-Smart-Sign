@@ -11,8 +11,8 @@
 - [License](#license)
 - [Regards](#regards)
 - [Contributing](#contributing)
-- [Example of the credentials.h File](#example)
-- [Calculating Default Constants for the Battery Charge Function](#calculating)
+- [Example of the credentials.h File](#exampleofthecredentials.hfile)
+- [Calculating Default Constants for the Battery Charge Function](#calculatingdefaultconstantsforthebatterychargefunction)
 - [Conclusion](#conclusion)
 
 
@@ -30,6 +30,7 @@ Once the 42 Prague Smart Sign is installed and powered on, it will automatically
 4. **Exam in progress**: During the exam, the device displays a big red warning sign with the exact exam end time.
 4. **Last hour of exam**: The exact time changes into a countdown.
 5. **Post-exam state**: After the exam ends, the device returns to its normal state, displaying the number of the cluster.
+
 The device operates fully automatically and does not require any input from school personnel.
 
 
@@ -68,7 +69,7 @@ Please note that while the project strives to provide accurate information, it i
 This project is a group effort of various 42 students with support from the 42 Prague Bocal team. Here they are:
 - raleksan — firmware and electronic hardware developer. Made the idea reality,
 - gsura — motivation supporter and graphics designer. Pitched the idea to Bocal so well they ended up asking for two devices,
-- Colin — hardware development and 3D printing. Created beautiful and functional incasement for the electronics,
+- Cullen — hardware development and 3D printing. Created beautiful and functional incasement for the electronics,
 - arosado- — 42 API expert. Tought how to get the data from the 42 servers.
 
 The project is based on Jean-Marc Zingg's [GxEPD2](https://github.com/ZinggJM/GxEPD2) library for e-paper displays.
