@@ -76,4 +76,16 @@ void  ft_get_time(void)
     rtc_g.month = time_info.tm_mon;
     rtc_g.year = 1900 + time_info.tm_mon;
 }
+
+unsigned int  ft_time_till_event(uint8_t hours, uint8_t minutes;)                 // counts exact time till events with 1 minute precision
+{
+    unsigned int result;
+
+    result = (hours - rtc_g.hour) * 3600000;
+    result += (minutes * 60000) - (rtc_g.minute * 60000);
+    if (result <= 0)                                                              // нельзя уходить в сон на 0 миллисекунд...
+        result = 10;                                                              // ...иначе микропроцессор из него не проснётся самостоятельно, только с перезагрузкой
+    return (result);
+}
+ 
  
