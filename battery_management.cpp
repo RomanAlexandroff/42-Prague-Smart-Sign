@@ -27,25 +27,49 @@ void IRAM_ATTR  ft_eeprom_init(void)
     rtc_g.eeprom_state = false;
 }
 
+static bool ft_result_chech(const int address, uint16_t result, uint16_t old_max, uint16_t old_min)
+{
+    if (address == MAX_STATE_ADDR)
+    {
+        if (result > old_max + 200 || result < old_max - 200)
+            return (false);
+        else
+            return (true); 
+    }
+    if (address == MIN_STATE_ADDR)
+    {
+        if (result > old_min + 200 || result < old_min - 200)
+            return (false);
+        else
+            return (true); 
+    }
+}
+
 void IRAM_ATTR ft_battery_state(const int address)
 {
-    unsigned short battery;
-    unsigned short result;  
+    uint16_t battery;
+    uint16_t result;
+    uint16_t old_max;
+    uint16_t old_min;  
 
     if (!rtc_g.eeprom_state)
         return;
+    old_max = EEPROM.readShort(MAX_STATE_ADDR);
+    old_min = EEPROM.readShort(MIN_STATE_ADDR);
     #ifdef DEBUG
         if (address == MAX_STATE_ADDR)
         {
             DEBUG_PRINTF("\n======  EEPROM Test  ======\n", "");
             DEBUG_PRINTF("\n current data in the memory:\n", "");
-            DEBUG_PRINTF("  - battery Max state %d\n", EEPROM.readShort(MAX_STATE_ADDR));
-            DEBUG_PRINTF("  - battery Min state %d\n", EEPROM.readShort(MIN_STATE_ADDR));
+            DEBUG_PRINTF("  - battery Max state %d\n", old_max);
+            DEBUG_PRINTF("  - battery Min state %d\n", old_min);
             DEBUG_PRINTF("\n===========================\n", "");
         }
     #endif
     battery = EEPROM.readShort(address);
     result = ceil((adc1_get_raw(ADC1_CHANNEL_0) + battery) / 2);
+    if (!ft_result_chech(address, result, old_max, old_min))
+        return;
     EEPROM.writeShort(address, result);
     EEPROM.commit();
 }
