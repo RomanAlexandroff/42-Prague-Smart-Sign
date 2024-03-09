@@ -43,10 +43,10 @@ void  ft_ota_init(void)
             type = "sketch";
         else
             type = "filesystem";
-        ft_display_bitmap(badge_bitmap_ota_updating);
+//        ft_display_bitmap(badge_bitmap_ota_updating);
     });
     ArduinoOTA.onEnd([]() {
-        ft_display_bitmap(badge_bitmap_ota_success);
+//        ft_display_bitmap(badge_bitmap_ota_success);
         ft_delay(5000);
         ft_clear_display(true);
         display.powerOff();
@@ -54,7 +54,7 @@ void  ft_ota_init(void)
     ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
     });
     ArduinoOTA.onError([](ota_error_t error) {
-        ft_display_bitmap(badge_bitmap_ota_fail);
+//        ft_display_bitmap(badge_bitmap_ota_fail);
         ft_delay(3000);
         ft_clear_display(true);
         ESP.restart();

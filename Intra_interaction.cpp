@@ -15,6 +15,8 @@
 // https://stackoverflow.com/questions/23936246/error-invalid-operands-of-types-const-char-35-and-const-char-2-to-binar
 
 
+// !!! ПЕРЕПИСАТЬ ВЫДЕЛЕНИЕ ПАМЯТИ ДЛЯ СООБЩЕНИЯ С ТОКЕНОМ И СООБЩЕНИЯ С ИНФОЙ ОБ ЭКЗАМЕНЕ ЧЕРЕЗ CALLOC !!!
+
 
 static uint8_t  ft_number_of_exams(String server_message)                            // Считаем количество экзаменов упомянутых в сообщении сервера
 {

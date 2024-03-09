@@ -1,6 +1,21 @@
 
 #include "42-Prague-Smart-Sign.h"
 
+void ft_display_exam_sign(void)
+{
+  return;
+}
+
+void ft_display_timer_exact_end_time(void)
+{
+  return;
+}
+
+void ft_display_timer(int minutes)
+{
+  return;
+}
+
 void  IRAM_ATTR ft_display_animated_text_with_font(String output)                 // flikers and inverts colours while running, animation doesn't work yet
 {
     int16_t   tbx;
@@ -66,7 +81,7 @@ void  IRAM_ATTR ft_display_battery_state(void)
     uint16_t  y;
     uint16_t  x;
 
-    ft_display_bitmap(badge_bitmap_low_battery);
+//    ft_display_bitmap(badge_bitmap_low_battery);
     output = String(g.battery) + "%";
     display.getTextBounds(output, 0, 0, &text_x, &text_y, &text_width, &text_height);
   // center bounding box by transposition of origin:
@@ -94,24 +109,6 @@ bool  IRAM_ATTR ft_clear_display(bool errase_display)                          /
         errase_display = false;
     }
     return (errase_display);
-}
-
-void  ft_run_slideshow(long* p_cycle_length)
-{
-    ft_display_bitmap_with_refresh(badge_bitmap_slide_6_logo);
-    ft_delay(8000);
-    if (g.battery <= 20)
-    {
-        ft_display_battery_state();
-        *p_cycle_length = *p_cycle_length + 8000 * (21 - g.battery);
-        ft_delay(8000);
-    }
-    ft_display_bitmap(badge_bitmap_slide_4_github);
-    ft_delay(8000);
-    ft_display_bitmap(badge_bitmap_your_ad_slide);
-    ft_delay(8000);
-    ft_display_bitmap(badge_bitmap_name_slide_v2);
-    display.powerOff();
 }
 
 void  IRAM_ATTR ft_display_init(void)

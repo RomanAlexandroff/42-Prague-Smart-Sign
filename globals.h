@@ -7,6 +7,7 @@
 # include <GxEPD2_7C.h>
 # include <Adafruit_GFX.h>
 # include <Fonts/FreeSansBold24pt7b.h>
+# include <WiFiClientSecure.h>                      // has to be here. For Wi-Fi connection and HTTPS requests
 # include "credentials.h"
 # include "constants.h"
 

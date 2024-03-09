@@ -8,7 +8,7 @@ static unsigned int ft_exam(bool* p_preexam_check)
 
     minutes = 60;
     exam_remaining_time = ft_time_till_event(rtc_g.exam_end_hour, rtc_g.exam_end_minutes);   //проверяем сколько времени (миллисекунд) осталось до конца
-    ft_display_bitmap_with_refresh(/*HERE SHOULD BE THE EXAM TIME WARNING BITMAP*/);                // Показываем предупреждение Экзамен
+//    ft_display_bitmap_with_refresh(/*HERE SHOULD BE THE EXAM TIME WARNING BITMAP*/);                // Показываем предупреждение Экзамен
     if (exam_remaining_time > 3600000)                                                              // Если до окончания экзамена больше 1 часа, то...
     {
         ft_display_timer_exact_end_time();                                            // ...показывем точное время завершения и...
@@ -38,8 +38,8 @@ static void ft_preexam_warning(unsigned int* p_preexam_time)              // П�
 {                                                                         // эта функция никуда не выходит до самого начала экзамена
     int minutes;
 
-    minutes = 60
-    ft_display_bitmap_with_refresh(/*HERE SHOULD BE THE PRE-EXAM TIME WARNING BITMAP*/);
+    minutes = 60;
+//    ft_display_bitmap_with_refresh(/*HERE SHOULD BE THE PRE-EXAM TIME WARNING BITMAP*/);
     while (minutes > 10)
     {
         ft_display_timer(minutes);                                        // timer counts down every 10 minutes

@@ -3,7 +3,6 @@
 # define _42_PRAGUE_SMART_SIGN_H
 
 # include <Arduino.h>                     // String variables manipulations
-# include <WiFiClientSecure.h>            // Wi-Fi connection, HTTPS requests
 //# include <esp_wifi.h>
 # include <WiFiUdp.h>
 # include <ESPmDNS.h>
@@ -49,6 +48,16 @@ static void         ft_clean_data(String server_message);
 static void         ft_get_data_load(const String token, String* p_server_message);
 static void         ft_get_token(const String* p_token);
 void                ft_fetch_exams(void);
+
+void ft_display_exam_sign(void);
+void ft_display_timer_exact_end_time(void);
+void ft_display_timer(int minutes);
+void  IRAM_ATTR ft_display_animated_text_with_font(String output);
+void  IRAM_ATTR ft_display_bitmap_with_refresh(const unsigned char* output);
+void  IRAM_ATTR ft_display_bitmap(const unsigned char* output);
+void  IRAM_ATTR ft_display_battery_state(void);
+bool  IRAM_ATTR ft_clear_display(bool errase_display);
+
 
 #endif
  

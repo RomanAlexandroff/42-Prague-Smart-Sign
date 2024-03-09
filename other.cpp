@@ -45,14 +45,11 @@ void  ft_wifi_connect(void)
 
 void  ft_get_time(void)
 {
-    const char* ntp_server;
-    const long  gmt_offset_sec;
-    const int   daylight_offset_sec;
+    const char* ntp_server = "pool.ntp.org";
+    const long  gmt_offset_sec = TIME_ZONE * 3600;
+    const int   daylight_offset_sec = 3600;
     struct tm   time_info;
 
-    ntp_server = "pool.ntp.org";
-    gmt_offset_sec = TIME_ZONE * 3600;
-    daylight_offset_sec = 3600;
     if (WiFi.status() != WL_CONNECTED)
         WiFi.reconnect();
     if (WiFi.status() != WL_CONNECTED)
