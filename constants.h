@@ -38,6 +38,11 @@
 # define SPI_SCK_PIN             12                                    // also known as SCL pin
 # define SPI_MISO_PIN            -1                                    // NOT USED IN THIS PROJECT
 # define ENABLE_GxEPD2_GFX       0
+# define GxEPD2_DISPLAY_CLASS    GxEPD2_3C
+# define GxEPD2_DRIVER_CLASS     GxEPD2_750c_Z08
+# define GxEPD2_3C_IS_GxEPD2_3C  true
+# define MAX_DISPLAY_BUFFER_SIZE 65536ul
+# define MAX_HEIGHT(EPD)         (EPD::HEIGHT <= (MAX_DISPLAY_BUFFER_SIZE / 2) / (EPD::WIDTH / 8) ? EPD::HEIGHT : (MAX_DISPLAY_BUFFER_SIZE / 2) / (EPD::WIDTH / 8))
 
 #endif
  
