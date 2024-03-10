@@ -16,7 +16,7 @@ void ft_display_timer(int minutes)
   return;
 }
 
-void  IRAM_ATTR ft_display_animated_text_with_font(String output)                 // flikers and inverts colours while running, animation doesn't work yet
+void   ft_display_animated_text_with_font(String output)                 // flikers and inverts colours while running, animation doesn't work yet
 {
     int16_t   tbx;
     int16_t   tby;
@@ -45,7 +45,7 @@ void  IRAM_ATTR ft_display_animated_text_with_font(String output)               
     while (display.nextPage());
 }
 
-void  IRAM_ATTR ft_display_bitmap_with_refresh(const unsigned char* output)       // flickers, does NOT invert colours while running 
+void   ft_display_bitmap_with_refresh(const unsigned char* output)       // flickers, does NOT invert colours while running 
 {
     display.setRotation(1);
     display.setFullWindow();
@@ -58,7 +58,7 @@ void  IRAM_ATTR ft_display_bitmap_with_refresh(const unsigned char* output)     
     while (display.nextPage());
 }
 
-void  IRAM_ATTR ft_display_bitmap(const unsigned char* output)                     // uses Full Screen Partial Mode. Does NOT flicker, does NOT invert colours while running 
+void   ft_display_bitmap(const unsigned char* output)                     // uses Full Screen Partial Mode. Does NOT flicker, does NOT invert colours while running 
 {
     display.setPartialWindow(0, 0, display.width(), display.height());
     display.setRotation(1);
@@ -71,7 +71,7 @@ void  IRAM_ATTR ft_display_bitmap(const unsigned char* output)                  
     while (display.nextPage());
 }
 
-void  IRAM_ATTR ft_display_battery_state(void)
+void   ft_display_battery_state(void)
 {
     String    output;
     int16_t   text_x;
@@ -100,7 +100,7 @@ void  IRAM_ATTR ft_display_battery_state(void)
     while (display.nextPage());
 }
 
-bool  IRAM_ATTR ft_clear_display(bool errase_display)                          // flickers
+bool   ft_clear_display(bool errase_display)                          // flickers
 {
     if (errase_display)
     {
@@ -111,7 +111,7 @@ bool  IRAM_ATTR ft_clear_display(bool errase_display)                          /
     return (errase_display);
 }
 
-void  IRAM_ATTR ft_display_init(void)
+void   ft_display_init(void)
 {
     SPI.end();
     SPI.begin(SPI_SCK_PIN, SPI_MISO_PIN, SPI_MOSI_PIN, SPI_SS_PIN);

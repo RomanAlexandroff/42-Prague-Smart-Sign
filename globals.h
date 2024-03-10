@@ -2,9 +2,7 @@
 #ifndef GLOBALS_H_
 # define GLOBALS_H_
 
-# include <GxEPD2_BW.h>
-# include <GxEPD2_3C.h>
-# include <GxEPD2_7C.h>
+# include <GxEPD2_3C.h>                             // 3-coloured version of the library
 # include <Adafruit_GFX.h>
 # include <Fonts/FreeSansBold24pt7b.h>
 # include <WiFiClientSecure.h>                      // has to be here. For Wi-Fi connection and HTTPS requests

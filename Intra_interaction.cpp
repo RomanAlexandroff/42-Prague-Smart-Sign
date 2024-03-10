@@ -130,8 +130,8 @@ static void  ft_get_token(String* p_token)                                      
 
 void  ft_fetch_exams(void)                                              // Получаем данные о экзаменах
 {
-    String        server_message;
-    String        token;
+    String  server_message;
+    String  token;
 
     if (WiFi.status() != WL_CONNECTED)                                  // убеждаемся что мы подключены к вай-фай
         WiFi.reconnect();

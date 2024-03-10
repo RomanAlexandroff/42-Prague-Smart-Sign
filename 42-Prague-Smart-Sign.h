@@ -18,9 +18,9 @@
 # include "bitmap_library.h"
 # include "globals.h"
 
-void IRAM_ATTR      ft_eeprom_init(void);
-void IRAM_ATTR      ft_battery_init(void);
-void IRAM_ATTR      ft_display_init(void);
+void       ft_eeprom_init(void);
+void       ft_battery_init(void);
+void       ft_display_init(void);
 void                ft_power_down_recovery(void);
 short               ft_battery_check(void);
 void                ft_buttons_init(void);
@@ -34,7 +34,7 @@ void IRAM_ATTR      isr_reboot(void);
 void                ft_ota_init(void);
 static void         ft_ota_waiting_loop(void);
 void                ft_go_to_sleep(uint64_t time_in_millis);
-void IRAM_ATTR      ft_delay(uint64_t time_in_millis);
+void       ft_delay(uint64_t time_in_millis);
 void                ft_wifi_connect(void);
 void                ft_get_time(void);
 unsigned int        ft_time_till_event(uint8_t hours, uint8_t minutes);
@@ -52,11 +52,11 @@ void                ft_fetch_exams(void);
 void ft_display_exam_sign(void);
 void ft_display_timer_exact_end_time(void);
 void ft_display_timer(int minutes);
-void  IRAM_ATTR ft_display_animated_text_with_font(String output);
-void  IRAM_ATTR ft_display_bitmap_with_refresh(const unsigned char* output);
-void  IRAM_ATTR ft_display_bitmap(const unsigned char* output);
-void  IRAM_ATTR ft_display_battery_state(void);
-bool  IRAM_ATTR ft_clear_display(bool errase_display);
+void   ft_display_animated_text_with_font(String output);
+void   ft_display_bitmap_with_refresh(const unsigned char* output);
+void   ft_display_bitmap(const unsigned char* output);
+void   ft_display_battery_state(void);
+bool   ft_clear_display(bool errase_display);
 
 
 #endif

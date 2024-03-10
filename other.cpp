@@ -11,7 +11,7 @@ void  ft_go_to_sleep(uint64_t time_in_millis)
     esp_deep_sleep_start();
 }
 
-void  IRAM_ATTR ft_delay(uint64_t time_in_millis)
+void   ft_delay(uint64_t time_in_millis)
 {
     esp_sleep_enable_timer_wakeup(time_in_millis * 1000);
     esp_light_sleep_start();

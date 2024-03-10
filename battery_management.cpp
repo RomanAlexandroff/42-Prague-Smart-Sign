@@ -1,7 +1,7 @@
 
 #include "42-Prague-Smart-Sign.h"
 
-void IRAM_ATTR  ft_eeprom_init(void)
+void   ft_eeprom_init(void)
 {
     RTC_DATA_ATTR static short i = 1;
     
@@ -105,7 +105,7 @@ short  ft_battery_check(void)
     return (g.battery);
 }
 
-void IRAM_ATTR ft_battery_init(void)
+void  ft_battery_init(void)
 {
     adc1_config_width(ADC_WIDTH_BIT_13);
     adc1_config_channel_atten(ADC1_CHANNEL_0, ADC_ATTEN_11db);
