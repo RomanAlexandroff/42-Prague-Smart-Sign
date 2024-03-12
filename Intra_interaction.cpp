@@ -15,9 +15,6 @@
 // https://stackoverflow.com/questions/23936246/error-invalid-operands-of-types-const-char-35-and-const-char-2-to-binar
 
 
-// !!! ПЕРЕПИСАТЬ ВЫДЕЛЕНИЕ ПАМЯТИ ДЛЯ СООБЩЕНИЯ С ТОКЕНОМ И СООБЩЕНИЯ С ИНФОЙ ОБ ЭКЗАМЕНЕ ЧЕРЕЗ CALLOC !!!
-
-
 static uint8_t  ft_number_of_exams(String server_message)                            // Считаем количество экзаменов упомянутых в сообщении сервера
 {
     int8_t  i;
@@ -55,7 +52,7 @@ static void  ft_clean_data(String server_message)                               
         {
             rtc_g.exam_start_hour = server_message.substring(24, 26).toInt() + TIME_ZONE;
             rtc_g.exam_start_minutes = server_message.substring(27, 29).toInt();
-            DEBUG_PRINTF("Exam starts at: ", "");
+            DEBUG_PRINTF("Exam starts at ", "");
             DEBUG_PRINTF("%d:", rtc_g.exam_start_hour);
             DEBUG_PRINTF("%d\n", rtc_g.exam_start_minutes);
         }
@@ -63,7 +60,7 @@ static void  ft_clean_data(String server_message)                               
         {
             rtc_g.exam_end_hour = server_message.substring(22, 24).toInt() + TIME_ZONE;
             rtc_g.exam_end_minutes = server_message.substring(25, 27).toInt();
-            DEBUG_PRINTF("Exam starts at: ", "");
+            DEBUG_PRINTF("Exam ends at ", "");
             DEBUG_PRINTF("%d:", rtc_g.exam_end_hour);
             DEBUG_PRINTF("%d\n", rtc_g.exam_end_minutes);
             break;
@@ -94,7 +91,7 @@ static void  ft_get_data_load(String token, String* p_server_message)           
     }
 }
 
-static void  ft_get_token(String* p_token)                                            // Запрашиваем и получаем токен безопасности
+static bool  ft_get_token(String* p_token)                                            // Запрашиваем и получаем токен безопасности
 {
     String  data;
     String  server_reply;
@@ -115,6 +112,11 @@ static void  ft_get_token(String* p_token)                                      
             DEBUG_PRINTF("Response received: \n%s\n\n", server_reply.c_str());              // выписываем ответ в серийный монитор на случай...
             break;                                                                          // если нужна будет визуальная проверка
         }
+        else
+        {
+            DEBUG_PRINTF("Intra token retrieval FAILED\n", "");
+            return (false);
+        }
     }
     while (client.available())
     {
@@ -125,10 +127,16 @@ static void  ft_get_token(String* p_token)                                      
             DEBUG_PRINTF("Access Token: %s\n\n", p_token->c_str());
             break;
         }
+        else
+        {
+            DEBUG_PRINTF("Intra token search FAILED\n", "");
+            return (false);
+        }
     }
+    return (true);
 }
 
-void  ft_fetch_exams(void)                                              // Получаем данные о экзаменах
+bool  ft_fetch_exams(void)                                              // Получаем данные о экзаменах
 {
     String  server_message;
     String  token;
@@ -140,16 +148,18 @@ void  ft_fetch_exams(void)                                              // По�
         DEBUG_PRINTF("Failed to obtain Intra data due to Wi-Fi connection issues\n", "");
         WiFi.disconnect(true);
         WiFi.mode(WIFI_OFF);
-        return;
+        return (false);
     }
     if (!client.connect("https://api.intra.42.fr", 443))                // подключаемся к удалённому серверу
     {
         DEBUG_PRINTF("Intra server connection FAILED\n", "");           // ! Здесь нехватает обработки ошибки - сообщение об этом нужно вывести на экран !
-        return;
+        return (false);
     }
-    ft_get_token(&token);                                               // запрашиваем токен безопасности с которым сможем получить данные с сервера
+    if (!ft_get_token(&token))                                          // запрашиваем токен безопасности с которым сможем получить данные с сервера
+        return (false);
     ft_get_data_load(token, &server_message);                           // запрашиваем сервер о данных экзаменов за сегодняшний день
     ft_clean_data(server_message);                                      // из полученного пакета информации вытаскиваем только то, что нам нужно
     client.stop();                                                      // закрываем клиента безопасного соединения
+    return (true);
 }                                                                       // выходим в место откуда нас звали
  
