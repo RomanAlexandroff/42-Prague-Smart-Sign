@@ -3,7 +3,7 @@
 
 void   ft_eeprom_init(void)
 {
-    RTC_DATA_ATTR static short i = 1;
+    RTC_DATA_ATTR static short i = 1;                          // if a static variable needs to be initialised, it shall be done right away 
     
     if (!EEPROM.begin(EEPROM_SIZE))
     {
@@ -27,7 +27,7 @@ void   ft_eeprom_init(void)
     rtc_g.eeprom_state = false;
 }
 
-static bool ft_result_chech(const int address, uint16_t result, uint16_t old_max, uint16_t old_min)
+static bool ft_result_check(const int address, uint16_t result, uint16_t old_max, uint16_t old_min)
 {
     if (address == MAX_STATE_ADDR)
     {
@@ -46,7 +46,7 @@ static bool ft_result_chech(const int address, uint16_t result, uint16_t old_max
     return (false);                                                                       // the program will never reach here. It is only to make compiler happy
 }
 
-void IRAM_ATTR ft_battery_state(const int address)
+void IRAM_ATTR ft_battery_state(const int address)                                        // Make a record of the lowest or highest battery reading
 {
     uint16_t battery;
     uint16_t result;
@@ -69,43 +69,43 @@ void IRAM_ATTR ft_battery_state(const int address)
     #endif
     battery = EEPROM.readShort(address);
     result = ceil((adc1_get_raw(ADC1_CHANNEL_0) + battery) / 2);
-    if (!ft_result_chech(address, result, old_max, old_min))
+    if (!ft_result_check(address, result, old_max, old_min))
         return;
     EEPROM.writeShort(address, result);
     EEPROM.commit();
 }
 
-short  ft_battery_check(void)
+short  ft_battery_check(void)                                           // Find out the battery charge
 {
     short i;
     short min;
     float coeff;
 
     i = 0;
-    if (!rtc_g.eeprom_state)
+    if (!rtc_g.eeprom_state)                                            // if unable to read accurate constants values, use default ones
     {
         min = BATTERY_DEFAULT_MIN;
         coeff = BATTERY_DEFAULT_COEFF;
     }
-    else
+    else                                                                // if able to read, get the accurate constant values
     {
         min = EEPROM.readShort(MIN_STATE_ADDR);
         coeff = (EEPROM.readShort(MAX_STATE_ADDR) - min) / 100;
     }
-    while (i < 10)
+    while (i < 10)                                                        // limit of number of battery readings, in this case 10 
     {
         g.battery += ceil((adc1_get_raw(ADC1_CHANNEL_0) - min) / coeff);
         i++;
     }
     g.battery = g.battery / i;                                            // counting average of i samples
-    if (g.battery <= 0)
+    if (g.battery <= 0)                                                   // normalize the reading result if it turned out to be out of range
         g.battery = 0;
     if (g.battery >= 100)
         g.battery = 100;
     return (g.battery);
 }
 
-void  ft_battery_init(void)
+void  ft_battery_init(void)                                               // Configure ADC module for the future battery charge measurements
 {
     adc1_config_width(ADC_WIDTH_BIT_13);
     adc1_config_channel_atten(ADC1_CHANNEL_0, ADC_ATTEN_11db);
