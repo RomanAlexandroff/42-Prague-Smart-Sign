@@ -7,6 +7,7 @@ static void  ft_ota_waiting_loop(void)
 
     i = 0;
     DEBUG_PRINTF("\nOTA initialised. Waiting for update...\n", "");
+    ft_display_cluster_number(OTA_WAITING);
     while (i < WAIT_FOR_OTA_LIMIT)
     {
         ArduinoOTA.handle();
@@ -14,7 +15,9 @@ static void  ft_ota_waiting_loop(void)
         i++;
         if (!rtc_g.ota_active)
         {
+            ft_display_cluster_number(OTA_CANCELED);
             DEBUG_PRINTF("\nOTA canceled without an update: USER TOUCH PAD\n", "");
+            ft_delay(8000);
             return;
         }
     }
@@ -43,10 +46,10 @@ void  ft_ota_init(void)
             type = "sketch";
         else
             type = "filesystem";
-//        ft_display_bitmap(badge_bitmap_ota_updating);
+        ft_display_cluster_number(OTA_UPDATING);
     });
     ArduinoOTA.onEnd([]() {
-//        ft_display_bitmap(badge_bitmap_ota_success);
+        ft_display_cluster_number(OTA_SUCCESS);
         ft_delay(5000);
         ft_clear_display(true);
         display.powerOff();
@@ -54,7 +57,7 @@ void  ft_ota_init(void)
     ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
     });
     ArduinoOTA.onError([](ota_error_t error) {
-//        ft_display_bitmap(badge_bitmap_ota_fail);
+        ft_display_cluster_number(OTA_FAIL);
         ft_delay(3000);
         ft_clear_display(true);
         ESP.restart();

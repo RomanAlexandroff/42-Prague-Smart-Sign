@@ -19,7 +19,6 @@
 # define CONNECT_TIMEOUT         4                                     // WiFi timeout per each network, in seconds. Increase if cannot connect.
 # define WAIT_FOR_OTA_LIMIT      3600000                               // how long to wait for OTA to begin (in milliseconds, 1 HOUR)
 # define SLEEP_DURATION          60000ul                               // in milliseconds
-# define HOME_SLEEP_TIME         1800000                               // in milliseconds, 30 minutes
 # define DEAD_BATTERY_SLEEP      7200000                               // in milliseconds, 2 HOURS
 
 # define BUTTON_THRESHOLD        5000                                  // lower the value, more sensitive the buttons
@@ -37,12 +36,21 @@
 # define SPI_MOSI_PIN            11                                    // also known as SDA pin, as SPI_D pin or as DIN pin
 # define SPI_SCK_PIN             12                                    // also known as SCL pin
 # define SPI_MISO_PIN            -1                                    // NOT USED IN THIS PROJECT
-# define ENABLE_GxEPD2_GFX       0
 # define GxEPD2_DISPLAY_CLASS    GxEPD2_3C
 # define GxEPD2_DRIVER_CLASS     GxEPD2_750c_Z08
 # define GxEPD2_3C_IS_GxEPD2_3C  true
-# define MAX_DISPLAY_BUFFER_SIZE 65536ul
+# define MAX_DISPLAY_BUFFER_SIZE 32000ul                               // recomended buffer size for 3-colour 800x480 e-paper display — 96 KB
 # define MAX_HEIGHT(EPD)         (EPD::HEIGHT <= (MAX_DISPLAY_BUFFER_SIZE / 2) / (EPD::WIDTH / 8) ? EPD::HEIGHT : (MAX_DISPLAY_BUFFER_SIZE / 2) / (EPD::WIDTH / 8))
+
+# define DEFAULT                 1
+# define INTRA_ERROR             2
+# define EXAM_DAY                3
+# define LOW_BATTERY             4
+# define OTA_WAITING             5
+# define OTA_UPDATING            6
+# define OTA_SUCCESS             7
+# define OTA_FAIL                8
+# define OTA_CANCELED            9
 
 #endif
  

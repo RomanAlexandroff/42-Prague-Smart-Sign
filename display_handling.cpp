@@ -1,6 +1,36 @@
 
 #include "42-Prague-Smart-Sign.h"
 
+/*
+ *  We need to be able to create a total number of 12 different slides. For that we have 
+ *  6 bitmaps and system fonts. The bitmaps are fixed images that can be placed staticaly 
+ *  anywhere on the display. With the system fornts we can write any phrases and texts.
+ *  Here is the list of the slides and what each of them shall consist of:
+ *      - boot_up_img                         system fonts only
+ *      - empty_battery_img                   system fonts only
+ *      - default_cluster_number_img          cluster_number_img + default_cluster_icons
+ *      - intra_error_img                     cluster_number_img + system fonts for the error note
+ *      - cluster_number_with_exam_note       cluster_number_img + system fonts for the exam note
+ *      - low_battery_img                     cluster_number_img + system fonts for the low battery note
+ *      - ota_waiting_img                     cluster_number_img + system fonts for the OTA waiting note
+ *      - ota_updating_img                    cluster_number_img + system fonts for the OTA updating note
+ *      - ota_success_img                     cluster_number_img + system fonts for the OTA success note
+ *      - ota_fail_img                        cluster_number_img + system fonts for the OTA fail note
+ *      - ota canceled                        cluster_number_img + system fonts for the OTA cancel note
+ *      - exam_warning_img                    exam_warning_img_0 + exam_warning_img_1 + system fonts for the exam time note
+ *      - preexam_warning_img                 preexam_warning_img + preexam_warning_icons + system fonts for the exam time note
+ *  You may see what the final slides look should be like in the Slides Final Look folder.
+ *  The slides may be devided into 4 groups by the maner of their assembly:
+ *      - 2 slides that consist of system fonts only,
+ *      - 8 slides that consist of the cluster_number and some note in system font,
+ *      - 1 slide of preexam warning that has a unique assembly steps,
+ *      - 1 slide of exam warning that has a unique assembly steps.
+ *  It means that we will need at least 4 different assembly functions to take care of each
+ *  of the slides groups.
+ */
+
+
+
 void ft_display_exam_sign(void)
 {
   return;
@@ -16,88 +46,40 @@ void ft_display_timer(int minutes)
   return;
 }
 
-void   ft_display_animated_text_with_font(String output)                 // flikers and inverts colours while running, animation doesn't work yet
+
+
+void  ft_display_cluster_number(uint8_t mode)
 {
-    int16_t   tbx;
-    int16_t   tby;
-    uint16_t  tbw;
-    uint16_t  tbh;
-    uint16_t  y;
-    uint16_t  x;
-
-    display.setFont(&FreeSansBold24pt7b);
-    display.setTextColor(GxEPD_BLACK);
-    display.setRotation(1);
-    display.getTextBounds(output, 0, 0, &tbx, &tby, &tbw, &tbh);
-    y = (display.height() - tbh) / 2;
-    x = display.width();
-    display.setFullWindow();
-    display.firstPage();
-    do
+    switch (mode)
     {
-        display.fillScreen(GxEPD_WHITE);
-        display.setCursor(x, y);
-        display.print(output);
-        x -= 25;                                                                  // this value here controls the speed of movement
-        if (x + tbw < 0)
-            x = display.width();
-    }
-    while (display.nextPage());
-}
+        case DEFAULT:
 
-void   ft_display_bitmap_with_refresh(const unsigned char* output)       // flickers, does NOT invert colours while running 
-{
-    display.setRotation(1);
-    display.setFullWindow();
-    display.firstPage();
-    do
-    {
-        display.fillScreen(GxEPD_WHITE);
-        display.drawBitmap(0, 0, output, 296, 128, GxEPD_BLACK);
-    }
-    while (display.nextPage());
-}
+            break;
+        case INTRA_ERROR:
 
-void   ft_display_bitmap(const unsigned char* output)                     // uses Full Screen Partial Mode. Does NOT flicker, does NOT invert colours while running 
-{
-    display.setPartialWindow(0, 0, display.width(), display.height());
-    display.setRotation(1);
-    display.firstPage();
-    do
-    {
-        display.fillScreen(GxEPD_WHITE);
-        display.drawBitmap(0, 0, output, 296, 128, GxEPD_BLACK);
-    }
-    while (display.nextPage());
-}
+            break;
+        case EXAM_DAY:
 
-void   ft_display_battery_state(void)
-{
-    String    output;
-    int16_t   text_x;
-    int16_t   text_y;
-    uint16_t  text_width;
-    uint16_t  text_height;
-    uint16_t  y;
-    uint16_t  x;
+            break;
+        case LOW_BATTERY:
 
-//    ft_display_bitmap(badge_bitmap_low_battery);
-    output = String(g.battery) + "%";
-    display.getTextBounds(output, 0, 0, &text_x, &text_y, &text_width, &text_height);
-  // center bounding box by transposition of origin:
-    x = ((display.width() - text_width) / 2) - text_x + 60;
-    y = ((display.height() - text_height) / 2) - text_y;
-    display.setRotation(1);                                      // 0 for vertical display, 1 for horizontal rotated right 90 degrees
-    display.setPartialWindow(x, y, text_width, text_height);     // x, y, width, height
-    display.setFont(&FreeSansBold24pt7b);
-    display.setTextColor(GxEPD_BLACK);
-    display.firstPage();
-    do
-    {
-        display.setCursor(x, y);                                 // x and y coordinates (for vertical display)
-        display.print(output);
+            break;
+        case OTA_WAITING:
+
+            break;
+        case OTA_UPDATING:
+
+            break;
+        case OTA_SUCCESS:
+
+            break;
+        case OTA_FAIL:
+
+            break;
+        case OTA_CANCELED:
+
+            break;
     }
-    while (display.nextPage());
 }
 
 bool   ft_clear_display(bool errase_display)                          // flickers
