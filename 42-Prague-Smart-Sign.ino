@@ -28,5 +28,8 @@ static void  ft_pathfinder(void)                    // Решаем в како�
     DEBUG_PRINTF("  ---- This message will never be printed out", "");
 }
 
-void  loop(void) { /* NOTHING IS HERE */ }
+void  loop(void)
+{
+    ft_pathfinder();
+}
  
