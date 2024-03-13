@@ -2,7 +2,7 @@
 #ifndef CONSTANTS_H
 # define CONSTANTS_H
 
-# define SOFTWARE_VERSION        0.01
+# define SOFTWARE_VERSION        1.01
 
 #define DEBUG                                                         // comment out this line to turn off Serial output
 #ifdef DEBUG
