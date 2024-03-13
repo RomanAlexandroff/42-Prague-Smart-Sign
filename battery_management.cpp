@@ -38,7 +38,7 @@ static bool ft_result_check(const int address, uint16_t result, uint16_t old_max
     }
     if (address == MIN_STATE_ADDR)
     {
-        if (result > old_min + 200 || result < old_min - 200)
+        if (result > old_min + 200 || result < old_min - 200 || result >= old_max)
             return (false);
         else
             return (true); 
