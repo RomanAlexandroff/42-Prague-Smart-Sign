@@ -29,7 +29,7 @@ void  ft_wifi_connect(void)
     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
     while ((WiFi.status() != WL_CONNECTED) && i < CONNECT_TIMEOUT)
     {
-        ft_delay(1000);
+        delay(1000);
         i++;
     }
     if ((WiFi.status() != WL_CONNECTED) && !reboot)
