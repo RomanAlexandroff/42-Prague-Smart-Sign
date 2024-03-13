@@ -12,6 +12,7 @@ void  ft_power_down_recovery(void)
         case ESP_RST_BROWNOUT:
 //            ft_display_bitmap_with_refresh(empty_battery_img);
             ft_battery_state(MIN_STATE_ADDR);
+            DEBUG_PRINTF("\nReset reason: Brown-out reset. Going into extensive sleep\n", "");
             display.powerOff();
             esp_sleep_enable_timer_wakeup(DEAD_BATTERY_SLEEP);
             esp_deep_sleep_start();
@@ -20,7 +21,7 @@ void  ft_power_down_recovery(void)
 //            ft_display_bitmap_with_refresh(bootup_screen_img);
             ft_battery_state(MAX_STATE_ADDR);
             rtc_g.ota_active = false;
-            DEBUG_PRINTF("\nReset reason: Power-on or Brown-out reset\n", "");
+            DEBUG_PRINTF("\nReset reason: Power-on reset\n", "");
             DEBUG_PRINTF("Power-down Recovery was performed.\n", "");
             ft_delay(3000);
             ft_clear_display(true);
