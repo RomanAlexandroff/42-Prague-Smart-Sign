@@ -15,7 +15,7 @@
 # include "esp_sleep.h"                   // allows to use touch pad for wake up
 # include <driver/adc.h>                  // measures battery voltage
 # include "bitmap_library.h"
-# include "globals.h"
+# include "globals.h"                     // contains global variables, calls display libraries
 
 void                ft_eeprom_init(void);
 void                ft_battery_init(void);
@@ -51,6 +51,8 @@ bool                ft_fetch_exams(void);
 void                ft_display_exam_sign(void);
 void                ft_display_timer_exact_end_time(void);
 void                ft_display_timer(int minutes);
+static void         ft_draw_text(String output);
+static void         ft_draw_cluster_slide(const unsigned char* output);
 void                ft_display_cluster_number(uint8_t mode);
 void                ft_display_battery_state(void);
 bool                ft_clear_display(bool errase_display);
