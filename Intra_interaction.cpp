@@ -150,7 +150,7 @@ bool  ft_fetch_exams(void)                                              // По�
         WiFi.mode(WIFI_OFF);
         return (false);
     }
-    if (!client.connect("https://api.intra.42.fr", 443))                // подключаемся к удалённому серверу
+    if (!client.connect("https://api.intra.42.fr/v2", 443))             // подключаемся к удалённому серверу
     {
         DEBUG_PRINTF("Intra server connection FAILED\n", "");           // ! Здесь нехватает обработки ошибки - сообщение об этом нужно вывести на экран !
 //        return (false);
