@@ -111,31 +111,27 @@ void drawBitmaps3c1304x984()
 
 static void  ft_draw_text(String output)                                              // flikers and inverts colours while running
 {
-    const int16_t   window_x PROGMEM;
-    const int16_t   window_y PROGMEM;
-    const uint16_t  window_width PROGMEM;
-    const uint16_t  window_height PROGMEM;
+    const int16_t   window_x PROGMEM = 0;
+    const int16_t   window_y PROGMEM = 631;
+    const uint16_t  window_width PROGMEM = 480;
+    const uint16_t  window_height PROGMEM = 169;
     int16_t         text_x;
     int16_t         text_y;
     uint16_t        text_width;
     uint16_t        text_height;
 
-    window_x = 0;
-    window_y = 631;
-    window_width = 480;
-    window_height = 169;
     display.setPartialWindow(window_x, window_y, window_width, window_height);                // create partial update window
     display.setRotation(3);                                                                   // rotate the whole display so the future text faces right
     display.setFont(&FreeSansBold24pt7b);
     display.setTextColor(GxEPD_BLACK);
     display.getTextBounds(output, 0, 0, &text_x, &text_y, &text_width, &text_height);         // check the dimensions of the future text
-    x = ((window_width - text_width) / 2) - text_x;
-    y = display.height() - (window_height - text_height) / 2;
+    text_x = ((window_width - text_width) / 2) - text_x;
+    text_y = display.height() - (window_height - text_height) / 2;
     display.firstPage();
     do
     {
         display.fillScreen(GxEPD_WHITE);
-        display.setCursor(x, y);
+        display.setCursor(text_x, text_y);
         display.print(output);
     }
     while (display.nextPage());
@@ -153,8 +149,7 @@ static void ft_draw_cluster_slide(const unsigned char* output)                  
         if (output)
             display.drawBitmap(631, 0, output, 169, 480, GxEPD_BLACK);
     }
-    while (display.nextPage());
-    
+    while (display.nextPage()); 
 }
 
 void  ft_display_cluster_number(uint8_t mode)
@@ -165,36 +160,36 @@ void  ft_display_cluster_number(uint8_t mode)
             ft_draw_cluster_slide(default_cluster_icons);
             break;
         case INTRA_ERROR:
-            ft_draw_cluster_slide();
+            ft_draw_cluster_slide(NULL);
             ft_draw_text("COULD NOT CONNECT TO INTRA. CHECK EXAMS TIME YOURSELF");
             break;
         case EXAM_DAY:
-            ft_draw_cluster_slide();
+            ft_draw_cluster_slide(NULL);
             ft_draw_text("THE CLUSTER WILL BE RESERVED FOR AN EXAM TODAY AT " + 
-                        String(exam_start_hour) + ":" + String(exam_start_minutes));
+                        String(rtc_g.exam_start_hour) + ":" + String(rtc_g.exam_start_minutes));
             break;
         case LOW_BATTERY:
-            ft_draw_cluster_slide();
+            ft_draw_cluster_slide(NULL);
             ft_draw_text("LOW BATTERY!");
             break;
         case OTA_WAITING:
-            ft_draw_cluster_slide();
+            ft_draw_cluster_slide(NULL);
             ft_draw_text("WAITING FOR OTA UPDATE");
             break;
         case OTA_UPDATING:
-            ft_draw_cluster_slide();
+            ft_draw_cluster_slide(NULL);
             ft_draw_text("OTA UPDATE IN PROGRESS...");
             break;
         case OTA_SUCCESS:
-            ft_draw_cluster_slide();
+            ft_draw_cluster_slide(NULL);
             ft_draw_text("OTA UPDATE SUCCESS");
             break;
         case OTA_FAIL:
-            ft_draw_cluster_slide();
+            ft_draw_cluster_slide(NULL);
             ft_draw_text("OTA UPDATE FAIL");
             break;
         case OTA_CANCELED:
-            ft_draw_cluster_slide();
+            ft_draw_cluster_slide(NULL);
             ft_draw_text("OTA UPDATE CANCELED");
             break;
     }
