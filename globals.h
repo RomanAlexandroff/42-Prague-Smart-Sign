@@ -6,6 +6,7 @@
 # include <GxEPD2_BW.h>                             // we still need the black/white library version
 # include <GxEPD2_3C.h>                             // 3-coloured version of the GxEPD2 library
 # include <Fonts/FreeSansBold24pt7b.h>              // the fonts come from the Adafruit GFX library which gets called by the GxEPD2 library
+# include <WiFi.h>
 # include <WiFiClientSecure.h>                      // has to be here. For Wi-Fi connection and HTTPS requests
 # include "credentials.h"
 
