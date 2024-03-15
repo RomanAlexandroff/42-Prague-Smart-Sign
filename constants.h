@@ -16,7 +16,7 @@
 # define MIN_STATE_ADDR          4
 # define BATTERY_DEFAULT_MIN     367                                   // see ReadMe regarding this constant
 # define BATTERY_DEFAULT_COEFF   12.06                                 // see ReadMe regarding this constant
-# define CONNECT_TIMEOUT         4                                     // WiFi timeout per each network, in seconds. Increase if cannot connect.
+# define CONNECT_TIMEOUT         5                                     // WiFi timeout per each network, in seconds. Increase if cannot connect.
 # define WAIT_FOR_OTA_LIMIT      3600000                               // how long to wait for OTA to begin (in milliseconds, 1 HOUR)
 # define SLEEP_DURATION          60000ul                               // in milliseconds
 # define DEAD_BATTERY_SLEEP      7200000                               // in milliseconds, 2 HOURS
