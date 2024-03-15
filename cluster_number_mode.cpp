@@ -3,11 +3,15 @@
 
 static unsigned int  ft_time_till_wakeup(void)                                                          // counts exact time till the next wakeup
 {
+    unsigned int  result;
+
     if (rtc_g.hour == 18)
-        return (12 * 3600000 - (rtc_g.minute * 60000));                                                 // 12 hours till next wakeup
+        result = 12 * 3600000 - (rtc_g.minute * 60000);                                                 // 12 hours till next wakeup
     if (rtc_g.hour % 3 == 0 && rtc_g.hour >= 6 && rtc_g.hour <= 15)
-        return (3 * 3600000 - (rtc_g.minute * 60000));                                                  // 3 hours till next wakeup
-    return (10);                                                                                        // the programm will never reach here. This return is here only to make compiler happy.
+        result = 3 * 3600000 - (rtc_g.minute * 60000);                                                  // 3 hours till next wakeup
+    if (result < 10)                                                                                    // нельзя уходить в сон на 0 миллисекунд
+        result = 10;
+    return (result);                                                                                    // the programm will never reach here. This return is here only to make compiler happy.
 }
 
 void  ft_cluster_number_mode(unsigned int* p_sleep_length)                                              // Начинаем работу в режиме Номера Кластера и первым делом проверяем...
