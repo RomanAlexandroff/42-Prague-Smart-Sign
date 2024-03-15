@@ -30,10 +30,10 @@ void IRAM_ATTR      isr_warning(void);
 void IRAM_ATTR      isr_diagnostics(void);
 void IRAM_ATTR      isr_ota(void);
 void IRAM_ATTR      isr_reboot(void);
-void                ft_ota_init(void);
-static void         ft_ota_waiting_loop(void);
+void IRAM_ATTR      ft_ota_init(void);
+static void IRAM_ATTR ft_ota_waiting_loop(void);
 void                ft_go_to_sleep(uint64_t time_in_millis);
-void                ft_delay(uint64_t time_in_millis);
+void IRAM_ATTR      ft_delay(uint64_t time_in_millis);
 void                ft_wifi_connect(void);
 void                ft_get_time(void);
 unsigned int        ft_time_till_event(uint8_t hours, uint8_t minutes);
@@ -51,11 +51,11 @@ bool                ft_fetch_exams(void);
 void                ft_display_exam_sign(void);
 void                ft_display_timer_exact_end_time(void);
 void                ft_display_timer(int minutes);
-static void         ft_draw_text(String output);
-static void         ft_draw_cluster_slide(const unsigned char* output);
-void                ft_display_cluster_number(uint8_t mode);
+static void IRAM_ATTR ft_draw_text(String output);
+static void IRAM_ATTR ft_draw_cluster_slide(const unsigned char* output);
+void IRAM_ATTR      ft_display_cluster_number(uint8_t mode);
 void                ft_display_battery_state(void);
-bool                ft_clear_display(bool errase_display);
+bool IRAM_ATTR      ft_clear_display(bool errase_display);
 
 #endif
  

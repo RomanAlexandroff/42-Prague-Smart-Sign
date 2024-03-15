@@ -1,7 +1,7 @@
 
 #include "42-Prague-Smart-Sign.h"
 
-static void  ft_ota_waiting_loop(void)
+static void IRAM_ATTR ft_ota_waiting_loop(void)
 {
     int i;
 
@@ -24,7 +24,7 @@ static void  ft_ota_waiting_loop(void)
     DEBUG_PRINTF("\nOTA canceled without an update: AUTOMATIC TIME OUT\n", "");
 }
 
-void  ft_ota_init(void)
+void IRAM_ATTR  ft_ota_init(void)
 {
     const char* ssid;
     uint16_t    maxlen;
