@@ -112,9 +112,9 @@ void drawBitmaps3c1304x984()
 static void  ft_draw_text(String output)                                              // flikers and inverts colours while running
 {
     const int16_t   window_x PROGMEM = 0;
-    const int16_t   window_y PROGMEM = 631;
+    const int16_t   window_y PROGMEM = 630;
     const uint16_t  window_width PROGMEM = 480;
-    const uint16_t  window_height PROGMEM = 169;
+    const uint16_t  window_height PROGMEM = 170;
     int16_t         text_x;
     int16_t         text_y;
     uint16_t        text_width;
@@ -140,19 +140,19 @@ static void  ft_draw_text(String output)                                        
 static void ft_draw_cluster_slide(const unsigned char* output)                      // with display refresh: flickers, does NOT invert colours while running 
 {                                                                                   // this function only draws the cluster slides
     display.setFullWindow();
-    display.setRotation(1);
+    display.setRotation(0);
     display.firstPage();
     do
     {
         display.fillScreen(GxEPD_WHITE);
-        display.drawBitmap(0, 0, cluster_number_img, 631, 480, GxEPD_BLACK);
+        display.drawBitmap(0, 0, cluster_number_img, 630, 480, GxEPD_BLACK);
         if (output)
-            display.drawBitmap(631, 0, output, 169, 480, GxEPD_BLACK);
+            display.drawBitmap(630, 0, output, 170, 480, GxEPD_BLACK);
     }
     while (display.nextPage()); 
 }
 
-void  ft_display_cluster_number(uint8_t mode)
+void IRAM_ATTR  ft_display_cluster_number(uint8_t mode)
 {
     switch (mode)
     {
@@ -195,7 +195,7 @@ void  ft_display_cluster_number(uint8_t mode)
     }
 }
 
-bool   ft_clear_display(bool errase_display)                          // flickers
+bool IRAM_ATTR   ft_clear_display(bool errase_display)                          // flickers
 {
     if (errase_display)
     {
