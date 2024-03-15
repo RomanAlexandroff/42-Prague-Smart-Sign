@@ -20,6 +20,7 @@ static void  ft_pathfinder(void)                    // Решаем в како�
 {
     unsigned int  sleep_length;
 
+    sleep_length = 1800000;
     if (rtc_g.exam_state)
         ft_exam_mode(&sleep_length);                // режим Экзамен отвечает за отрезок времени от "1 час до начала экзамена" до "конец экзамена"
     else
