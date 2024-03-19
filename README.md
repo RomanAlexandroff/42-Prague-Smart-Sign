@@ -67,10 +67,11 @@ Please note that while the project strives to provide accurate information, it i
 ## Regards
 
 This project is a group effort of various 42 students with support from the 42 Prague Bocal team. Here they are:
-- raleksan — firmware and electronic hardware developer. Made the idea reality,
-- gsura — motivation supporter and graphics designer. Pitched the idea to Bocal so well they ended up asking for two devices,
-- Cullen — hardware development and 3D printing. Created beautiful and functional incasement for the electronics,
-- arosado- — 42 API expert. Tought how to get the data from the 42 servers.
+- raleksan, 42 Prague — firmware and electronic hardware developer. Made the idea reality,
+- gsura, 42 Prague — idea starter and motivation supporter. Pitched the idea to Bocal so well they ended up asking for two devices,
+- cgray, 42 Prague — hardware development and 3D printing. Created beautiful and functional incasement for the electronics,
+- arosado-, 42 Lisboa — 42 API expert. Tought how to get the data from the 42 servers,
+- jrathelo, 42 Nice — memory wizard. Helped resolve the microcontroller's RAM overflow.
 
 The project is based on Jean-Marc Zingg's [GxEPD2](https://github.com/ZinggJM/GxEPD2) library for e-paper displays.
 
