@@ -11,14 +11,12 @@
 # include "credentials.h"
 
 extern GxEPD2_3C<GxEPD2_750c_Z08, GxEPD2_750c_Z08::HEIGHT/2> display; // GDEY075Z08 800x480
-extern WiFiClientSecure client;
 
 struct RTC_GlobalsManagement {
     bool     eeprom_state;
     bool     warning_active;
     bool     ota_active;
     bool     exam_state;
-    uint8_t  exams_number;
     uint8_t  exam_start_hour;
     uint8_t  exam_start_minutes;
     uint8_t  exam_end_hour;
