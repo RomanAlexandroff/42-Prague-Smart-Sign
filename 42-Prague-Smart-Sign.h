@@ -1,11 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   42-Prague-Smart-Sign.h                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: raleksan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/09 12:59:10 by raleksan          #+#    #+#             */
+/*   Updated: 2024/04/09 12:59:16 by raleksan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef _42_PRAGUE_SMART_SIGN_H
 # define _42_PRAGUE_SMART_SIGN_H
 
 //# define ESP32
-//# define ESP32_S2
-# define ESP32_C3
-//# define XIAO_ESP32C3
+//# define ESP32_S2                                                    // Ai-Thinker ESP32—S2—WROVER—I board
+//# define ESP32_C3                                                    // Ai-Thinker ESP32—C3—1M board 
+# define XIAO_ESP32C3                                                  // Seeed Studio XIAO ESP32—C3 board
 
 # include <Arduino.h>
 # include "LittleFS.h"

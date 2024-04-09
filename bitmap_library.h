@@ -1,21 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   bitmap_library.h                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: raleksan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/09 12:59:51 by raleksan          #+#    #+#             */
+/*   Updated: 2024/04/09 12:59:54 by raleksan         ###   ########.fr       */
+/*                                                                            */
+/*                                                                            */
+/*   IMAGES LIST                    colour        size       location         */
+/*   ==================================================================       */
+/*   cluster_number_img           - black only    630x480    31               */
+/*   default_cluster_icons        - black only    170x480    2414             */
+/*   reserve_note_img             - black only    170x480    3087             */
+/*   intra_error_img              - black only    170x480    3760             */
+/*   secret_expire_img            - black only    170x480    4433             */
+/*   low_battery_img              - black only    170x480    5106             */
+/*   preexam_warning_black        - black side    800x480    5779             */
+/*   preexam_warning_red          - red side      800x480    8792             */
+/*   exam_warning_black           - black side    800x480    11805            */
+/*   exam_warning_red             - red side      800x480    14818            */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef BITMAP_LIBRARY_H
 # define BITMAP_LIBRARY_H
-
-// IMAGES LIST                    colour        size       location
-// ==================================================================
-// cluster_number_img           - black only    630x480    21
-// default_cluster_icons        - black only    170x480    2404
-// reserve_note_img             - black only    170x480    3077
-// intra_error_img              - black only    170x480    3750
-// secret_expire_img            - black only    170x480    4423
-// low_battery_img              - black only    170x480    5096
-// preexam_warning_black        - black side    800x480    5769
-// preexam_warning_red          - red side      800x480    8782
-// exam_warning_black           - black side    800x480    11795
-// exam_warning_red             - red side      800x480    14808
-// ===================================================================
-
 
 // Cluster number — BLACK only, 630x480px
 const unsigned char cluster_number_img [] PROGMEM = {

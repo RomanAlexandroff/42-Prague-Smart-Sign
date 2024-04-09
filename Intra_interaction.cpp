@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Intra_interaction.cpp                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: raleksan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/09 13:01:50 by raleksan          #+#    #+#             */
+/*   Updated: 2024/04/09 13:01:52 by raleksan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "42-Prague-Smart-Sign.h"
 
@@ -112,27 +123,27 @@ bool  ft_fetch_exams(void)
     client1.println();
 
 // READING THE SERVER RESPONSE. EXTRACTING & EVALUATING THE EXAMS INFORMATION
-    server_response = client1.readStringUntil(']');                                                        // забираем в память целиком всё сообщение сервера
+    server_response = client1.readStringUntil(']');
     DEBUG_PRINTF("\n============================== SERVER RESPONSE BEGIN ==============================  \n", "");
     DEBUG_PRINTF("%s\n", server_response.c_str());
     DEBUG_PRINTF("\n=============================== SERVER RESPONSE END ===============================\n\n", "");
-    if (server_response.length() <= 0)                                                                    // если сообщение пустое, то произошла ошибка
+    if (server_response.length() <= 0)
     {
         DEBUG_PRINTF("\nError! Server response to the Exam Time request was not received\n\n", "");
         return (false);
     }
-    if (server_response.indexOf("\"begin_at\":\"") == -1)                                                 // если в сообщении нет упоминания о начале экзамена, то и экзамена сегодня нет
+    if (server_response.indexOf("\"begin_at\":\"") == -1)
     {
         DEBUG_PRINTF("\nEXAMS STATUS: As of now, there are no upcoming exams today\n\n", "");
         rtc_g.exam_status = false;
         return (true);
     }
-    else                                                                                                  // упоминание экзамена нашлось - значит экзамен сегодня будет или уже был
+    else
     {
         i = 0;
-        while (i != -1)                                                                                   // check the server response until there are no instances of "begin_at"
+        while (i != -1)
         {
-            i = server_response.indexOf("\"begin_at\":\"");                                               // find the 1st instance of "begin_at" in the the server response string
+            i = server_response.indexOf("\"begin_at\":\"");
             rtc_g.exam_start_hour = server_response.substring(i + 23, i + 25).toInt() + TIME_ZONE;
             rtc_g.exam_start_minutes = server_response.substring(i + 26, i + 28).toInt();
             i = server_response.indexOf("\"end_at\":\"");
@@ -143,21 +154,21 @@ bool  ft_fetch_exams(void)
             DEBUG_PRINTF("%d0\n", rtc_g.exam_start_minutes);
             DEBUG_PRINTF("-- Ends at %d:", rtc_g.exam_end_hour);
             DEBUG_PRINTF("%d0\n", rtc_g.exam_end_minutes);
-            if (rtc_g.exam_end_hour <= rtc_g.hour)                                                        // checking if this information is about past exam or future exam today
-                server_response = server_response.substring(i + 34);                                      // if about the past exam then delete this information from the string and check next instance of "begin_at" 
+            if (rtc_g.exam_end_hour <= rtc_g.hour)
+                server_response = server_response.substring(i + 34); 
             else
             {
                 DEBUG_PRINTF("\nEXAMS STATUS: Active Exam found!\n\n", "");
                 rtc_g.exam_status = true;
                 return (true);
             }
-            if (server_response.indexOf("\"begin_at\":\"") == -1)                                         // если в оставшейся части сообщения нет начала экзамена, то экзаменов больше нет
+            if (server_response.indexOf("\"begin_at\":\"") == -1)
                 break;
         }
         DEBUG_PRINTF("\nEXAMS STATUS: All the detected exams have already passed.\n\n", "");
-        rtc_g.exam_status = false;                                                                    // all the instances of "begin_at" in the server response were about past exams, so no more exams today
+        rtc_g.exam_status = false;
     }
     client1.stop();
-    return (true);                                                                                         // this means that connection with Intra was successful 
+    return (true);
 }
  

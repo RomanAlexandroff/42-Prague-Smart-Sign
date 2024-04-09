@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   time_utilities.cpp                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: raleksan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/09 13:03:05 by raleksan          #+#    #+#             */
+/*   Updated: 2024/04/09 13:03:07 by raleksan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "42-Prague-Smart-Sign.h"
 
@@ -7,18 +18,18 @@ bool  ft_unix_timestamp_decoder(uint8_t* p_day, uint8_t* p_month, uint16_t* p_ye
         return (false);
     struct tm* time_info = localtime(&rtc_g.secret_expiration);
     *p_day = time_info->tm_mday;
-    *p_month = time_info->tm_mon + 1;                                                              // tm_mon is 0-based, this is why +1
-    *p_year = time_info->tm_year + 1900;                                                           // tm_year represents years since 1900
+    *p_month = time_info->tm_mon + 1;
+    *p_year = time_info->tm_year + 1900;
     return (true);
 }    
 
 int8_t  ft_expiration_counter(void)
 {
-    const int months_days[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};         // Array to store the number of days in each month
+    const int months_days[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     uint8_t   expire_day;
     uint8_t   expire_month;
     uint16_t  expire_year;
-    int       month;                                                                    // Variable to store the total number of days
+    int       month;
 
     if (!ft_unix_timestamp_decoder(&expire_day, &expire_month, &expire_year))
         return (-128);
@@ -62,33 +73,33 @@ bool  ft_get_time(void)
     return (true);
 }
 
-unsigned int  ft_time_till_event(int8_t hours, uint8_t minutes)                  // counts exact time till events with 1 minute precision
+unsigned int  ft_time_till_event(int8_t hours, uint8_t minutes)
 {
     unsigned int result;
 
     result = (hours - rtc_g.hour) * 3600000;
     result += (minutes * 60000) - (rtc_g.minute * 60000);
-    if (result > 86400000)                                                        // нельзя уходить в сон на больше чем на 24 часа
-        result = 86400000;                                                        // такое может быть только из-за програмной ошибки, но лучше подстраховаться
-    if (result < 10)                                                              // нельзя уходить в сон на 0 миллисекунд...
-        result = 10;                                                              // ...иначе микропроцессор из него не проснётся самостоятельно, только с перезагрузкой
+    if (result > 86400000)
+        result = 86400000;
+    if (result < 10)
+        result = 10;
     return (result);
 }
 
-int  ft_time_sync(unsigned int preexam_time)                              // This function time-syncs long cumbersome values in millis into a beautiful
-{                                                                         // round values in minutes without compromising time precision (± 1 second)
-    int minutes;                                                          // Then those beautiful round values may be drawn on the display
+int  ft_time_sync(unsigned int preexam_time)
+{
+    int minutes;
 
     minutes = ceil(preexam_time / 1000);
-    while (minutes % 10 != 0)                                             // this part removes seconds without compromising the time sync
-    {                                                                     // e.g. 58 mins and 48 sec until the exam will get time-syncked into 58 mins
+    while (minutes % 10 != 0)
+    {
         preexam_time = preexam_time - 1000;
         minutes = ceil(preexam_time / 1000);
         ft_delay(1000);
     }
-    minutes = ceil(preexam_time / 60000);                                 // at this point there were no time loss in seconds
-    while (minutes % 10 != 0)                                             // this part removes minutes until there is a round decimal value in minutes
-    {                                                                     // e.g. 58 mins until the exam will get time-syncked into 50 mins left
+    minutes = ceil(preexam_time / 60000);
+    while (minutes % 10 != 0)
+    {
         ft_delay(59990);
         minutes--;
     }

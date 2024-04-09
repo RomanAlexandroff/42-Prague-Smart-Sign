@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   globals.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: raleksan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/09 13:01:26 by raleksan          #+#    #+#             */
+/*   Updated: 2024/04/09 13:01:28 by raleksan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef GLOBALS_H_
 # define GLOBALS_H_
@@ -13,9 +24,9 @@
 # include "credentials.h"
 
 #if defined(ESP32) || defined(ESP32_S2)
-    extern GxEPD2_3C<GxEPD2_750c_Z08, GxEPD2_750c_Z08::HEIGHT/2> display;           // GDEY075Z08 800x480
+    extern GxEPD2_3C<GxEPD2_750c_Z08, GxEPD2_750c_Z08::HEIGHT/2> display;
 # else //ESP32_C3 || XIAO_ESP32C3
-    extern GxEPD2_3C<GxEPD2_750c_Z08, GxEPD2_750c_Z08::HEIGHT> display;             // GDEY075Z08 800x480
+    extern GxEPD2_3C<GxEPD2_750c_Z08, GxEPD2_750c_Z08::HEIGHT> display;
 # endif
 
 extern WiFiClientSecure client;

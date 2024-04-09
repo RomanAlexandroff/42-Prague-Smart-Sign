@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   display_handling.cpp                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: raleksan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/09 13:00:56 by raleksan          #+#    #+#             */
+/*   Updated: 2024/04/09 13:00:57 by raleksan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "42-Prague-Smart-Sign.h"
 
@@ -15,18 +26,17 @@ void  ft_draw_colour_bitmap(const unsigned char* black_image, const unsigned cha
     while (display.nextPage());
 }
 
-static void  ft_draw_text(String output, uint16_t x, uint16_t y)                             // flikers and inverts colours while running
+static void  ft_draw_text(String output, uint16_t x, uint16_t y)
 {
     int16_t         text_box_x;
     int16_t         text_box_y;
     uint16_t        text_width;
     uint16_t        text_height;
 
-    display.setRotation(3);                                                                   // rotate the whole display so the future text faces right
+    display.setRotation(3);
     display.setFont(&FreeSansBold24pt7b);
     display.setTextColor(GxEPD_BLACK);
-//    display.getTextBounds(output, 0, 0, &text_box_x, &text_box_y, &text_width, &text_height);       // check the dimensions of the future text
-    display.setPartialWindow(224, 732, 140, 40);                                                      // create partial update window
+    display.setPartialWindow(224, 732, 140, 40);
     display.firstPage();
     do
     {
@@ -37,13 +47,13 @@ static void  ft_draw_text(String output, uint16_t x, uint16_t y)                
     while (display.nextPage());
 }
 
-static void  ft_draw_exam_start_time(void)                                      // flikers and inverts colours while running
+static void  ft_draw_exam_start_time(void)
 {
     String   text;
-    int16_t  text_x = 27;                                                       // always points to the bottom left corner of the first(!) line of text 
-    int16_t  text_y = 776;                                                      // always points to the bottom left corner of the first(!) line of text
-    int16_t  window_x = 0;                                                      // always points to the top left corner of the window box 
-    int16_t  window_y = 740;                                                    // always points to the top left corner of the window box
+    int16_t  text_x = 27;
+    int16_t  text_y = 776;
+    int16_t  window_x = 0;
+    int16_t  window_y = 740;
     int16_t  window_width = 480;
     int16_t  window_height = 40;
 
@@ -55,8 +65,8 @@ static void  ft_draw_exam_start_time(void)                                      
         text += ":" + String(rtc_g.exam_start_minutes);
     display.setFont(&FreeSansBold24pt7b);
     display.setTextColor(GxEPD_BLACK);
-    display.setRotation(3);                                                          // rotate the whole display so the future text faces right
-    display.setPartialWindow(window_x, window_y, window_width, window_height);       // create partial update window
+    display.setRotation(3);
+    display.setPartialWindow(window_x, window_y, window_width, window_height);
     display.firstPage();
     do
     {
@@ -68,8 +78,8 @@ static void  ft_draw_exam_start_time(void)                                      
     display.powerOff();
 }
 
-static void ft_draw_bitmap_partial_update(const unsigned char* image, uint16_t width, uint16_t height)    // with display refresh: flickers, does NOT invert colours while running 
-{                                                                                                         // this function only draws the cluster slides
+static void ft_draw_bitmap_partial_update(const unsigned char* image, uint16_t width, uint16_t height)
+{
     display.setRotation(0);
     display.setPartialWindow(630, 0, width, height);
     display.firstPage();
@@ -79,11 +89,11 @@ static void ft_draw_bitmap_partial_update(const unsigned char* image, uint16_t w
         display.drawBitmap(630, 0, image, width, height, GxEPD_BLACK);
     }
     while (display.nextPage());
-    display.powerOff();                                                                                  // force the display to power off to clean its buffer
+    display.powerOff();
 }
 
-static void ft_draw_bitmap_full_update(const unsigned char* image, uint16_t width, uint16_t height)     // with display refresh: flickers, does NOT invert colours while running 
-{                                                                                                       // this function only draws the cluster slides
+static void ft_draw_bitmap_full_update(const unsigned char* image, uint16_t width, uint16_t height)
+{
     display.setRotation(0);
     display.setFullWindow();
     display.firstPage();
@@ -97,23 +107,23 @@ static void ft_draw_bitmap_full_update(const unsigned char* image, uint16_t widt
 
 void IRAM_ATTR  ft_display_cluster_number(uint8_t mode)
 {
-    RTC_DATA_ATTR static bool    display_cluster;                                                 // По-умолчанию, компилятор всегда инициализирует static bool переменные значением false
-    RTC_DATA_ATTR static uint8_t flag;                                                            // display update flag. Prevents image that is already on the screen to be drawn on the screen again.
+    RTC_DATA_ATTR static bool    display_cluster;
+    RTC_DATA_ATTR static uint8_t flag;
 
     if (!display_cluster)
     {
         ft_draw_bitmap_full_update(cluster_number_img, 630, 480);
         display_cluster = true;
-        flag = CLUSTER;                                                                           // just in case reset the blocking flag to make sure any image or text could be drawn
+        flag = CLUSTER;
     }
     switch (mode)
     {
-        case DEFAULT:                                                                             // program requires to draw default cluster icons on the display
-            if (flag == DEFAULT)                                                                  // first chech if they have not been already drown on the display
-                return;                                                                           // if the default icons are already on the display, exit the function
-            ft_draw_bitmap_partial_update(default_cluster_icons, 170, 480);                       // if they are not, draw the default icons on the display and...
-            flag = DEFAULT;                                                                       // ...set the flag, so the program knows what is already on the display
-            break;                                                                                // setting the flag here also automatically removes blocking flags from other images
+        case DEFAULT:
+            if (flag == DEFAULT)
+                return;
+            ft_draw_bitmap_partial_update(default_cluster_icons, 170, 480);
+            flag = DEFAULT;
+            break;
         case INTRA_ERROR:
             if (flag == INTRA_ERROR)
                 return;
@@ -174,7 +184,7 @@ void IRAM_ATTR  ft_display_cluster_number(uint8_t mode)
     }
 }
 
-bool IRAM_ATTR   ft_clear_display(bool errase_display)                          // flickers
+bool IRAM_ATTR   ft_clear_display(bool errase_display)
 {
     if (errase_display)
     {

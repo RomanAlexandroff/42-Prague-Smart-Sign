@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   constants.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: raleksan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/09 13:00:36 by raleksan          #+#    #+#             */
+/*   Updated: 2024/04/09 13:00:37 by raleksan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef CONSTANTS_H
 # define CONSTANTS_H
@@ -7,48 +18,48 @@
 # define MAX_STATE               "/battery_max.txt"
 # define MIN_STATE               "/battery_min.txt"
 # define BATTERY_DEFAULT_MAX     4094
-# define BATTERY_DEFAULT_MIN     2000                                  // see ReadMe regarding this constant
-# define BATTERY_DEFAULT_COEFF   12.06                                 // see ReadMe regarding this constant
-# define CONNECT_TIMEOUT         5                                     // WiFi timeout, in seconds. Increase if cannot connect
-# define WAIT_FOR_OTA_LIMIT      3600000                               // how long to wait for OTA to begin (in milliseconds, 1 HOUR)
-# define DEAD_BATTERY_SLEEP      7200ul                                // in milliseconds, 2 HOURS
+# define BATTERY_DEFAULT_MIN     2000
+# define BATTERY_DEFAULT_COEFF   12.06
+# define CONNECT_TIMEOUT         5
+# define WAIT_FOR_OTA_LIMIT      3600000ul
+# define DEAD_BATTERY_SLEEP      7200000ul
 /*
-# define BUTTON_THRESHOLD        5000                                  // lower the value, more sensitive the buttons
+# define BUTTON_THRESHOLD        5000
 # define WARNING_BUTTON          1
 # define DIAGNOSTICS_BUTTON      2
 # define OTA_BUTTON              3
-# define BUTTON_4                4                                     // for future development
+# define BUTTON_4                4
 */
 # if defined(ESP32) || defined(ESP32_S2)
     #define BUSY_PIN             7
-    #define RST_PIN              8                                     // also known as RES pin
+    #define RST_PIN              8
     #define DC_PIN               9
-    #define SPI_SS_PIN           10                                    // also known as CS pin
-    #define SPI_MOSI_PIN         11                                    // also known as SDA pin, as SPI_D pin or as DIN pin
-    #define SPI_SCK_PIN          12                                    // also known as SCL pin
-    #define SPI_MISO_PIN         -1                                    // NOT USED IN THIS PROJECT
+    #define SPI_SS_PIN           10
+    #define SPI_MOSI_PIN         11
+    #define SPI_SCK_PIN          12
+    #define SPI_MISO_PIN         -1
 # elif defined(ESP32_C3)
     #define BUSY_PIN             19
-    #define RST_PIN              18                                    // also known as RES pin
+    #define RST_PIN              18
     #define DC_PIN               0
-    #define SPI_SS_PIN           10                                    // also known as CS pin
-    #define SPI_MOSI_PIN         7                                     // also known as SDA pin, as SPI_D pin or as DIN pin
-    #define SPI_SCK_PIN          6                                     // also known as SCL pin
-    #define SPI_MISO_PIN         -1                                    // NOT USED IN THIS PROJECT
+    #define SPI_SS_PIN           10
+    #define SPI_MOSI_PIN         7
+    #define SPI_SCK_PIN          6
+    #define SPI_MISO_PIN         -1
 # elif defined(XIAO_ESP32C3)
     #define BUSY_PIN             D4
-    #define RST_PIN              D5                                    // also known as RES pin
+    #define RST_PIN              D5
     #define DC_PIN               D6
-    #define SPI_SS_PIN           D7                                    // also known as CS pin
-    #define SPI_SCK_PIN          D8                                    // also known as SCL pin
-    #define SPI_MISO_PIN         -1                                    // NOT USED IN THIS PROJECT
-    #define SPI_MOSI_PIN         D10                                   // also known as SDA pin, as SPI_D pin or as DIN pin
+    #define SPI_SS_PIN           D7
+    #define SPI_SCK_PIN          D8
+    #define SPI_MISO_PIN         -1
+    #define SPI_MOSI_PIN         D10
 # endif
 # define GxEPD2_DISPLAY_CLASS    GxEPD2_3C
 # define GxEPD2_DRIVER_CLASS     GxEPD2_750c_Z08
 # define GxEPD2_3C_IS_GxEPD2_3C  true
 # define IS_GxEPD2_3C(x)         IS_GxEPD(GxEPD2_3C_IS_, x)
-# define MAX_DISPLAY_BUFFER_SIZE 96124ul                               // recomended buffer size for 3-colour 800x480 e-paper display — 96124 Bytes
+# define MAX_DISPLAY_BUFFER_SIZE 96124ul
 # define MAX_HEIGHT(EPD)         (EPD::HEIGHT <= (MAX_DISPLAY_BUFFER_SIZE / 2) / (EPD::WIDTH / 8) ? EPD::HEIGHT : (MAX_DISPLAY_BUFFER_SIZE / 2) / (EPD::WIDTH / 8))
 
 # define CLUSTER                 0

@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   telegram_bot.cpp                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: raleksan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/09 13:02:56 by raleksan          #+#    #+#             */
+/*   Updated: 2024/04/09 13:02:57 by raleksan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "42-Prague-Smart-Sign.h"
 
@@ -81,7 +92,7 @@ static void ft_reply_machine(String text)
     }
 }
 
-static void  ft_new_messages(short message_count)                                // function to handle what happens when you receive new messages
+static void  ft_new_messages(short message_count)
 {
     uint8_t i;
     String  text;
