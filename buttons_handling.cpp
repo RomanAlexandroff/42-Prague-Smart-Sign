@@ -1,4 +1,4 @@
-
+/*
 #include "42-Prague-Smart-Sign.h"
 
 void IRAM_ATTR  isr_warning(void)
@@ -60,4 +60,4 @@ void  ft_buttons_init(void)
     else
         DEBUG_PRINTF("Wakeup not by touchpad\n\n", "");
 }
- 
+ */

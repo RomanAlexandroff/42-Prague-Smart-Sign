@@ -4,24 +4,25 @@
 void  setup(void)                                   // Настраиваем всё, что нужно при любом включении
 {
     #ifdef DEBUG
-        Serial.begin(115200);
-        ft_delay(50);
-        DEBUG_PRINTF("\n\nDEVICE START\nversion %f\n", float(SOFTWARE_VERSION));
+        ft_serial_init();
     #endif
-    ft_eeprom_init();                               // активизируем ячейку памяти для данных состояния аккумулятора
-    ft_battery_init();                              // активируем измерение заряда аккумулятора
+    ft_spiffs_init();
+    #if !defined(XIAO_ESP32C3)
+        ft_battery_init();                          // активируем измерение заряда аккумулятора
+    #endif
     ft_display_init();                              // активируем связь с дисплеем
     ft_power_down_recovery();                       // проверяем от чего проснулись и реагируем соответственно
-    ft_battery_check();                             // проверяем актуальный заряд аккумулятора
-    ft_buttons_init();                              // активируем кнопки управления
+    #if !defined(XIAO_ESP32C3)
+        ft_battery_check();                             // проверяем актуальный заряд аккумулятора
+    #endif
+//    ft_buttons_init();                              // активируем кнопки управления
 }
 
 static void  ft_pathfinder(void)                    // Решаем в каком режиме будем работать: Экзамен или Номер Кластера
 {
     unsigned int  sleep_length;
 
-    sleep_length = 1800000;
-    if (rtc_g.exam_state)
+    if (rtc_g.exam_status)
         ft_exam_mode(&sleep_length);                // режим Экзамен отвечает за отрезок времени от "1 час до начала экзамена" до "конец экзамена"
     else
         ft_cluster_number_mode(&sleep_length);      // за всё остальное время отвечает режим Номер Кластера
