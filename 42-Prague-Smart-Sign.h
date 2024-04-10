@@ -18,26 +18,27 @@
 //# define ESP32_C3                                                    // Ai-Thinker ESP32—C3—1M board 
 # define XIAO_ESP32C3                                                  // Seeed Studio XIAO ESP32—C3 board
 
-# include <Arduino.h>
-# include "LittleFS.h"
-# include <WiFiUdp.h>
-# include <ESPmDNS.h>
-# include <ArduinoOTA.h>
-# include <time.h>
-# include <stdio.h>
-# include <stdint.h>
-# include <esp_system.h>
-# include "esp_sleep.h"
-# include <driver/adc.h>
-# include "bitmap_library.h"
-# include "globals.h"
-
 # define DEBUG                                                         // comment out this line to turn off Serial output
 # ifdef DEBUG
     #define DEBUG_PRINTF(x, y) Serial.printf(x, y)
 # else
     #define DEBUG_PRINTF(x, y)
 # endif
+
+# include <Arduino.h>
+# include <LittleFS.h>
+# include <WiFiUdp.h>
+# include <ESPmDNS.h>
+# include <ArduinoOTA.h> 
+
+# include <time.h>
+# include <stdio.h>
+# include <stdint.h>
+# include <esp_system.h>
+# include <esp_sleep.h>
+# include <driver/adc.h>
+# include "bitmap_library.h"
+# include "globals.h"
 
 void                  ft_serial_init(void);
 void                  ft_spiffs_init(void);

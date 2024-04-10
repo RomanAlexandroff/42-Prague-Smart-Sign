@@ -11,7 +11,6 @@
 - [License](#license)
 - [Regards](#regards)
 - [Contributing](#contributing)
-- [Example of the credentials.h File](#exampleofthecredentials.hfile)
 - [Calculating Default Constants for the Battery Charge Function](#calculatingdefaultconstantsforthebatterychargefunction)
 - [Conclusion](#conclusion)
 
@@ -46,15 +45,15 @@ The device operates fully automatically and does not require any input from scho
 ## Components
 
 The following components are used in the 42 Prague Smart Sign:
-1. ESP32–S2 Wi-Fi module: Provides connectivity to the internet for retrieving exam dates and updating the display.
-2. 7.5'' e-paper black/red/white SPI display: A high-resolution display that allows for clear and easy-to-read information.
-3. 4000mAh Li-ion battery: Powers the device and ensures continuous operation.
-4. Battery management and charging circuit: Manages the battery charging process and protects it from overcharging or discharging.
+1. Seeed Studio XIAO ESP32C3 Wi-Fi module: provides connectivity to the Internet for retrieving exam dates, updates the display, takes care of the battery with its battery management and charging circuit — all of that while rocking modern USB-C port for charging and easy software updating.
+2. Good Display GDEY075Z08 7.5" 800x480 ePaper black/red/white SPI display: a high-resolution display that allows for clear and easy-to-read information.
+3. Good Display DESPI-C02 universal SPI e-Paper adapter: transforms display's FPC interface into microcontroller's SPI.
+4. 4000mAh Li-ion battery with overcharge and undercharge protection: powers the device and ensures continuous operation.
 
 
 ## Maintenance
 
-The 42 Prague Smart Sign is designed with low-maintenance in mind. The battery capacity of 4000mAh ensures long periods of operation before requiring a recharge, typically once every few months. To recharge the device, it needs to be connected to a power source using any microUSB 5V power adapter. During the recharge, the Sign remains completely operational.
+The 42 Prague Smart Sign is designed with low-maintenance in mind. The battery capacity of 4000mAh ensures long periods of operation before requiring a recharge, typically once every few months. To recharge the device, it needs to be connected to a power source using any USB-C 5V power adapter. During the recharge, the Sign remains completely operational.
 
 
 ## License
@@ -75,8 +74,6 @@ This project is a group effort of various 42 students with support from the 42 P
 
 The project is based on Jean-Marc Zingg's [GxEPD2](https://github.com/ZinggJM/GxEPD2) library for e-paper displays.
 
-The OTA updating functionality added using the native Arduino OTA library.
-
 
 ## Contributing
 
@@ -85,33 +82,12 @@ Contributions to the 42 Prague Smart Sign project are welcome! If you have any i
 When contributing, please adhere to the existing code style and follow the established guidelines. Clearly describe your changes and provide any necessary documentation or tests.
 
 
-## Example of the credentials.h File
-
-```  
-#ifndef CREDENTIALS_H
-# define CREDENTIALS_H
-
-# define SECRET          "x-xxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-# define UID             "x-xxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-# define CAMPUS_ID       "56"                // 42 Prague
-# define CLUSTER_ID      "xx"                // your cluster number
-
-# define TIME_ZONE       2                   // according to the GMT standart
-
-# define WIFI_SSID       "wifi_name"
-# define WIFI_PASSWORD   "wifi_password"
-
-#endif
-```
- 
 ## Calculating Default Constants for the Battery Charge Function
 
 You will need to check the following little utility:
 https://github.com/RomanAlexandroff/ESP-Battery-Charge-Utility
       
 It was designed to be a universal solution for battery charge level detection in ESP-based projects and has all the instructions inside of it.
-
-You may skip this step and use the default constants provided in the header file. The battery measuremet will autocalibrate itself after a few battery charge-discharge cycles. But expect to see inaccurate readings for a while.
 
 
 ## Conclusion

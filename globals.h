@@ -17,7 +17,7 @@
 # include <Wire.h>
 # include <GxEPD2_BW.h>
 # include <GxEPD2_3C.h>
-# include <Fonts/FreeSansBold24pt7b.h>
+# include "Fonts/FreeSansBold24pt7b.h"
 # include <WiFi.h>
 # include <WiFiClientSecure.h>
 # include <UniversalTelegramBot.h>
