@@ -30,7 +30,7 @@
 # define OTA_BUTTON              3
 # define BUTTON_4                4
 */
-# if defined(ESP32) || defined(ESP32_S2)
+# if defined(ESP32_ORIGINAL) || defined(ESP32_S2)
     #define BUSY_PIN             7
     #define RST_PIN              8
     #define DC_PIN               9

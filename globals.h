@@ -23,7 +23,7 @@
 # include <UniversalTelegramBot.h>
 # include "credentials.h"
 
-#if defined(ESP32) || defined(ESP32_S2)
+#if defined(ESP32_ORIGINAL) || defined(ESP32_S2)
     extern GxEPD2_3C<GxEPD2_750c_Z08, GxEPD2_750c_Z08::HEIGHT/2> display;
 # else //ESP32_C3 || XIAO_ESP32C3
     extern GxEPD2_3C<GxEPD2_750c_Z08, GxEPD2_750c_Z08::HEIGHT> display;
