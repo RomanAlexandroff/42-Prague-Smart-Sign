@@ -35,7 +35,7 @@ static void  ft_pathfinder(void)
 
     if (rtc_g.exam_status)
         ft_exam_mode(&sleep_length);
-    else
+    if (!rtc_g.exam_status)
         ft_cluster_number_mode(&sleep_length);
     ft_go_to_sleep(sleep_length);
     DEBUG_PRINTF("  ---- This message will never be printed out", "");
