@@ -80,7 +80,7 @@ void  ft_exam_mode(unsigned int* p_sleep_length)
         preexam_check = true;
     }
     if (!ft_get_time())
-        rtc_g.exam_start_hour += 1;
+        rtc_g.hour += 1;
     preexam_time = ft_time_till_event(rtc_g.exam_start_hour, rtc_g.exam_start_minutes);
     if (preexam_time > 4200000)
         preexam_time = 3600000;
