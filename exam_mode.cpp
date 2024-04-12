@@ -50,7 +50,7 @@ static void ft_preexam_warning(unsigned int* p_preexam_time)
     int minutes;
 
     minutes = ft_time_sync(*p_preexam_time);
-    ft_draw_colour_bitmap(preexam_warning_black, preexam_warning_red);
+    ft_draw_colour_bitmap(preexam_50mins, preexam_warning_red);
     while (minutes > 10)
     {
 //        ft_display_timer(minutes);
