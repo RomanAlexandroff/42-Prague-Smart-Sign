@@ -49,19 +49,59 @@ static void ft_preexam_warning(unsigned int* p_preexam_time)
 {
     int minutes;
 
+    
     minutes = ft_time_sync(*p_preexam_time);
-    ft_draw_colour_bitmap(preexam_50mins, preexam_warning_red);
-    while (minutes > 10)
+    if (minutes == 50)
     {
-//        ft_display_timer(minutes);
+        ft_draw_colour_bitmap(preexam_50mins, preexam_warning_red);
         ft_delay(600000);
         minutes -= 10;
     }
-    while (minutes > 0)
+    if (minutes == 40)
     {
-//        ft_display_timer(minutes);
-        ft_delay(60000);
-        minutes -= 1;
+        ft_draw_colour_bitmap(preexam_50mins, preexam_warning_red);
+        ft_delay(600000);
+        minutes -= 10;
+    }
+    if (minutes == 30)
+    {
+        ft_draw_colour_bitmap(preexam_25mins, preexam_warning_red);
+        ft_delay(600000);
+        minutes -= 10;
+    }
+    if (minutes == 20)
+    {
+        ft_draw_colour_bitmap(preexam_25mins, preexam_warning_red);
+        ft_delay(600000);
+        minutes -= 10;
+    }
+    if (minutes == 10)
+    {
+        ft_draw_colour_bitmap(preexam_5mins, preexam_warning_red);
+        ft_delay(540000);
+    }
+    *p_preexam_time = 0;
+
+
+
+
+
+    if (minutes == 60 || minutes == 50)
+    {
+        ft_draw_colour_bitmap(preexam_50mins, preexam_warning_red);
+        ft_delay((minutes - 40) * 1000);
+        minutes = 40;
+    }
+    if (minutes == 40 || minutes == 30 || minutes == 20)
+    {
+        ft_draw_colour_bitmap(preexam_25mins, preexam_warning_red);
+        ft_delay((minutes - 10) * 1000);
+        minutes = 10;
+    }
+    if (minutes == 10)
+    {
+        ft_draw_colour_bitmap(preexam_5mins, preexam_warning_red);
+        ft_delay(480000);
     }
     *p_preexam_time = 0;
 }
