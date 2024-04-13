@@ -30,23 +30,27 @@
 # define OTA_BUTTON              3
 # define BUTTON_4                4
 */
-# if defined(ESP32_ORIGINAL) || defined(ESP32_S2)
+// Uncomment for ESP32 or ESP32_S2
+/*
     #define BUSY_PIN             7
     #define RST_PIN              8
     #define DC_PIN               9
     #define SPI_SS_PIN           10
     #define SPI_MOSI_PIN         11
     #define SPI_SCK_PIN          12
-    #define SPI_MISO_PIN         -1
-# elif defined(ESP32_C3)
+    #define SPI_MISO_PIN         -1 */
+
+// Uncomment for ESP32_C3
+/*
     #define BUSY_PIN             19
     #define RST_PIN              18
     #define DC_PIN               0
     #define SPI_SS_PIN           10
     #define SPI_MOSI_PIN         7
     #define SPI_SCK_PIN          6
-    #define SPI_MISO_PIN         -1
-# elif defined(XIAO_ESP32C3)
+    #define SPI_MISO_PIN         -1 */
+
+// Uncomment for XIAO_ESP32C3
     #define BUSY_PIN             D4
     #define RST_PIN              D5
     #define DC_PIN               D6
@@ -54,7 +58,7 @@
     #define SPI_SCK_PIN          D8
     #define SPI_MISO_PIN         -1
     #define SPI_MOSI_PIN         D10
-# endif
+
 # define GxEPD2_DISPLAY_CLASS    GxEPD2_3C
 # define GxEPD2_DRIVER_CLASS     GxEPD2_750c_Z08
 # define GxEPD2_3C_IS_GxEPD2_3C  true

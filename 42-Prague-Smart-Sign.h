@@ -13,7 +13,7 @@
 #ifndef _42_PRAGUE_SMART_SIGN_H
 # define _42_PRAGUE_SMART_SIGN_H
 
-//# define ESP32_ORIGINAL
+//# define ESP32_BOARD
 //# define ESP32_S2                                                    // Ai-Thinker ESP32—S2—WROOM—I board
 //# define ESP32_C3                                                    // Ai-Thinker ESP32—C3—1M board 
 # define XIAO_ESP32C3                                                  // Seeed Studio XIAO ESP32—C3 board
@@ -30,7 +30,6 @@
 # include <WiFiUdp.h>
 # include <ESPmDNS.h>
 # include <ArduinoOTA.h> 
-
 # include <time.h>
 # include <stdio.h>
 # include <stdint.h>

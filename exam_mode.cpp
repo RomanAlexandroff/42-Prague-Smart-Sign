@@ -49,43 +49,7 @@ static void ft_preexam_warning(unsigned int* p_preexam_time)
 {
     int minutes;
 
-    
     minutes = ft_time_sync(*p_preexam_time);
-    if (minutes == 50)
-    {
-        ft_draw_colour_bitmap(preexam_50mins, preexam_warning_red);
-        ft_delay(600000);
-        minutes -= 10;
-    }
-    if (minutes == 40)
-    {
-        ft_draw_colour_bitmap(preexam_50mins, preexam_warning_red);
-        ft_delay(600000);
-        minutes -= 10;
-    }
-    if (minutes == 30)
-    {
-        ft_draw_colour_bitmap(preexam_25mins, preexam_warning_red);
-        ft_delay(600000);
-        minutes -= 10;
-    }
-    if (minutes == 20)
-    {
-        ft_draw_colour_bitmap(preexam_25mins, preexam_warning_red);
-        ft_delay(600000);
-        minutes -= 10;
-    }
-    if (minutes == 10)
-    {
-        ft_draw_colour_bitmap(preexam_5mins, preexam_warning_red);
-        ft_delay(540000);
-    }
-    *p_preexam_time = 0;
-
-
-
-
-
     if (minutes == 60 || minutes == 50)
     {
         ft_draw_colour_bitmap(preexam_50mins, preexam_warning_red);

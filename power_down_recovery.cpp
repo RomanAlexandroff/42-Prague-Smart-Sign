@@ -75,7 +75,7 @@ void  ft_power_down_recovery(void)
             DEBUG_PRINTF("\nReset reason: Panic/exception reset\n", "");
             break;
     }
-    #if defined(ESP32_ORIGINAL) || defined(ESP32_S2)
+    #if defined(ESP32_BOARD) || defined(ESP32_S2)
         wakeup_reason = esp_sleep_get_wakeup_cause();
         switch (wakeup_reason)
         {
