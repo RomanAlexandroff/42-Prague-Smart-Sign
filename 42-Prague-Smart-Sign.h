@@ -56,6 +56,7 @@ void IRAM_ATTR        ft_ota_init(void);
 static void IRAM_ATTR ft_ota_waiting_loop(void);
 void                  ft_go_to_sleep(uint64_t time_in_millis);
 void IRAM_ATTR        ft_delay(uint64_t time_in_millis);
+int16_t               ft_checksum(String input, int16_t checksum);
 void                  ft_wifi_connect(void);
 int8_t                ft_expiration_counter(void);
 bool                  ft_unix_timestamp_decoder(uint8_t* p_day, uint8_t* p_month, uint16_t* p_year);

@@ -46,6 +46,44 @@ void  ft_wifi_connect(void)
         WiFi.reconnect();
 }
 
+int16_t ft_checksum(String input, int16_t checksum)
+{
+    const char *str;
+    uint8_t    i;
+    int16_t    result;
+
+    i = 0;
+    result = 0;
+    str = input.c_str();
+    if (!str)
+    {
+        DEBUG_PRINTF("\n[CHECKSUM] Test canceled. No input was provided.\n", "");
+        return (-1);
+    }
+    while (str[i])
+    {
+        result += str[i];
+        i++;
+    }
+    if (checksum && checksum == result)
+    {
+        DEBUG_PRINTF("\n[CHECKSUM] Test successfully passed.\n", "");
+        return (1);
+    }
+    if (checksum && checksum != result)
+    {
+        DEBUG_PRINTF("\n[CHECKSUM] Data corruption detected!\n", "");
+        return (0);
+    }
+    if (!checksum)
+    {
+        DEBUG_PRINTF("\n[CHECKSUM] New checksum was successfully generated.\n", "");
+        return (result);
+    }
+    DEBUG_PRINTF("\n[CHECKSUM] Unknown error.\n", "");
+    return (-1);
+}
+
 void  ft_serial_init(void)
 {
     uint8_t i;

@@ -16,10 +16,11 @@ String  ft_compose_message(uint8_t subject, int8_t days_left)
 {
     String  output;
 
-    output = "Dear User, I need your assistance! My ";
+    output = "Dear " + rtc_g.from_name;
+    output += ", I need your assistance! ";
     if (subject == SECRET_EXPIRED)
     {
-        output += "SECRET token ";
+        output += "My SECRET token ";
         if (days_left > 1)
             output += "expires in " + String(days_left) + " days. ";
         if (days_left == 1)
@@ -35,9 +36,17 @@ String  ft_compose_message(uint8_t subject, int8_t days_left)
         output += "/s-xxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n\n";
         output += "After it is done, I will leave you in pease for another month =)";
     }
+    if (subject == SECRET_CORRUPTED)
+    {
+        output += "I detected that the SECRET token in my memory has been corrupted. ";
+        output += "And now I really need you to send it to me again. ";
+        output += "You do not have to generate a new one if the old one is still good. ";
+        output += "Just don't forget to start the message with a forward slash (/). ";
+        output += "Sorry for that! I very appreciate your help!";
+    }
     if (subject == LOW_BATTERY)
     {
-        output += "battery is low. I am currently sitting on " + String(g.battery);
+        output += "My battery is low. I am currently sitting on " + String(g.battery);
         output += "% and it keeps on draining. Please, charge me when you have time.";
     }
     return (output);
@@ -78,6 +87,7 @@ static void ft_reply_machine(String text)
         {
             rtc_g.Secret = text;
             ft_write_spiffs_file("/secret.txt", text);
+            rtc_g.secret_checksum = ft_checksum(rtc_g.Secret, 0);
             message = "Accepted!\nThe SECRET token has been renewed.\n\n";
             message += "Current token now is:\n" + rtc_g.Secret;
             bot.sendMessage(rtc_g.chat_id, message, "");
@@ -96,7 +106,6 @@ static void  ft_new_messages(short message_count)
 {
     uint8_t i;
     String  text;
-    String  from_name;
 
     i = 0;
     DEBUG_PRINTF("\nHandling new Telegram messages\n", "");
@@ -106,8 +115,8 @@ static void  ft_new_messages(short message_count)
         DEBUG_PRINTF("Handling loop iterations: i = %d\n", i);
         rtc_g.chat_id = String(bot.messages[i].chat_id);
         text = bot.messages[i].text;
-        from_name = bot.messages[i].from_name;
-        DEBUG_PRINTF("%s says: ", from_name.c_str());
+        rtc_g.from_name = bot.messages[i].from_name;
+        DEBUG_PRINTF("%s says: ", rtc_g.from_name.c_str());
         DEBUG_PRINTF("%s\n\n", text.c_str());
         ft_reply_machine(text);
         i++;

@@ -30,7 +30,8 @@
 # define OTA_BUTTON              3
 # define BUTTON_4                4
 */
-// Uncomment for ESP32 or ESP32_S2
+
+// Uncomment for ESP32 or ESP32—S2—WROOM-I
 /*
     #define BUSY_PIN             7
     #define RST_PIN              8
@@ -40,7 +41,7 @@
     #define SPI_SCK_PIN          12
     #define SPI_MISO_PIN         -1 */
 
-// Uncomment for ESP32_C3
+// Uncomment for ESP32—C3—1M
 /*
     #define BUSY_PIN             19
     #define RST_PIN              18
@@ -50,7 +51,7 @@
     #define SPI_SCK_PIN          6
     #define SPI_MISO_PIN         -1 */
 
-// Uncomment for XIAO_ESP32C3
+// Uncomment for XIAO ESP32C3
     #define BUSY_PIN             D4
     #define RST_PIN              D5
     #define DC_PIN               D6
@@ -70,13 +71,14 @@
 # define DEFAULT                 1
 # define INTRA_ERROR             2
 # define SECRET_EXPIRED          3
-# define EXAM_DAY                4
-# define LOW_BATTERY             5
-# define OTA_WAITING             6
-# define OTA_UPDATING            7
-# define OTA_SUCCESS             8
-# define OTA_FAIL                9
-# define OTA_CANCELED            10
+# define SECRET_CORRUPTED        4
+# define EXAM_DAY                5
+# define LOW_BATTERY             6
+# define OTA_WAITING             7
+# define OTA_UPDATING            8
+# define OTA_SUCCESS             9
+# define OTA_FAIL                10
+# define OTA_CANCELED            11
 
 #endif
  
