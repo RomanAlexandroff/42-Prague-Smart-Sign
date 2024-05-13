@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   Intra_interaction.cpp                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raleksan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:01:50 by raleksan          #+#    #+#             */
 /*   Updated: 2024/04/09 13:01:52 by raleksan         ###   ########.fr       */
@@ -73,6 +73,13 @@ bool  ft_fetch_exams(void)
     if (i == -1)
     {
         DEBUG_PRINTF("\nError! Server response came without the Access Token\n\n", "");
+        if (!ft_checksum(rtc_g.Secret, rtc_g.secret_checksum))
+        {
+            DEBUG_PRINTF("The error occured due to corrupted Secret token. Resolving...\n\n", "");
+            ft_data_restore(rtc_g.Secret, rtc_g.secret_checksum);
+        }
+        else
+            DEBUG_PRINTF("The error occured due to unknown reason.\n\n", "");
         return (false);
     }
     token = server_response.substring(i + 17, i + 81);

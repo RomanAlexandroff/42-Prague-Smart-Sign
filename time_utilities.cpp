@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   time_utilities.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raleksan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:03:05 by raleksan          #+#    #+#             */
 /*   Updated: 2024/04/09 13:03:07 by raleksan         ###   ########.fr       */

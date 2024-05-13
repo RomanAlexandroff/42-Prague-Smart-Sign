@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   bitmap_library.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raleksan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 12:59:51 by raleksan          #+#    #+#             */
 /*   Updated: 2024/04/09 12:59:54 by raleksan         ###   ########.fr       */

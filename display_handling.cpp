@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   display_handling.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raleksan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:00:56 by raleksan          #+#    #+#             */
 /*   Updated: 2024/04/09 13:00:57 by raleksan         ###   ########.fr       */

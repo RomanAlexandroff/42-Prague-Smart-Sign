@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   42-Prague-Smart-Sign.ino                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raleksan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 12:59:10 by raleksan          #+#    #+#             */
 /*   Updated: 2024/04/09 12:59:16 by raleksan         ###   ########.fr       */
@@ -18,14 +18,10 @@ void  setup(void)
         ft_serial_init();
     #endif
     ft_spiffs_init();
-    #if !defined(XIAO_ESP32C3)
-        ft_battery_init();
-    #endif
+    ft_battery_init();
     ft_display_init();
     ft_power_down_recovery();
-    #if !defined(XIAO_ESP32C3)
-        ft_battery_check();
-    #endif
+    ft_battery_check();
 //    ft_buttons_init();
 }
 

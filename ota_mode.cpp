@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ota_mode.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raleksan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:02:05 by raleksan          #+#    #+#             */
 /*   Updated: 2024/04/09 13:02:10 by raleksan         ###   ########.fr       */
@@ -32,7 +32,7 @@ static void IRAM_ATTR ft_ota_waiting_loop(void)
             return;
         }
     }
-    DEBUG_PRINTF("\nOTA canceled without an update: AUTOMATIC TIME OUT\n", "");
+    DEBUG_PRINTF("\nOTA canceled without an update: AUTOMATIC TIME-OUT\n", "");
 }
 
 void IRAM_ATTR  ft_ota_init(void)
@@ -44,7 +44,7 @@ void IRAM_ATTR  ft_ota_init(void)
     uint8_t     mac[6];
 
     ssid = WiFi.SSID().c_str();
-    nameprefix = "42 Prague Smart Sign";
+    nameprefix = DEVICE_NAME;
     maxlen = strlen(nameprefix) + 7;
     fullhostname = new char[maxlen];
     WiFi.macAddress(mac);

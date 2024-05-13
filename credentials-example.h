@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   credentials.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raleksan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:00:46 by raleksan          #+#    #+#             */
 /*   Updated: 2024/04/09 13:00:48 by raleksan         ###   ########.fr       */
@@ -31,13 +31,14 @@
 #ifndef CREDENTIALS_H
 # define CREDENTIALS_H
 
-# define BOT_TOKEN       "xxxxxxxxxx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"       // Telegram Bot
+# define DEVICE_NAME     "42 Smart Sign"     // for OTA updates
 
+# define BOT_TOKEN       "xxxxxxxxxx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"       // Telegram Bot
 # define SECRET          "x-xxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 # define UID             "x-xxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
 # define CAMPUS_ID       "xx"                // your campus number on Intra
 # define CLUSTER_ID      "xx"
-
 # define TIME_ZONE       1                   // your campus time zone according to the GMT standart
 
 # define WIFI_SSID       "your_campus_wifi_name"

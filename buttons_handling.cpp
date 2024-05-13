@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   buttons_handling.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raleksan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:00:13 by raleksan          #+#    #+#             */
 /*   Updated: 2024/04/09 13:00:15 by raleksan         ###   ########.fr       */

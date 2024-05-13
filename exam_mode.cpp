@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   exam_mode.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raleksan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:01:07 by raleksan          #+#    #+#             */
 /*   Updated: 2024/04/09 13:01:09 by raleksan         ###   ########.fr       */

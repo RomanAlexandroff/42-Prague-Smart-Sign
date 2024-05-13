@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   cluster_number_mode.cpp                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raleksan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:00:25 by raleksan          #+#    #+#             */
 /*   Updated: 2024/04/09 13:00:27 by raleksan         ###   ########.fr       */
@@ -47,7 +47,7 @@ void  ft_cluster_number_mode(unsigned int* p_sleep_length)
         DEBUG_PRINTF("Fetching exams data — try #%d\n\n", i + 1);
         intra_connected = ft_fetch_exams();
         i++;
-        if (!intra_connected)
+        if (!intra_connected && i < 3)
             DEBUG_PRINTF("\nRetrying in %d minutes\n\n", i * 5);
     }
     if (!intra_connected && rtc_g.hour <= 18)
@@ -74,12 +74,6 @@ void  ft_cluster_number_mode(unsigned int* p_sleep_length)
     {
         ft_display_cluster_number(SECRET_EXPIRED);
         bot.sendMessage(rtc_g.chat_id, ft_compose_message(SECRET_EXPIRED, days_left), "");
-        return;
-    }
-    if (g.battery <= 15)
-    {
-        ft_display_cluster_number(LOW_BATTERY);
-        bot.sendMessage(rtc_g.chat_id, ft_compose_message(LOW_BATTERY, 0), "");
         return;
     }
     ft_display_cluster_number(DEFAULT);
