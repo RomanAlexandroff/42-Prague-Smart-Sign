@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   telegram_bot.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raleksan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:02:56 by raleksan          #+#    #+#             */
 /*   Updated: 2024/04/09 13:02:57 by raleksan         ###   ########.fr       */
@@ -42,12 +42,17 @@ String  ft_compose_message(uint8_t subject, int8_t days_left)
         output += "And now I really need you to send it to me again. ";
         output += "You do not have to generate a new one if the old one is still good. ";
         output += "Just don't forget to start the message with a forward slash (/). ";
-        output += "Sorry for that! I very appreciate your help!";
+        output += "Sorry about this! I very appreciate your help!";
     }
     if (subject == LOW_BATTERY)
     {
-        output += "My battery is low. I am currently sitting on " + String(g.battery);
-        output += "% and it keeps on draining. Please, charge me when you have time.";
+        output += "My battery is low. I am currently sitting on 3%";
+        output += " and it keeps on draining. Please, charge me as soon as possible.";
+    }
+    if (subject == DEAD_BATTERY)
+    {
+        output += "My battery is dead, so I am stopping all the processes and turning off. ";
+        output += "Please, charge me and I will turn back on again.";
     }
     return (output);
 }
@@ -63,7 +68,6 @@ static void ft_reply_machine(String text)
     {
         message = "Connected to " + String(WiFi.SSID());   
         message += ", Signal strength is " + String(WiFi.RSSI()) + " dBm, ";
-        message += "Battery is " + String(g.battery) + "% charged, ";
         message += "Software version " + String(SOFTWARE_VERSION);
         message += ", Exams status: ";
         if (rtc_g.exam_status)

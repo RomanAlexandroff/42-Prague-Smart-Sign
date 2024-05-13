@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   42-Prague-Smart-Sign.h                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raleksan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 12:59:10 by raleksan          #+#    #+#             */
 /*   Updated: 2024/04/09 12:59:16 by raleksan         ###   ########.fr       */
@@ -12,11 +12,6 @@
 
 #ifndef _42_PRAGUE_SMART_SIGN_H
 # define _42_PRAGUE_SMART_SIGN_H
-
-//# define ESP32_BOARD
-//# define ESP32_S2                                                    // Ai-Thinker ESP32—S2—WROOM—I board
-//# define ESP32_C3                                                    // Ai-Thinker ESP32—C3—1M board 
-# define XIAO_ESP32C3                                                  // Seeed Studio XIAO ESP32—C3 board
 
 # define DEBUG                                                         // comment out this line to turn off Serial output
 # ifdef DEBUG
@@ -41,12 +36,9 @@
 
 void                  ft_serial_init(void);
 void                  ft_spiffs_init(void);
-# if !defined(XIAO_ESP32C3)
-    static bool       ft_result_check(const String address, int32_t result, int32_t old_max, int32_t old_min);
-    void IRAM_ATTR    ft_battery_state(const String address);
-    short             ft_battery_check(void);
-    void              ft_battery_init(void);
-# endif
+static bool           ft_charging_detection(void);
+void                  ft_battery_check(void);
+void                  ft_battery_init(void);
 void IRAM_ATTR        ft_display_init(void);
 void                  ft_power_down_recovery(void);
 static void           ft_pathfinder(void);
@@ -56,7 +48,6 @@ void IRAM_ATTR        ft_ota_init(void);
 static void IRAM_ATTR ft_ota_waiting_loop(void);
 void                  ft_go_to_sleep(uint64_t time_in_millis);
 void IRAM_ATTR        ft_delay(uint64_t time_in_millis);
-int16_t               ft_checksum(String input, int16_t checksum);
 void                  ft_wifi_connect(void);
 int8_t                ft_expiration_counter(void);
 bool                  ft_unix_timestamp_decoder(uint8_t* p_day, uint8_t* p_month, uint16_t* p_year);
@@ -78,6 +69,8 @@ void IRAM_ATTR        ft_display_cluster_number(uint8_t mode);
 bool IRAM_ATTR        ft_clear_display(bool errase_display);
 String                ft_compose_message(uint8_t subject, int8_t days_left);
 bool                  ft_secret_verification(String text);
+bool                  ft_data_restore(String input, int16_t checksum);
+int16_t               ft_checksum(String input, int16_t checksum);
 static void           ft_reply_machine(String text);
 static void           ft_new_messages(short message_count);
 void                  ft_telegram_check(void);
