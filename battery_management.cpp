@@ -12,24 +12,22 @@
 
 #include "42-Prague-Smart-Sign.h"
 
-static bool ft_charging_detection(void)
+static bool ft_charging_detection(int16_t battery)
 {
-    short i;
-    int   new_result;
-    int   old_result;
-    int   counter;
+    int8_t   i;
+    int8_t   counter;
+    int16_t  new_result;
 
     i = 5;
     counter = 0;
-    old_result = g.battery;
     while(i)
     {
         new_result = adc1_get_raw(ADC1_CHANNEL_0);
         if (new_result < 550)
             return (false);
-        if ((old_result - new_result) > 0)
+        if ((battery - new_result) > 0)
             counter++;
-        old_result = new_result;
+        battery = new_result;
         i--;
         delay(60000);
     }
@@ -40,32 +38,33 @@ static bool ft_charging_detection(void)
 
 void  ft_battery_check(void)
 {
-    short i;
+    int8_t  i;
+    int16_t battery;
 
     i = 0;
     while (i < 10)
     {
-        g.battery += adc1_get_raw(ADC1_CHANNEL_0);
+        battery += adc1_get_raw(ADC1_CHANNEL_0);
         delay(100);
         i++;
     }
-    g.battery = g.battery / i;
-    if (g.battery < 400)
+    battery = battery / i;
+    if (battery < 400)
     {
 //        ft_display_bitmap_with_refresh(empty_battery_img);
         DEBUG_PRINTF("\nBattery is too low. Going into extensive sleep\n", "");
         bot.sendMessage(rtc_g.chat_id, ft_compose_message(DEAD_BATTERY, 0), "");
         ft_go_to_sleep(DEAD_BATTERY_SLEEP);
     }
-    if (g.battery < 700 && g.battery > 600)
+    if (battery < 700 && battery > 600)
     {
-        if (ft_charging_detection())
+        if (ft_charging_detection(battery))
         {
             DEBUG_PRINTF("\nThe device is charging...\n", "");
             return;
         }
     }
-    if (g.battery < 800)
+    if (battery < 800)
     {
         ft_display_cluster_number(LOW_BATTERY);
         DEBUG_PRINTF("\nLow battery! Need charging!\n", "");

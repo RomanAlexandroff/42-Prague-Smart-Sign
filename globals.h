@@ -27,7 +27,7 @@ extern GxEPD2_3C<GxEPD2_750c_Z08, GxEPD2_750c_Z08::HEIGHT> display;
 extern WiFiClientSecure client;
 extern UniversalTelegramBot bot;
 
-struct RTC_GlobalsManagement {
+struct rtc_global_variables {
     bool     spiffs_state;
     bool     warning_active;
     bool     ota_active;
@@ -47,12 +47,7 @@ struct RTC_GlobalsManagement {
     uint8_t  month;
     uint16_t year;
 };
-extern struct RTC_GlobalsManagement rtc_g;
-
-struct GlobalsManagement {
-    uint16_t battery;
-};
-extern struct GlobalsManagement g;
+extern struct rtc_global_variables rtc_g;
 
 #endif
  
