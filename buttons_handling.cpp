@@ -9,16 +9,8 @@
 /*   Updated: 2024/04/09 13:00:15 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-/*
-#include "42-Prague-Smart-Sign.h"
 
-void IRAM_ATTR  isr_warning(void)
-{
-    DEBUG_PRINTF("  ---- Warning Button was pressed\n", "");
-    rtc_g.warning_active = !rtc_g.warning_active;
-    if (rtc_g.warning_active)
-        ft_display_exam_sign();
-}
+#include "42-Prague-Smart-Sign.h"
 
 void IRAM_ATTR  isr_diagnostics(void)
 {
@@ -33,42 +25,36 @@ void IRAM_ATTR  isr_ota(void)
         ft_ota_init();
 }
 
-void IRAM_ATTR  isr_reboot(void)
+void IRAM_ATTR  isr_warning(void)
 {
-    DEBUG_PRINTF("  ---- Reboot Button was pressed\n", "");
-    ft_go_to_sleep(100);
+    DEBUG_PRINTF("  ---- Warning Button was pressed\n", "");
+    rtc_g.warning_active = !rtc_g.warning_active;
+    if (rtc_g.warning_active)
+        ft_draw_colour_bitmap(exam_warning_black, exam_warning_red);
+    else
+        ft_display_cluster_number(DEFAULT);
+}
+
+void  ft_buttons_deinit(void)
+{
+    detachInterrupt(DIAGNOSTICS_BUTTON);
+    pinMode(DIAGNOSTICS_BUTTON, INPUT);
+    detachInterrupt(OTA_BUTTON);
+    pinMode(OTA_BUTTON, INPUT);
+    detachInterrupt(WARNING_BUTTON);
+    pinMode(WARNING_BUTTON, INPUT);
+    esp_deep_sleep_enable_gpio_wakeup(DIAGNOSTICS_BUTTON, ESP_GPIO_WAKEUP_GPIO_HIGH); //1 = High; The button is pulled down with a 10K Ohm resistor
+    esp_deep_sleep_enable_gpio_wakeup(OTA_BUTTON, ESP_GPIO_WAKEUP_GPIO_HIGH);         //1 = High; The button is pulled down with a 10K Ohm resistor
+    esp_deep_sleep_enable_gpio_wakeup(WARNING_BUTTON, ESP_GPIO_WAKEUP_GPIO_HIGH);     //1 = High; The button is pulled down with a 10K Ohm resistor   
 }
 
 void  ft_buttons_init(void)
 {
-    esp_err_t   touchpad_status;
-    touch_pad_t touch_pin;
-
-    touchAttachInterrupt(WARNING_BUTTON, isr_warning, BUTTON_THRESHOLD);
-    touchAttachInterrupt(DIAGNOSTICS_BUTTON, isr_diagnostics, BUTTON_THRESHOLD);
-    touchAttachInterrupt(OTA_BUTTON, isr_ota, BUTTON_THRESHOLD);
-    touchAttachInterrupt(REBOOT_BUTTON, isr_reboot, BUTTON_THRESHOLD);
-    touchSleepWakeUpEnable(WARNING_BUTTON, BUTTON_THRESHOLD);
-    touchSleepWakeUpEnable(DIAGNOSTICS_BUTTON, BUTTON_THRESHOLD);
-    touchSleepWakeUpEnable(OTA_BUTTON, BUTTON_THRESHOLD);
-    touchpad_status = esp_sleep_enable_touchpad_wakeup();
-    switch (touchpad_status)
-    {
-        case ESP_OK:
-            DEBUG_PRINTF("\nAll Buttons were enabled to be a wake up source\n", "");
-            break;
-        case ESP_ERR_NOT_SUPPORTED:
-            DEBUG_PRINTF("\nFailed to set Buttons as a wake up source\n", "");
-            break;
-        case ESP_ERR_INVALID_STATE:
-            DEBUG_PRINTF("\nError setting Buttons as a wake up source! ", "");
-            DEBUG_PRINTF("Wake up sources trigger a conflict\n", "");
-            break;
-    }
-    touch_pin = esp_sleep_get_touchpad_wakeup_status();
-    if(touch_pin < TOUCH_PAD_MAX)
-        DEBUG_PRINTF("Touch detected on GPIO %d\n", touch_pin); 
-    else
-        DEBUG_PRINTF("Wakeup not by touchpad\n\n", "");
+    pinMode(DIAGNOSTICS_BUTTON, INPUT_PULLUP);
+    attachInterrupt(DIAGNOSTICS_BUTTON, isr_diagnostics, FALLING);
+    pinMode(OTA_BUTTON, INPUT_PULLUP);
+    attachInterrupt(OTA_BUTTON, isr_ota, FALLING);
+    pinMode(WARNING_BUTTON, INPUT_PULLUP);
+    attachInterrupt(WARNING_BUTTON, isr_warning, FALLING);
 }
- */
+ 

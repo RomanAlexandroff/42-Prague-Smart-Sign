@@ -35,6 +35,7 @@ void  ft_poweron_sequence(void)
         DEBUG_PRINTF("The Secret variable value is now:\n%s\n", rtc_g.Secret.c_str());
     }
     rtc_g.ota_active = false;
+    rtc_g.warning_active = false;
     DEBUG_PRINTF("\nReset reason: Power-on reset\n", "");
     DEBUG_PRINTF("Power-down Recovery was performed.\n\n", "");
 //    ft_delay(3000);

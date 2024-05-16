@@ -13,7 +13,7 @@
 #ifndef _42_PRAGUE_SMART_SIGN_H
 # define _42_PRAGUE_SMART_SIGN_H
 
-# define DEBUG                                                         // comment out this line to turn off Serial output
+# define DEBUG                                                       // comment out this line to turn off Serial output
 # ifdef DEBUG
     #define DEBUG_PRINTF(x, y) Serial.printf(x, y)
 # else
@@ -31,12 +31,13 @@
 # include <esp_system.h>
 # include <esp_sleep.h>
 # include <driver/adc.h>
+# include <driver/gpio.h>
 # include "bitmap_library.h"
 # include "globals.h"
 
 void                  ft_serial_init(void);
 void                  ft_spiffs_init(void);
-static bool           ft_charging_detection(void);
+static bool           ft_charging_detection(int16_t battery);
 void                  ft_battery_check(void);
 void                  ft_battery_init(void);
 void IRAM_ATTR        ft_display_init(void);
@@ -76,10 +77,11 @@ static void           ft_new_messages(short message_count);
 void                  ft_telegram_check(void);
 void IRAM_ATTR        ft_brownout_sequence(void);
 void                  ft_poweron_sequence(void);
-//void                  ft_buttons_init(void);
-//void IRAM_ATTR        isr_warning(void);
-//void IRAM_ATTR        isr_diagnostics(void);
-//void IRAM_ATTR        isr_ota(void);
+void                  ft_buttons_init(void);
+void                  ft_buttons_deinit(void);
+void IRAM_ATTR        isr_diagnostics(void);
+void IRAM_ATTR        isr_ota(void);
+void IRAM_ATTR        isr_warning(void);
 
 #endif
  

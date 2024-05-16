@@ -18,11 +18,11 @@ void  setup(void)
         ft_serial_init();
     #endif
     ft_spiffs_init();
+    ft_buttons_init();
     ft_battery_init();
     ft_display_init();
     ft_power_down_recovery();
     ft_battery_check();
-//    ft_buttons_init();
 }
 
 static void  ft_pathfinder(void)

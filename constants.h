@@ -13,18 +13,16 @@
 #ifndef CONSTANTS_H
 # define CONSTANTS_H
 
-# define SOFTWARE_VERSION        3.02
+# define SOFTWARE_VERSION        3.04
 
 # define CONNECT_TIMEOUT         5
 # define WAIT_FOR_OTA_LIMIT      3600000ul    //1 hour
 # define DEAD_BATTERY_SLEEP      86400000ul   //24 hours
-/*
-# define BUTTON_THRESHOLD        5000
-# define WARNING_BUTTON          1
-# define DIAGNOSTICS_BUTTON      2
-# define OTA_BUTTON              3
-# define BUTTON_4                4
-*/
+
+# define DIAGNOSTICS_BUTTON      D1
+# define OTA_BUTTON              D2
+# define WARNING_BUTTON          D3
+
 # define BUSY_PIN                D4
 # define RST_PIN                 D5
 # define DC_PIN                  D6
