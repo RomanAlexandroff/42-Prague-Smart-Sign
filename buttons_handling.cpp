@@ -20,9 +20,14 @@ void IRAM_ATTR  isr_diagnostics(void)
 void IRAM_ATTR  isr_ota(void)
 {
     DEBUG_PRINTF("  ---- OTA Button was pressed\n", "");
-    rtc_g.ota_active = !rtc_g.ota_active;
-    if (rtc_g.ota_active)
-        ft_ota_init();
+    rtc_g.ota = !rtc_g.ota;
+    if (rtc_g.ota == true)
+    {
+        ft_write_spiffs_file("/ota.txt", ACTIVE);
+        ESP.restart();
+    }
+    else
+        ft_write_spiffs_file("/ota.txt", CLOSED);
 }
 
 void IRAM_ATTR  isr_warning(void)
@@ -43,16 +48,16 @@ void  ft_buttons_deinit(void)
     pinMode(OTA_BUTTON, INPUT);
     detachInterrupt(WARNING_BUTTON);
     pinMode(WARNING_BUTTON, INPUT);
-    esp_deep_sleep_enable_gpio_wakeup(DIAGNOSTICS_BUTTON, ESP_GPIO_WAKEUP_GPIO_HIGH); //1 = High; The button is pulled down with a 10K Ohm resistor
-    esp_deep_sleep_enable_gpio_wakeup(OTA_BUTTON, ESP_GPIO_WAKEUP_GPIO_HIGH);         //1 = High; The button is pulled down with a 10K Ohm resistor
-    esp_deep_sleep_enable_gpio_wakeup(WARNING_BUTTON, ESP_GPIO_WAKEUP_GPIO_HIGH);     //1 = High; The button is pulled down with a 10K Ohm resistor   
+    esp_deep_sleep_enable_gpio_wakeup(DIAGNOSTICS_BUTTON, ESP_GPIO_WAKEUP_GPIO_LOW); // If button PULLED DOWN, wake up on HIGH
+    esp_deep_sleep_enable_gpio_wakeup(OTA_BUTTON, ESP_GPIO_WAKEUP_GPIO_LOW);         // If button PULLED UP, wake up on LOW
+    esp_deep_sleep_enable_gpio_wakeup(WARNING_BUTTON, ESP_GPIO_WAKEUP_GPIO_LOW);   
 }
 
 void  ft_buttons_init(void)
 {
-    pinMode(DIAGNOSTICS_BUTTON, INPUT_PULLUP);
+    pinMode(DIAGNOSTICS_BUTTON, INPUT_PULLUP);                                       // If button PULLED UP, connect the other button pin to GND
     attachInterrupt(DIAGNOSTICS_BUTTON, isr_diagnostics, FALLING);
-    pinMode(OTA_BUTTON, INPUT_PULLUP);
+    pinMode(OTA_BUTTON, INPUT_PULLUP);                                               // If button PULLED DOWN, connect the other button pin to VCC
     attachInterrupt(OTA_BUTTON, isr_ota, FALLING);
     pinMode(WARNING_BUTTON, INPUT_PULLUP);
     attachInterrupt(WARNING_BUTTON, isr_warning, FALLING);

@@ -34,6 +34,7 @@ void  ft_cluster_number_mode(unsigned int* p_sleep_length)
     i = 0;
     intra_connected = false;
     ft_wifi_connect();
+    ft_telegram_check();
     if (!ft_get_time())
     {
         *p_sleep_length = 60000;
@@ -55,7 +56,6 @@ void  ft_cluster_number_mode(unsigned int* p_sleep_length)
         ft_display_cluster_number(INTRA_ERROR);
         rtc_g.exam_status = false;
     }
-    ft_telegram_check();
     if (rtc_g.exam_status)
     {
         if (rtc_g.hour >= (rtc_g.exam_start_hour - 1) && rtc_g.hour <= rtc_g.exam_end_hour)

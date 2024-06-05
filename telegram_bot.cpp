@@ -83,7 +83,21 @@ static void ft_reply_machine(String text)
             message += ", Secret token expires on " + String(day) + "." + String(month) + "." + String(year);
         bot.sendMessage(rtc_g.chat_id, message, "");
         message.clear();
-    } 
+    }
+    else if (text == "/ota")
+    {
+        if (rtc_g.ota == false)
+        {
+            ft_write_spiffs_file("/ota.txt", ACTIVE);
+            ESP.restart();
+        }
+        else
+        {
+            rtc_g.ota = false;
+            ft_write_spiffs_file("/ota.txt", CLOSED);
+        }
+        return;
+    }
     else
     {
         text.remove(0, 1);
@@ -118,6 +132,7 @@ static void  ft_new_messages(short message_count)
     {
         DEBUG_PRINTF("Handling loop iterations: i = %d\n", i);
         rtc_g.chat_id = String(bot.messages[i].chat_id);
+        ft_write_spiffs_file("/chat_id.txt", rtc_g.chat_id);
         text = bot.messages[i].text;
         rtc_g.from_name = bot.messages[i].from_name;
         DEBUG_PRINTF("%s says: ", rtc_g.from_name.c_str());

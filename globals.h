@@ -30,7 +30,7 @@ extern UniversalTelegramBot bot;
 struct rtc_global_variables {
     bool     spiffs_state;
     bool     warning_active;
-    bool     ota_active;
+    bool     ota;
     String   Secret;
     int16_t  secret_checksum;
     time_t   secret_expiration;

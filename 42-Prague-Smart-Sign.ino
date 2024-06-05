@@ -6,7 +6,7 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 12:59:10 by raleksan          #+#    #+#             */
-/*   Updated: 2024/04/09 12:59:16 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:59:16 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void  setup(void)
     ft_display_init();
     ft_power_down_recovery();
     ft_battery_check();
+    ft_ota_init();
 }
 
 static void  ft_pathfinder(void)
@@ -39,6 +40,7 @@ static void  ft_pathfinder(void)
 
 void  loop(void)
 {
+    ft_ota_waiting_loop();
     ft_pathfinder();
 }
  

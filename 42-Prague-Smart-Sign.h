@@ -6,7 +6,7 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 12:59:10 by raleksan          #+#    #+#             */
-/*   Updated: 2024/04/09 12:59:16 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:59:16 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 # include "bitmap_library.h"
 # include "globals.h"
 
+inline void           ft_ota_init(void) __attribute__((always_inline));
+inline void           ft_ota_waiting_loop(void) __attribute__((always_inline));
 void                  ft_serial_init(void);
 void                  ft_spiffs_init(void);
 static bool           ft_charging_detection(int16_t battery);
@@ -45,8 +47,6 @@ void                  ft_power_down_recovery(void);
 static void           ft_pathfinder(void);
 short                 ft_write_spiffs_file(const char* file_name, String input);
 String                ft_read_spiffs_file(const char* file_name);
-void IRAM_ATTR        ft_ota_init(void);
-static void IRAM_ATTR ft_ota_waiting_loop(void);
 void                  ft_go_to_sleep(uint64_t time_in_millis);
 void IRAM_ATTR        ft_delay(uint64_t time_in_millis);
 void                  ft_wifi_connect(void);
@@ -82,6 +82,8 @@ void                  ft_buttons_deinit(void);
 void IRAM_ATTR        isr_diagnostics(void);
 void IRAM_ATTR        isr_ota(void);
 void IRAM_ATTR        isr_warning(void);
+
+# include "ota.h"                                                   // has to be here 
 
 #endif
  

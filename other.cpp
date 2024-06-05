@@ -59,6 +59,6 @@ void  ft_serial_init(void)
         delay(100);
         i--;
     }
-    DEBUG_PRINTF("\n\nDEVICE START\nversion %f\n", float(SOFTWARE_VERSION));
+    DEBUG_PRINTF("\n\nDEVICE START\nversion %s\n", String(SOFTWARE_VERSION));
 }
  
