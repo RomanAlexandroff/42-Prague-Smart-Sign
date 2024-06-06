@@ -18,11 +18,11 @@ static unsigned int  ft_time_till_wakeup(void)
     uint8_t       i;
 
     if (rtc_g.hour >= 18)
-        return ((wakeup_hour[0] + 24 - rtc_g.hour) * 3600000 - (rtc_g.minute * 60000));
+        return ((wakeup_hour[0] + 24 - rtc_g.hour) * 3600000 - (rtc_g.minute * 60000) - millis());
     i = 0;
     while ((wakeup_hour[i] - rtc_g.hour) <= 0)
         i++;
-    return ((wakeup_hour[i] - rtc_g.hour) * 3600000 - (rtc_g.minute * 60000));
+    return ((wakeup_hour[i] - rtc_g.hour) * 3600000 - (rtc_g.minute * 60000) - millis());
 }
 
 void  ft_cluster_number_mode(unsigned int* p_sleep_length)
@@ -69,6 +69,8 @@ void  ft_cluster_number_mode(unsigned int* p_sleep_length)
     }
     else
         *p_sleep_length = ft_time_till_wakeup();
+    if (!intra_connected)
+        return;
     days_left = ft_expiration_counter();
     if (days_left <= 3 && days_left != -128)
     {
