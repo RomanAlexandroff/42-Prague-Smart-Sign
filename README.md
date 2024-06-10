@@ -68,7 +68,8 @@ Please note that while the project strives to provide accurate information, it i
 This project is a group effort of various 42 students with support from the 42 Prague Bocal team. Here they are:
 - raleksan, 42 Prague — firmware and electronic hardware developer. Made the idea reality,
 - gsura, 42 Prague — idea starter and motivation supporter. Pitched the idea to Bocal so well they ended up asking for two devices,
-- cgray, 42 Prague — hardware development and 3D printing. Created beautiful and functional incasement for the electronics,
+- cgray, 42 Prague — hardware development. Modeled beautiful and functional inner frame for the electronics,
+- phelebra, 42 Prague — 3D printing. Turned 3D model into high-quality pieces of hardware.
 - arosado-, 42 Lisboa — 42 API expert. Tought how to get the data from the 42 servers,
 - jrathelo, 42 Nice — memory wizard. Helped resolve the microcontroller's RAM overflow.
 
