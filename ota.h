@@ -87,7 +87,7 @@ void ft_ota_waiting_loop(void)
         ota_limit++;
         delay(250);
     }
-    rtc_g.ota = true;                                                           // not a mistake
+    rtc_g.ota = false;
     ft_write_spiffs_file("/ota.txt", CLOSED);
     ft_display_cluster_number(OTA_CANCELED);
     bot.sendMessage(rtc_g.chat_id, "OTA Update port closed", "");

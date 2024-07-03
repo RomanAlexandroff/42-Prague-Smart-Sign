@@ -6,7 +6,15 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:02:56 by raleksan          #+#    #+#             */
-/*   Updated: 2024/04/09 13:02:57 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/07/03 13:20:00 by raleksan         ###   ########.fr       */
+/*                                                                            */
+/*                                                                            */
+/*   These functions are for checking new Telegram messages, reading them     */
+/*   and reacting to them.                                                    */
+/*   WARNING! DO NOT CALL ft_go_to_sleep(), ft_delay() or ESP.restart()       */
+/*   FROM THESE FUNCTIONS! THE DEVICE WILL BECOME UNRESPONSIVE TO ANY         */
+/*   MESSAGES FROM THE TELEGRAM CHAT! YOU MAY DO IT ONLY WHEN YOU ARE ABOUT   */
+/*   TO EXIT FROM ft_telegram_check().                                        */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +97,13 @@ static void ft_reply_machine(String text)
         if (rtc_g.ota == false)
         {
             ft_write_spiffs_file("/ota.txt", ACTIVE);
-            ESP.restart();
+            rtc_g.reboot = true;
         }
         else
         {
             rtc_g.ota = false;
             ft_write_spiffs_file("/ota.txt", CLOSED);
+            rtc_g.reboot = false;
         }
         return;
     }
@@ -114,7 +123,7 @@ static void ft_reply_machine(String text)
         {
             message = "I am sorry, but I do not understand \"";
             message += text + "\"\n\n";
-            message = "You may try to use \"/status\" command";
+            message += "You may try to use \"/status\" command";
             bot.sendMessage(rtc_g.chat_id, message, "");
         }
     }
@@ -158,5 +167,7 @@ void  ft_telegram_check(void)
             message_count = bot.getUpdates(bot.last_message_received + 1);
         }
     }
+    if (rtc_g.reboot)
+        ESP.restart();
 }
  

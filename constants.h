@@ -13,9 +13,9 @@
 #ifndef CONSTANTS_H
 # define CONSTANTS_H
 
-# define SOFTWARE_VERSION        4.01
+# define SOFTWARE_VERSION        4.02
 
-# define CONNECT_TIMEOUT         5
+# define CONNECT_TIMEOUT         5                            // in seconds, per each Wi-Fi network
 # define OTA_WAIT_LIMIT          1200                         // in quarters of a second, 1200 == 5 minutes
 # define DEAD_BATTERY_SLEEP      86400000ul                   // in milliseconds, 24 hours
 # define ACTIVE                  "1"                          // for OTA

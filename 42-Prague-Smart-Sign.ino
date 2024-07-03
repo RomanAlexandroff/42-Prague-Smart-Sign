@@ -23,7 +23,7 @@ void  setup(void)
     ft_display_init();
     ft_power_down_recovery();
     ft_battery_check();
-    ft_ota_init();
+//    ft_ota_init();                 // firewall blocks OTA over Wi-Fi
 }
 
 static void  ft_pathfinder(void)
@@ -40,7 +40,7 @@ static void  ft_pathfinder(void)
 
 void  loop(void)
 {
-    ft_ota_waiting_loop();
+//    ft_ota_waiting_loop();         // firewall blocks OTA over Wi-Fi
     ft_pathfinder();
 }
  

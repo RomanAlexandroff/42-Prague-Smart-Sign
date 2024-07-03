@@ -42,7 +42,7 @@ void  ft_cluster_number_mode(unsigned int* p_sleep_length)
         DEBUG_PRINTF("Retrying in 1 minute\n", "");
         return;
     }
-    while (!intra_connected && i < 3)
+    while (!intra_connected && i < 2)
     {
         delay (i * 300000);
         DEBUG_PRINTF("Fetching exams data — try #%d\n\n", i + 1);
