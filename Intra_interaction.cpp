@@ -60,7 +60,7 @@ bool  ft_fetch_exams(void)
     auth_request.clear();
 
 // READING THE SERVER RESPONSE. EXTRACTING ACCESS TOKEN AND SECRET EXPIRATION DATE
-    server_response = client1.readStringUntil('}');
+    server_response = client1.readString();
     if (server_response.length() <= 0)
     {
         DEBUG_PRINTF("\nError! Server response to the Access Token request was not received\n\n", "");
@@ -130,7 +130,7 @@ bool  ft_fetch_exams(void)
     client1.println();
 
 // READING THE SERVER RESPONSE. EXTRACTING & EVALUATING THE EXAMS INFORMATION
-    server_response = client1.readStringUntil(']');
+    server_response = client1.readString();
     DEBUG_PRINTF("\n============================== SERVER RESPONSE BEGIN ==============================  \n", "");
     DEBUG_PRINTF("%s\n", server_response.c_str());
     DEBUG_PRINTF("\n=============================== SERVER RESPONSE END ===============================\n\n", "");
