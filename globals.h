@@ -42,6 +42,7 @@ struct rtc_global_variables {
     uint16_t exam_start_minutes;
     uint8_t  exam_end_hour;
     uint8_t  exam_end_minutes;
+    bool     daylight_flag;
     uint8_t  hour;
     uint8_t  minute;
     uint8_t  day;

@@ -59,12 +59,22 @@ bool  ft_get_time(void)
         DEBUG_PRINTF("Failed to obtain time from the NTP server\n", "");
         return (false);
     }
+    if (time_info.tm_isdst < 0)
+    {
+        DEBUG_PRINTF("Daylight Saving Time is not available\n", "");
+        return (false);
+    }
     rtc_g.hour = time_info.tm_hour;
     rtc_g.minute = time_info.tm_min;
     rtc_g.day = time_info.tm_mday;
     rtc_g.month = 1 + time_info.tm_mon;
     rtc_g.year = 1900 + time_info.tm_year;
+    rtc_g.daylight_flag = time_info.tm_isdst;
     DEBUG_PRINTF("\nObtained time from the NTP server is as follows:\n", "");
+    if (rtc_g.daylight_flag)
+        DEBUG_PRINTF("  --daylight saving time is ACTIVE (summer time)\n", "");
+    else
+        DEBUG_PRINTF("  --daylight saving time is INACTIVE (winter time)\n", "");
     DEBUG_PRINTF("  --hour:   %d\n", rtc_g.hour);
     DEBUG_PRINTF("  --minute: %d\n", rtc_g.minute);
     DEBUG_PRINTF("  --day:    %d\n", rtc_g.day);

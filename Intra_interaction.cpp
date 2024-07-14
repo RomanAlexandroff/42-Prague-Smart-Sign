@@ -156,6 +156,11 @@ bool  ft_fetch_exams(void)
             i = server_response.indexOf("\"end_at\":\"");
             rtc_g.exam_end_hour = server_response.substring(i + 21, i + 23).toInt() + TIME_ZONE;
             rtc_g.exam_end_minutes = server_response.substring(i + 24, i + 26).toInt();
+            if (rtc_g.daylight_flag)
+            {
+                rtc_g.exam_start_hour += 1;
+                rtc_g.exam_end_hour += 1;
+            }
             DEBUG_PRINTF("\nEXAMS STATUS: Exam information detected\n", "");
             DEBUG_PRINTF("-- Begins at %d:", rtc_g.exam_start_hour);
             DEBUG_PRINTF("%d0\n", rtc_g.exam_start_minutes);
