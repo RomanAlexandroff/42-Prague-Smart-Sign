@@ -14,6 +14,8 @@
 
 void  ft_go_to_sleep(uint64_t time_in_millis)
 {
+    if (time_in_millis < 10)
+        time_in_millis = 10;
     client.stop();
     display.powerOff();
     ft_buttons_deinit();
@@ -26,17 +28,20 @@ void  ft_go_to_sleep(uint64_t time_in_millis)
 
 void IRAM_ATTR  ft_delay(uint64_t time_in_millis)
 {
+    if (time_in_millis < 10)
+        time_in_millis = 10;
     esp_sleep_enable_timer_wakeup(time_in_millis * 1000);
     esp_light_sleep_start();
 }
 
 void  ft_wifi_connect(void)
 {
-    short                     i;
+    short i;
 
     i = 0;
     WiFi.mode(WIFI_STA);
     WiFi.persistent(true);
+    client.setCACert(TELEGRAM_CERTIFICATE_ROOT);
     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
     while ((WiFi.status() != WL_CONNECTED) && i < CONNECT_TIMEOUT)
     {
