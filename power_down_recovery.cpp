@@ -52,7 +52,6 @@ void  ft_poweron_sequence(void)
     rtc_g.chat_id.trim();
     DEBUG_PRINTF("[FILE SYSTEM] The rtc_g.chat_id variable has been set to %d\n", rtc_g.chat_id);
     rtc_g.warning_active = false;
-    DEBUG_PRINTF("\nReset reason: Power-on reset\n", "");
     DEBUG_PRINTF("Power-down Recovery was performed.\n\n", "");
 //    ft_delay(3000);
 }
@@ -69,10 +68,12 @@ void  ft_power_down_recovery(void)
             ft_brownout_sequence();
             break;
         case ESP_RST_POWERON:
+            DEBUG_PRINTF("\nReset reason: Power-on reset\n", "");
             ft_poweron_sequence();
             break;
         case ESP_RST_SW:
             DEBUG_PRINTF("\nReset reason: Software reset\n", "");
+            ft_poweron_sequence();
             break;
         case ESP_RST_PANIC:
             DEBUG_PRINTF("\nReset reason: Panic/exception reset\n", "");
