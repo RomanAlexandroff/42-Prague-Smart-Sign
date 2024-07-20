@@ -49,9 +49,12 @@ void  ft_battery_check(void)
         i++;
     }
     battery = battery / i;
+    ft_wifi_connect();
+    if (WiFi.status() != WL_CONNECTED)
+        WiFi.reconnect();
     if (battery < 400)
     {
-//        ft_display_bitmap_with_refresh(empty_battery_img);
+        ft_display_cluster_number(LOW_BATTERY);
         DEBUG_PRINTF("\nBattery is too low. Going into extensive sleep\n", "");
         bot.sendMessage(rtc_g.chat_id, ft_compose_message(DEAD_BATTERY, 0), "");
         ft_go_to_sleep(DEAD_BATTERY_SLEEP);
