@@ -108,7 +108,7 @@ int  ft_time_sync(unsigned int preexam_time)
         ft_delay(1000);
     }
     minutes = ceil(preexam_time / 60000);
-    while (minutes % 10 != 0)
+    while (minutes % 10 != 0 || minutes > 60)
     {
         ft_delay(59990);
         minutes--;

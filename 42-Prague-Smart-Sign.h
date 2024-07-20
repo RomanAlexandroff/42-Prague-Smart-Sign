@@ -55,7 +55,7 @@ bool                  ft_unix_timestamp_decoder(uint8_t* p_day, uint8_t* p_month
 bool                  ft_get_time(void);
 unsigned int          ft_time_till_event(int8_t hours, uint8_t minutes);
 int                   ft_time_sync(unsigned int preexam_time);
-static unsigned int   ft_exam(bool* p_preexam_check);
+static unsigned int   ft_exam(void);
 static void           ft_preexam_warning(unsigned int* p_preexam_time);
 void                  ft_exam_mode(unsigned int* p_sleep_length);
 static unsigned int   ft_time_till_wakeup(void);

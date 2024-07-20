@@ -12,37 +12,14 @@
 
 #include "42-Prague-Smart-Sign.h"
 
-static unsigned int ft_exam(bool* p_preexam_check)
+static unsigned int ft_exam(void)
 {
-    int           minutes;
     unsigned int  exam_remaining_time;
 
-    minutes = 60;
     exam_remaining_time = ft_time_till_event(rtc_g.exam_end_hour, rtc_g.exam_end_minutes);
     ft_draw_colour_bitmap(exam_warning_black, exam_warning_red);
-    if (exam_remaining_time > 3600000)
-    {
-//        ft_display_timer_exact_end_time();
-        return (exam_remaining_time - 3600000);
-    }
-    else
-    {
-        while (minutes > 10)
-        {
-//            ft_display_timer(minutes);
-            ft_delay(600000);
-            minutes -= 10;
-        }
-        while (minutes > 0)
-        {
-//            ft_display_timer(minutes);
-            ft_delay(60000);
-            minutes -= 1;
-        }
-    }
     rtc_g.exam_status = false;
-    *p_preexam_check = false;
-    return (10);
+    return (exam_remaining_time);
 }
 
 static void ft_preexam_warning(unsigned int* p_preexam_time)
@@ -52,19 +29,19 @@ static void ft_preexam_warning(unsigned int* p_preexam_time)
     minutes = ft_time_sync(*p_preexam_time);
     if (minutes == 60 || minutes == 50)
     {
-        ft_draw_colour_bitmap(preexam_50mins, preexam_warning_red);
-        ft_delay((minutes - 40) * 1000);
+        ft_draw_colour_bitmap(preexam_50mins, preexam_warning_red);                       // execution may take up to 40 sec
+        ft_delay((minutes - 40) * 60000);
         minutes = 40;
     }
     if (minutes == 40 || minutes == 30 || minutes == 20)
     {
-        ft_draw_colour_bitmap(preexam_25mins, preexam_warning_red);
-        ft_delay((minutes - 10) * 1000);
+        ft_draw_colour_bitmap(preexam_25mins, preexam_warning_red);                       // execution may take up to 40 sec
+        ft_delay((minutes - 10) * 60000);
         minutes = 10;
     }
     if (minutes == 10)
     {
-        ft_draw_colour_bitmap(preexam_5mins, preexam_warning_red);
+        ft_draw_colour_bitmap(preexam_5mins, preexam_warning_red);                        // execution may take up to 40 sec
         ft_delay(480000);
     }
     *p_preexam_time = 0;
@@ -72,22 +49,14 @@ static void ft_preexam_warning(unsigned int* p_preexam_time)
 
 void  ft_exam_mode(unsigned int* p_sleep_length)
 {
-    RTC_DATA_ATTR static bool preexam_check;
     unsigned int              preexam_time;
 
     ft_wifi_connect();
-    if (!preexam_check)
-    {
-        ft_fetch_exams();
-        if (!rtc_g.exam_status)
-            return;
-        preexam_check = true;
-    }
-    if (!ft_get_time())
-        rtc_g.hour += 1;
+    ft_get_time();
+    ft_fetch_exams();
+    if (!rtc_g.exam_status)
+        return;
     preexam_time = ft_time_till_event(rtc_g.exam_start_hour, rtc_g.exam_start_minutes);
-    if (preexam_time > 4200000)
-        preexam_time = 3600000;
     if (preexam_time > 600000)
         ft_preexam_warning(&preexam_time);
     if (preexam_time <= 600000 && preexam_time >= 25000)
@@ -95,7 +64,7 @@ void  ft_exam_mode(unsigned int* p_sleep_length)
         ft_delay(preexam_time - 25000);
         preexam_time = 0;
     }
-    if (preexam_time < 25000)
-        *p_sleep_length = ft_exam(&preexam_check);
+    ft_get_time();
+    *p_sleep_length = ft_exam();
 }
  
