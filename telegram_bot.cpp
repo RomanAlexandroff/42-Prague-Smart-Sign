@@ -155,7 +155,6 @@ void  ft_telegram_check(void)
 {
     short message_count;
 
-    client.setCACert(TELEGRAM_CERTIFICATE_ROOT);
     if (WiFi.status() != WL_CONNECTED)
         WiFi.reconnect();
     else
