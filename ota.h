@@ -23,8 +23,7 @@ void ft_ota_init(void)
     {
         char    fullhostname[21] = "42_Prague_Smart_Sign";
 
-        if (WiFi.status() != WL_CONNECTED)
-            WiFi.reconnect();
+        ft_wifi_connect();
         if (WiFi.status() != WL_CONNECTED)
         {
             DEBUG_PRINTF("Failed to initialise OTA due to Wi-Fi connection issues\n", "");
@@ -78,20 +77,23 @@ void ft_ota_init(void)
 
 void ft_ota_waiting_loop(void)
 {
-    uint16_t ota_limit = 0;
-
-    while (rtc_g.ota && ota_limit < OTA_WAIT_LIMIT)
+    if (rtc_g.ota)
     {
-        ArduinoOTA.handle();
-        DEBUG_PRINTF("\n[OTA] Active", "");
-        ota_limit++;
-        delay(250);
+        uint16_t ota_limit = 0;
+
+        while (rtc_g.ota && ota_limit < OTA_WAIT_LIMIT)
+        {
+            ArduinoOTA.handle();
+            DEBUG_PRINTF("\n[OTA] Active", "");
+            ota_limit++;
+            delay(2000);
+        }
+        rtc_g.ota = false;
+        ft_write_spiffs_file("/ota.txt", CLOSED);
+        ft_display_cluster_number(OTA_CANCELED);
+        bot.sendMessage(rtc_g.chat_id, "OTA Update port closed", "");
+        DEBUG_PRINTF("\n[OTA] OTA Update port closed\n", "");
     }
-    rtc_g.ota = false;
-    ft_write_spiffs_file("/ota.txt", CLOSED);
-    ft_display_cluster_number(OTA_CANCELED);
-    bot.sendMessage(rtc_g.chat_id, "OTA Update port closed", "");
-    DEBUG_PRINTF("\n[OTA] OTA Update port closed", "");
 }
 
 #endif
