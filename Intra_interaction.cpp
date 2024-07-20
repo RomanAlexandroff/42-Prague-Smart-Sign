@@ -131,7 +131,7 @@ bool  ft_fetch_exams(void)
 
 // READING THE SERVER RESPONSE. EXTRACTING & EVALUATING THE EXAMS INFORMATION
     server_response = client1.readString();
-    DEBUG_PRINTF("\n============================== SERVER RESPONSE BEGIN ==============================  \n", "");
+    DEBUG_PRINTF("\n============================== SERVER RESPONSE BEGIN ==============================\n\n", "");
     DEBUG_PRINTF("%s\n", server_response.c_str());
     DEBUG_PRINTF("\n=============================== SERVER RESPONSE END ===============================\n\n", "");
     if (server_response.length() <= 0)
