@@ -25,6 +25,7 @@
 
 extern GxEPD2_3C<GxEPD2_750c_Z08, GxEPD2_750c_Z08::HEIGHT> display;
 extern WiFiClientSecure client;
+extern WiFiClientSecure client1;
 extern UniversalTelegramBot bot;
 
 struct rtc_global_variables {

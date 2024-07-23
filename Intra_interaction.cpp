@@ -12,43 +12,82 @@
 
 #include "42-Prague-Smart-Sign.h"
 
-bool  ft_fetch_exams(void)
+static void ft_get_secret_expiration(String server_response)
 {
-    const char* server PROGMEM = "api.intra.42.fr";
-    String      auth_request;
-    String      server_response;
-    int         i;
-    String      token;
-    uint8_t     expire_day;
-    uint8_t     expire_month;
-    uint16_t    expire_year;
-    int8_t      days_left;
-    String      day;
-    String      month;
-    String      api_call;
+    int      i;
+    uint8_t  expire_day;
+    uint8_t  expire_month;
+    uint16_t expire_year;
 
-// WI-FI CONNECTION CHECK
-    if (WiFi.status() != WL_CONNECTED)
-        WiFi.reconnect();
-    if (WiFi.status() != WL_CONNECTED)
-        return (false);
-
-// CONNECTING TO THE INTRA SERVER
-    WiFiClientSecure client1;
-    client1.setInsecure();
-    client1.setTimeout(10);
-    if (!client1.connect(server, 443))
+    i = server_response.indexOf("\"secret_valid_until\":");
+    if (i == -1)
+        DEBUG_PRINTF("[INTRA] Secret expiration date was not found in the server response\n\n", "");
+    else
     {
-        DEBUG_PRINTF("\nConnection to the Intra server failed\n\n", "");
+        rtc_g.secret_expiration = server_response.substring(i + 21, i + 31).toInt();
+        DEBUG_PRINTF("[INTRA] The secret expires on %d (UNIX timestamp format)\n", rtc_g.secret_expiration);
+        if (ft_unix_timestamp_decoder(&expire_day, &expire_month, &expire_year))
+        {
+            DEBUG_PRINTF("[INTRA] The secret expires on %d.", expire_day);
+            DEBUG_PRINTF("%d.", expire_month);
+            DEBUG_PRINTF("%d\n", expire_year);
+            DEBUG_PRINTF("[INTRA] The secret days left: %d\n\n", ft_expiration_counter());
+        }
+    }
+}
+
+static String ft_get_token(String server_response)
+{
+    int     i;
+    String  token;
+
+    i = server_response.indexOf("{\"access_token\":\"");
+    if (i == -1)
+    {
+        DEBUG_PRINTF("\n[INTRA] Error! Server response came without the Access Token\n\n", "");
+        if (!ft_checksum(rtc_g.Secret, rtc_g.secret_checksum))
+        {
+            DEBUG_PRINTF("[INTRA] The error occured due to corrupted Secret token. Resolving...\n\n", "");
+            ft_data_restore(rtc_g.Secret, rtc_g.secret_checksum);
+        }
+        else
+            DEBUG_PRINTF("[INTRA] The error occured due to unknown reason.\n\n", "");
+        return ("ERROR");
+    }
+    token = server_response.substring(i + 17, i + 81);
+    DEBUG_PRINTF("[INTRA] Access Token has been extracted:\n%s\n", token.c_str());
+    return (token);
+}
+
+static bool  ft_handle_server_response(const char* server, String* token)
+{
+    String  server_response;
+    int     i;
+
+    server_response = client1.readString();
+    if (server_response.length() <= 0)
+    {
+        DEBUG_PRINTF("\n[INTRA] Error! Server response to the Access Token request was not received\n\n", "");
         return (false);
     }
+    DEBUG_PRINTF("\n============================== SERVER RESPONSE BEGIN ==============================\n\n", "");
+    DEBUG_PRINTF("%s", server_response.c_str());
+    DEBUG_PRINTF("\n=============================== SERVER RESPONSE END ===============================\n\n", "");
+    *token = ft_get_token(server_response);
+    if (*token == "ERROR")
+        return (false);
+    ft_get_secret_expiration(server_response);
+    return (true);
+}
 
-// REQUESTING A TEMPORARY ACCESS TOKEN FROM THE SERVER
+static void  ft_access_server(const char* server)
+{
+    String  auth_request;
+
     auth_request = "grant_type=client_credentials&client_id=";
     auth_request += UID;
     auth_request += "&client_secret=";
     auth_request += rtc_g.Secret;
-
     client1.print("POST https://api.intra.42.fr/oauth/token HTTP/1.1\r\n");
     client1.print("Host: ");
     client1.println(server);
@@ -58,49 +97,43 @@ bool  ft_fetch_exams(void)
     client1.println();
     client1.println(auth_request);
     auth_request.clear();
+}
 
-// READING THE SERVER RESPONSE. EXTRACTING ACCESS TOKEN AND SECRET EXPIRATION DATE
-    server_response = client1.readString();
-    if (server_response.length() <= 0)
+static bool  ft_intra_connect(const char* server)
+{
+    if (WiFi.status() != WL_CONNECTED)
+        WiFi.reconnect();
+    if (WiFi.status() != WL_CONNECTED)
     {
-        DEBUG_PRINTF("\nError! Server response to the Access Token request was not received\n\n", "");
+        DEBUG_PRINTF("\n[INTRA] Unable to connect to Wi-Fi\n\n", "");
         return (false);
     }
-    DEBUG_PRINTF("\n============================== SERVER RESPONSE BEGIN ==============================\n\n", "");
-    DEBUG_PRINTF("%s\n", server_response.c_str());
-    DEBUG_PRINTF("\n=============================== SERVER RESPONSE END ===============================\n\n", "");
-    i = server_response.indexOf("{\"access_token\":\"");
-    if (i == -1)
+    client1.setInsecure();
+    client1.setTimeout(10);
+    if (!client1.connect(server, 443))
     {
-        DEBUG_PRINTF("\nError! Server response came without the Access Token\n\n", "");
-        if (!ft_checksum(rtc_g.Secret, rtc_g.secret_checksum))
-        {
-            DEBUG_PRINTF("The error occured due to corrupted Secret token. Resolving...\n\n", "");
-            ft_data_restore(rtc_g.Secret, rtc_g.secret_checksum);
-        }
-        else
-            DEBUG_PRINTF("The error occured due to unknown reason.\n\n", "");
+        DEBUG_PRINTF("\n[INTRA] Connection to the server failed\n\n", "");
         return (false);
     }
-    token = server_response.substring(i + 17, i + 81);
-    DEBUG_PRINTF("Access Token has been extracted:\n%s\n", token.c_str());
-    i = server_response.indexOf("\"secret_valid_until\":");
-    if (i == -1)
-        DEBUG_PRINTF("Secret expiration date was not found in the server response\n\n", "");
-    else
-    {
-        rtc_g.secret_expiration = server_response.substring(i + 21, i + 31).toInt();
-        DEBUG_PRINTF("The secret expires on %d (UNIX timestamp format)\n", rtc_g.secret_expiration);
-        if (ft_unix_timestamp_decoder(&expire_day, &expire_month, &expire_year))
-        {
-            DEBUG_PRINTF("The secret expires on %d.", expire_day);
-            DEBUG_PRINTF("%d.", expire_month);
-            DEBUG_PRINTF("%d\n", expire_year);
-            days_left = ft_expiration_counter();
-            DEBUG_PRINTF("The secret days left: %d\n\n", days_left);
-        }
-    }
-    server_response.clear();
+    return (true);
+}
+
+bool  ft_fetch_exams(void)
+{
+    const char* server PROGMEM = "api.intra.42.fr";
+    String      server_response;
+    int         i;
+    String      token;
+    String      day;
+    String      month;
+    String      api_call;
+
+    if (!ft_intra_connect(server))
+        return (false);
+    ft_access_server(server);
+    if (!ft_handle_server_response(server, &token))
+        return (false);
+    
 
 // REQUESTING THE EXAMS INFORMATION FROM THE SERVER 
     if (rtc_g.month < 10)
@@ -132,7 +165,7 @@ bool  ft_fetch_exams(void)
 // READING THE SERVER RESPONSE. EXTRACTING & EVALUATING THE EXAMS INFORMATION
     server_response = client1.readString();
     DEBUG_PRINTF("\n============================== SERVER RESPONSE BEGIN ==============================\n\n", "");
-    DEBUG_PRINTF("%s\n", server_response.c_str());
+    DEBUG_PRINTF("%s", server_response.c_str());
     DEBUG_PRINTF("\n=============================== SERVER RESPONSE END ===============================\n\n", "");
     if (server_response.length() <= 0)
     {
