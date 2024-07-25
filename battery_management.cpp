@@ -49,9 +49,8 @@ void  ft_battery_check(void)
         i++;
     }
     battery = battery / i;
-    ft_wifi_connect();
     if (WiFi.status() != WL_CONNECTED)
-        WiFi.reconnect();
+        ft_wifi_connect();
     if (battery < 400)
     {
         ft_display_cluster_number(LOW_BATTERY);
