@@ -29,7 +29,6 @@ extern WiFiClientSecure client1;
 extern UniversalTelegramBot bot;
 
 struct rtc_global_variables {
-    bool     spiffs_state;
     bool     warning_active;
     bool     ota;
     bool     reboot;
