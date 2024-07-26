@@ -20,7 +20,6 @@ void IRAM_ATTR  ft_brownout_sequence(void)
 
 void  ft_poweron_sequence(void)
 {
-//    ft_display_bitmap_with_refresh(bootup_screen_img);
     if (!LittleFS.exists("/secret.txt"))
     {
         DEBUG_PRINTF("\n[FILE SYSTEM] The secret.txt file does not exist. Creating...\n", "");
@@ -53,7 +52,6 @@ void  ft_poweron_sequence(void)
     DEBUG_PRINTF("[FILE SYSTEM] The rtc_g.chat_id variable has been set to %d\n", rtc_g.chat_id);
     rtc_g.warning_active = false;
     DEBUG_PRINTF("Power-down Recovery was performed.\n\n", "");
-//    ft_delay(3000);
 }
 
 void  ft_power_down_recovery(void)

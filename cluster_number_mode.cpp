@@ -32,7 +32,8 @@ void  ft_cluster_number_mode(unsigned int* p_sleep_length)
     int8_t                       days_left;
 
     intra_connected = false;
-    ft_wifi_connect();
+    if (WiFi.status() != WL_CONNECTED)
+        ft_wifi_connect();
     ft_telegram_check();
     if (!ft_get_time())
     {
@@ -81,7 +82,7 @@ void  ft_cluster_number_mode(unsigned int* p_sleep_length)
     if (!intra_connected)
         return;
     days_left = ft_expiration_counter();
-    if (days_left <= 3 && days_left != -128)
+    if (days_left <= 3 && days_left != FAILED_TO_COUNT)
     {
         ft_display_cluster_number(SECRET_EXPIRED);
         bot.sendMessage(rtc_g.chat_id, ft_compose_message(SECRET_EXPIRED, days_left), "");

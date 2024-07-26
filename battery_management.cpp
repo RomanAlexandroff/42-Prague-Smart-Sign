@@ -18,9 +18,9 @@ static bool ft_charging_detection(int16_t battery)
     int8_t   counter;
     int16_t  new_result;
 
-    i = 5;
+    i = 0;
     counter = 0;
-    while(i)
+    while(i < BATTERY_SAMPLES_LIMIT)
     {
         new_result = adc1_get_raw(ADC1_CHANNEL_0);
         if (new_result < 550)
@@ -28,7 +28,7 @@ static bool ft_charging_detection(int16_t battery)
         if ((battery - new_result) > 0)
             counter++;
         battery = new_result;
-        i--;
+        i++;
         delay(60000);
     }
     if (counter >= 4)
@@ -42,15 +42,16 @@ void  ft_battery_check(void)
     int16_t battery;
 
     i = 0;
-    while (i < 10)
+    while (i < BATTERY_SAMPLES_LIMIT)
     {
         battery += adc1_get_raw(ADC1_CHANNEL_0);
         delay(100);
         i++;
     }
     battery = battery / i;
-    if (WiFi.status() != WL_CONNECTED)
-        ft_wifi_connect();
+    if (battery >= 800)
+        return;
+    ft_wifi_connect();    
     if (battery < 400)
     {
         ft_display_cluster_number(LOW_BATTERY);

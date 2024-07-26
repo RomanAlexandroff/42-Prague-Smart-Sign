@@ -13,13 +13,16 @@
 #ifndef CONSTANTS_H
 # define CONSTANTS_H
 
-# define SOFTWARE_VERSION        4.02
+# define SOFTWARE_VERSION        4.03
 
 # define CONNECT_TIMEOUT         5                            // in seconds, per each Wi-Fi network
-# define OTA_WAIT_LIMIT          1200                         // in quarters of a second, 1200 == 5 minutes
 # define DEAD_BATTERY_SLEEP      86400000ul                   // in milliseconds, 24 hours
+# define BATTERY_SAMPLES_LIMIT   5
+# define OTA_WAIT_LIMIT          1200                         // for OTA, in quarters of a second, 1200 == 5 minutes
 # define ACTIVE                  "1"                          // for OTA
 # define CLOSED                  "0"                          // for OTA
+# define NOT_FOUND               -1
+# define FAILED_TO_COUNT         -128
 
 # define DIAGNOSTICS_BUTTON      D0
 # define OTA_BUTTON              D1

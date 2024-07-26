@@ -51,7 +51,8 @@ void  ft_exam_mode(unsigned int* p_sleep_length)
 {
     unsigned int              preexam_time;
 
-    ft_wifi_connect();
+    if (WiFi.status() != WL_CONNECTED)
+        ft_wifi_connect();
     ft_get_time();
     ft_fetch_exams();
     if (!rtc_g.exam_status)

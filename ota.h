@@ -23,7 +23,8 @@ void ft_ota_init(void)
     {
         char    fullhostname[21] = "42_Prague_Smart_Sign";
 
-        ft_wifi_connect();
+        if (WiFi.status() != WL_CONNECTED)
+            ft_wifi_connect();
         if (WiFi.status() != WL_CONNECTED)
         {
             DEBUG_PRINTF("Failed to initialise OTA due to Wi-Fi connection issues\n", "");

@@ -55,7 +55,7 @@ int16_t ft_checksum(String input, int16_t checksum)
     if (!str)
     {
         DEBUG_PRINTF("\n[CHECKSUM] Test canceled. No input was provided.\n", "");
-        return (-1);
+        return (NOT_FOUND);
     }
     while (str[i])
     {

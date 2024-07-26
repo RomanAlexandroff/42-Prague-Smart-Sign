@@ -32,7 +32,7 @@ int8_t  ft_expiration_counter(void)
     int       month;
 
     if (!ft_unix_timestamp_decoder(&expire_day, &expire_month, &expire_year))
-        return (-128);
+        return (FAILED_TO_COUNT);
     if (expire_month == rtc_g.month)
         return (expire_day - rtc_g.day);
     else

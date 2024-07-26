@@ -20,7 +20,7 @@ static void ft_get_secret_expiration(String server_response)
     uint16_t expire_year;
 
     i = server_response.indexOf("\"secret_valid_until\":");
-    if (i == -1)
+    if (i == NOT_FOUND)
         DEBUG_PRINTF("[INTRA] Secret expiration date was not found in the server response\n\n", "");
     else
     {
@@ -42,7 +42,7 @@ static String ft_get_token(String server_response)
     String  token;
 
     i = server_response.indexOf("{\"access_token\":\"");
-    if (i == -1)
+    if (i == NOT_FOUND)
     {
         DEBUG_PRINTF("\n[INTRA] Error! Server response came without the Access Token\n\n", "");
         if (!ft_checksum(rtc_g.Secret, rtc_g.secret_checksum))
@@ -62,7 +62,6 @@ static String ft_get_token(String server_response)
 static bool  ft_handle_server_response(const char* server, String* token)
 {
     String  server_response;
-    int     i;
 
     server_response = client1.readString();
     if (server_response.length() <= 0)
@@ -172,7 +171,7 @@ bool  ft_fetch_exams(void)
         DEBUG_PRINTF("\nError! Server response to the Exam Time request was not received\n\n", "");
         return (false);
     }
-    if (server_response.indexOf("\"begin_at\":\"") == -1)
+    if (server_response.indexOf("\"begin_at\":\"") == NOT_FOUND)
     {
         DEBUG_PRINTF("\nEXAMS STATUS: As of now, there are no upcoming exams today\n\n", "");
         rtc_g.exam_status = false;
@@ -181,7 +180,7 @@ bool  ft_fetch_exams(void)
     else
     {
         i = 0;
-        while (i != -1)
+        while (i != NOT_FOUND)
         {
             i = server_response.indexOf("\"begin_at\":\"");
             rtc_g.exam_start_hour = server_response.substring(i + 23, i + 25).toInt() + TIME_ZONE;
@@ -207,7 +206,7 @@ bool  ft_fetch_exams(void)
                 rtc_g.exam_status = true;
                 return (true);
             }
-            if (server_response.indexOf("\"begin_at\":\"") == -1)
+            if (server_response.indexOf("\"begin_at\":\"") == NOT_FOUND)
                 break;
         }
         DEBUG_PRINTF("\nEXAMS STATUS: All the detected exams have already passed.\n\n", "");
