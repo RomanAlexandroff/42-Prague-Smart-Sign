@@ -12,6 +12,99 @@
 
 #include "42-Prague-Smart-Sign.h"
 
+static void  ft_get_exam_time(String server_response)
+{
+    int i;
+
+    i = 0;
+    while (i != NOT_FOUND)
+    {
+        i = server_response.indexOf("\"begin_at\":\"");
+        rtc_g.exam_start_hour = server_response.substring(i + 23, i + 25).toInt() + TIME_ZONE;
+        rtc_g.exam_start_minutes = server_response.substring(i + 26, i + 28).toInt();
+        i = server_response.indexOf("\"end_at\":\"");
+        rtc_g.exam_end_hour = server_response.substring(i + 21, i + 23).toInt() + TIME_ZONE;
+        rtc_g.exam_end_minutes = server_response.substring(i + 24, i + 26).toInt();
+        if (rtc_g.daylight_flag)
+        {
+            rtc_g.exam_start_hour += 1;
+            rtc_g.exam_end_hour += 1;
+        }
+        DEBUG_PRINTF("\nEXAMS STATUS: Exam information detected\n", "");
+        DEBUG_PRINTF("-- Begins at %d:", rtc_g.exam_start_hour);
+        DEBUG_PRINTF("%d0\n", rtc_g.exam_start_minutes);
+        DEBUG_PRINTF("-- Ends at %d:", rtc_g.exam_end_hour);
+        DEBUG_PRINTF("%d0\n", rtc_g.exam_end_minutes);
+        if (rtc_g.exam_end_hour <= rtc_g.hour)
+            server_response = server_response.substring(i + 34); 
+        else
+        {
+            DEBUG_PRINTF("\nEXAMS STATUS: Active Exam found!\n\n", "");
+            rtc_g.exam_status = true;
+        }
+        if (server_response.indexOf("\"begin_at\":\"") == NOT_FOUND)
+            break;
+    }
+    DEBUG_PRINTF("\nEXAMS STATUS: All the detected exams have already passed.\n\n", "");
+    rtc_g.exam_status = false;
+}
+
+static bool  ft_handle_exams_info(void)
+{
+    String  server_response;
+
+    server_response = client1.readString();
+    DEBUG_PRINTF("\n============================== SERVER RESPONSE BEGIN ==============================\n\n", "");
+    DEBUG_PRINTF("%s", server_response.c_str());
+    DEBUG_PRINTF("\n=============================== SERVER RESPONSE END ===============================\n\n", "");
+    if (server_response.length() <= 0)
+    {
+        DEBUG_PRINTF("\nError! Server response to the Exam Time request was not received\n\n", "");
+        return (false);
+    }
+    if (server_response.indexOf("\"begin_at\":\"") == NOT_FOUND)
+    {
+        DEBUG_PRINTF("\nEXAMS STATUS: As of now, there are no upcoming exams today\n\n", "");
+        rtc_g.exam_status = false;
+        return (true);
+    }
+    else
+        ft_get_exam_time(server_response);
+    return (true);
+}
+
+static void  ft_request_exams_info(const char* server, String* token)
+{
+    String  day;
+    String  month;
+    String  api_call;
+
+    if (rtc_g.month < 10)
+        month = "0" + String(rtc_g.month);
+    else
+        month = String(rtc_g.month);
+    if (rtc_g.day < 10)
+        day = "0" + String(rtc_g.day);
+    else
+        day = String(rtc_g.day);
+    api_call = "https://api.intra.42.fr/v2/campus/";
+    api_call += CAMPUS_ID;
+    api_call += "/exams?filter[location]=";
+    api_call += CLUSTER_ID;
+    api_call += "&range[begin_at]=";
+    api_call += String(rtc_g.year) + "-" + month + "-" + day + "T05:00:00.000Z,";
+    api_call += String(rtc_g.year) + "-" + month + "-" + day + "T21:00:00.000Z";
+    client1.print("GET ");
+    client1.print(api_call);
+    client1.println(" HTTP/1.1");
+    client1.print("Host: ");
+    client1.println(server);
+    client1.print("Authorization: Bearer ");
+    client1.println(*token);
+    client1.println("Connection: close");
+    client1.println();
+}
+
 static void ft_get_secret_expiration(String server_response)
 {
     int      i;
@@ -120,98 +213,16 @@ static bool  ft_intra_connect(const char* server)
 bool  ft_fetch_exams(void)
 {
     const char* server PROGMEM = "api.intra.42.fr";
-    String      server_response;
-    int         i;
     String      token;
-    String      day;
-    String      month;
-    String      api_call;
 
     if (!ft_intra_connect(server))
         return (false);
     ft_access_server(server);
     if (!ft_handle_server_response(server, &token))
         return (false);
-    
-
-// REQUESTING THE EXAMS INFORMATION FROM THE SERVER 
-    if (rtc_g.month < 10)
-        month = "0" + String(rtc_g.month);
-    else
-        month = String(rtc_g.month);
-    if (rtc_g.day < 10)
-        day = "0" + String(rtc_g.day);
-    else
-        day = String(rtc_g.day);
-    api_call = "https://api.intra.42.fr/v2/campus/";
-    api_call += CAMPUS_ID;
-    api_call += "/exams?filter[location]=";
-    api_call += CLUSTER_ID;
-    api_call += "&range[begin_at]=";
-    api_call += String(rtc_g.year) + "-" + month + "-" + day + "T05:00:00.000Z,";
-    api_call += String(rtc_g.year) + "-" + month + "-" + day + "T21:00:00.000Z";
-    
-    client1.print("GET ");
-    client1.print(api_call);
-    client1.println(" HTTP/1.1");
-    client1.print("Host: ");
-    client1.println(server);
-    client1.print("Authorization: Bearer ");
-    client1.println(token);
-    client1.println("Connection: close");
-    client1.println();
-
-// READING THE SERVER RESPONSE. EXTRACTING & EVALUATING THE EXAMS INFORMATION
-    server_response = client1.readString();
-    DEBUG_PRINTF("\n============================== SERVER RESPONSE BEGIN ==============================\n\n", "");
-    DEBUG_PRINTF("%s", server_response.c_str());
-    DEBUG_PRINTF("\n=============================== SERVER RESPONSE END ===============================\n\n", "");
-    if (server_response.length() <= 0)
-    {
-        DEBUG_PRINTF("\nError! Server response to the Exam Time request was not received\n\n", "");
+    ft_request_exams_info(server, &token);
+    if (!ft_handle_exams_info())
         return (false);
-    }
-    if (server_response.indexOf("\"begin_at\":\"") == NOT_FOUND)
-    {
-        DEBUG_PRINTF("\nEXAMS STATUS: As of now, there are no upcoming exams today\n\n", "");
-        rtc_g.exam_status = false;
-        return (true);
-    }
-    else
-    {
-        i = 0;
-        while (i != NOT_FOUND)
-        {
-            i = server_response.indexOf("\"begin_at\":\"");
-            rtc_g.exam_start_hour = server_response.substring(i + 23, i + 25).toInt() + TIME_ZONE;
-            rtc_g.exam_start_minutes = server_response.substring(i + 26, i + 28).toInt();
-            i = server_response.indexOf("\"end_at\":\"");
-            rtc_g.exam_end_hour = server_response.substring(i + 21, i + 23).toInt() + TIME_ZONE;
-            rtc_g.exam_end_minutes = server_response.substring(i + 24, i + 26).toInt();
-            if (rtc_g.daylight_flag)
-            {
-                rtc_g.exam_start_hour += 1;
-                rtc_g.exam_end_hour += 1;
-            }
-            DEBUG_PRINTF("\nEXAMS STATUS: Exam information detected\n", "");
-            DEBUG_PRINTF("-- Begins at %d:", rtc_g.exam_start_hour);
-            DEBUG_PRINTF("%d0\n", rtc_g.exam_start_minutes);
-            DEBUG_PRINTF("-- Ends at %d:", rtc_g.exam_end_hour);
-            DEBUG_PRINTF("%d0\n", rtc_g.exam_end_minutes);
-            if (rtc_g.exam_end_hour <= rtc_g.hour)
-                server_response = server_response.substring(i + 34); 
-            else
-            {
-                DEBUG_PRINTF("\nEXAMS STATUS: Active Exam found!\n\n", "");
-                rtc_g.exam_status = true;
-                return (true);
-            }
-            if (server_response.indexOf("\"begin_at\":\"") == NOT_FOUND)
-                break;
-        }
-        DEBUG_PRINTF("\nEXAMS STATUS: All the detected exams have already passed.\n\n", "");
-        rtc_g.exam_status = false;
-    }
     client1.stop();
     return (true);
 }
