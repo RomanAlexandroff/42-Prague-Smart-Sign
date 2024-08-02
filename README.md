@@ -19,18 +19,19 @@
 
 Welcome to the README for the 42 Prague Smart Sign — a self-sufficient information display designed to be installed on a cluster door. Its purpose is to notify students when the cluster is reserved for an exam and prevent them from accidental entering. The device automatically retrieves exam dates from Intra and displays appropriate warnings and information on its e-paper screen. In the spare time it simply displays the cluster number.
 
+For more information please refer to the technical documentation in this repository.
+
 
 ## Usage
 
 Once the 42 Prague Smart Sign is installed and powered on, it will automatically retrieve exam dates from Intra and update the display accordingly. The device operates in the following states:
 1. **Normal state**: The device displays only the number of the cluster.
-2. **Pre-exam warning**: On the day of an exam, the device adds a small warning sign indicating an upcoming exam later in the day.
-3. **1-hour countdown**: 1 hour before the exam starts a countdown. The device displays a big warning sign with the minutes left until the exam.
-4. **Exam in progress**: During the exam, the device displays a big red warning sign with the exact exam end time.
-4. **Last hour of exam**: The exact time changes into a countdown.
+2. **Pre-exam warning**: On the day of an exam, the device adds a small warning note informing about an upcoming exam later in the day. This way students who want to settle in the room may plan their work with the cluster availability limitations in mind.
+3. **1-hour countdown**: 1 hour before the exam a countdown starts. The device displays a big sign with the minutes left until the exam, telling students that it is time to vacate the room.
+4. **Exam in progress**: During the exam, the device displays a big bright-red warning sign indicating the ongoing exam. The drastically changed colour pallet attracts attention, increasing the sign's efficiency.
 5. **Post-exam state**: After the exam ends, the device returns to its normal state, displaying the number of the cluster.
 
-The device operates fully automatically and does not require any input from school personnel.
+The device operates fully automatically and does not require any input from the school personnel.
 
 
 ## Features
@@ -38,7 +39,6 @@ The device operates fully automatically and does not require any input from scho
 - Automatic check of exam dates and time on Intra;
 - Automatic battery charge monitoring;
 - Deep Sleep mode: the microcontroller wakes up only when it has a task to do, drastically saving the battery charge;
-- Touch pad: control the device with an array of touch buttons with custom features;
 - Over The Air firmware update: develop and upload new features from anywhere at school.
 
 
@@ -83,14 +83,6 @@ Contributions to the 42 Prague Smart Sign project are welcome! If you have any i
 When contributing, please adhere to the existing code style and follow the established guidelines. Clearly describe your changes and provide any necessary documentation or tests.
 
 
-## Calculating Default Constants for the Battery Charge Function
-
-You will need to check the following little utility:
-https://github.com/RomanAlexandroff/ESP-Battery-Charge-Utility
-      
-It was designed to be a universal solution for battery charge level detection in ESP-based projects and has all the instructions inside of it.
-
-
 ## Conclusion
 
-Thank you for your interest in the 42 Prague Smart Sign project! We hope this README provides you with the necessary information to understand the project's purpose, features, installation process, usage, and maintenance. If you have any further questions or need assistance, please don't hesitate to reach out. Happy coding!
+Thank you for your interest in the 42 Prague Smart Sign project! We hope this README provides you with the necessary information to understand the project's purpose, features, installation process, usage, and maintenance. If you did not find the information you need, please, refer to the technical documentation in this repository. If you have any further questions or need assistance, please don't hesitate to reach out. Happy coding!
