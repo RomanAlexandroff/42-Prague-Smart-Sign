@@ -99,8 +99,8 @@ void                  ft_serial_init(void);
 void                  ft_wifi_connect(void);
 
 // power_down_recovery.cpp
-void IRAM_ATTR        ft_brownout_sequence(void);
-void                  ft_poweron_sequence(void);
+static void IRAM_ATTR ft_brownout_sequence(void);
+static void           ft_poweron_sequence(void);
 void                  ft_power_down_recovery(void);
 
 // telegram_bot.cpp

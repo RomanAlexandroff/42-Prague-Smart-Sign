@@ -12,13 +12,13 @@
 
 #include "42-Prague-Smart-Sign.h"
 
-void IRAM_ATTR  ft_brownout_sequence(void)
+static void IRAM_ATTR  ft_brownout_sequence(void)
 {
     DEBUG_PRINTF("\nReset reason: Brown-out reset. Going into extensive sleep\n", "");
     ft_go_to_sleep(DEAD_BATTERY_SLEEP);
 }
 
-void  ft_poweron_sequence(void)
+static void  ft_poweron_sequence(void)
 {
     if (!LittleFS.exists("/secret.txt"))
     {
