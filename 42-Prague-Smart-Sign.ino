@@ -26,6 +26,12 @@ void  setup(void)
 //    ft_ota_init();                 // firewall blocks OTA over Wi-Fi
 }
 
+void  loop(void)
+{
+//    ft_ota_waiting_loop();         // firewall blocks OTA over Wi-Fi
+    ft_pathfinder();
+}
+
 static void  ft_pathfinder(void)
 {
     unsigned int  sleep_length;
@@ -36,11 +42,5 @@ static void  ft_pathfinder(void)
         ft_cluster_number_mode(&sleep_length);
     ft_go_to_sleep(sleep_length);
     DEBUG_PRINTF("  ---- This message will never be printed out", "");
-}
-
-void  loop(void)
-{
-//    ft_ota_waiting_loop();         // firewall blocks OTA over Wi-Fi
-    ft_pathfinder();
 }
  

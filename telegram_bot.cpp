@@ -135,16 +135,16 @@ static void  ft_new_messages(short message_count)
     String  text;
 
     i = 0;
-    DEBUG_PRINTF("\nHandling new Telegram messages\n", "");
-    DEBUG_PRINTF("Number of messages to handle: %d\n", message_count);
+    DEBUG_PRINTF("\n[TELEGRAM BOT] Handling new Telegram messages\n", "");
+    DEBUG_PRINTF("[TELEGRAM BOT] Number of messages to handle: %d\n", message_count);
     while (i < message_count) 
     {
-        DEBUG_PRINTF("Handling loop iterations: i = %d\n", i);
+        DEBUG_PRINTF("[TELEGRAM BOT] Handling loop iterations: i = %d\n", i);
         rtc_g.chat_id = String(bot.messages[i].chat_id);
         ft_write_spiffs_file("/chat_id.txt", rtc_g.chat_id);
         text = bot.messages[i].text;
         rtc_g.from_name = bot.messages[i].from_name;
-        DEBUG_PRINTF("%s says: ", rtc_g.from_name.c_str());
+        DEBUG_PRINTF("[TELEGRAM BOT] %s says: ", rtc_g.from_name.c_str());
         DEBUG_PRINTF("%s\n\n", text.c_str());
         ft_reply_machine(text);
         i++;
@@ -167,6 +167,6 @@ void  ft_telegram_check(void)
         }
     }
     if (rtc_g.reboot)
-        ESP.restart();
+        ESP.restart();                              // warning! erases ALL variables values, even from global RTC variables!
 }
  

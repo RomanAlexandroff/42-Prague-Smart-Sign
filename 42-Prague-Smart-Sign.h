@@ -72,7 +72,7 @@ static void           ft_draw_exam_start_time(void);
 static void           ft_draw_bitmap_partial_update(const unsigned char* image, uint16_t width, uint16_t height);
 static void           ft_draw_bitmap_full_update(const unsigned char* image, uint16_t width, uint16_t height);
 void IRAM_ATTR        ft_display_cluster_number(uint8_t mode);
-bool IRAM_ATTR        ft_clear_display(bool errase_display);
+void                  ft_clear_display(void);
 void IRAM_ATTR        ft_display_init(void);
 
 // exam_mode.cpp
@@ -116,7 +116,7 @@ bool                  ft_get_time(void);
 unsigned int          ft_time_till_event(int8_t hours, uint8_t minutes);
 int                   ft_time_sync(unsigned int preexam_time);
 
-# include "ota.h"                                                   // has to be here 
+# include "ota.h"                                                   // has to be here
 
 #endif
  

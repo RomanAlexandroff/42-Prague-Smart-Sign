@@ -184,15 +184,10 @@ void IRAM_ATTR  ft_display_cluster_number(uint8_t mode)
     }
 }
 
-bool IRAM_ATTR   ft_clear_display(bool errase_display)
+void  ft_clear_display(void)
 {
-    if (errase_display)
-    {
-        display.clearScreen();
-        display.writeScreenBuffer();
-        errase_display = false;
-    }
-    return (errase_display);
+    display.clearScreen();
+    display.writeScreenBuffer();
 }
 
 void IRAM_ATTR  ft_display_init(void)

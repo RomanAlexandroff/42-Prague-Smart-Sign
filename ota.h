@@ -50,7 +50,7 @@ void ft_ota_init(void)
                 ft_write_spiffs_file("/ota.txt", CLOSED);
                 bot.sendMessage(rtc_g.chat_id, "Successfully updated!", "");
                 ft_delay(5000);
-                ft_clear_display(true);
+                ft_clear_display();
                 display.powerOff();
             })
             .onProgress([](unsigned int progress, unsigned int total) {
@@ -66,7 +66,7 @@ void ft_ota_init(void)
                 else if (error == OTA_END_ERROR) DEBUG_PRINTF("End Failed\n", "");
                 bot.sendMessage(rtc_g.chat_id, "Something went wrong. Updating was not completed. Try again later", "");
                 ft_delay(3000);
-                ft_clear_display(true);
+                ft_clear_display();
                 ESP.restart();
             });
         ft_display_cluster_number(OTA_WAITING);
