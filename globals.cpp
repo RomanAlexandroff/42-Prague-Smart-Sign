@@ -18,6 +18,6 @@ WiFiClientSecure client1;
 UniversalTelegramBot bot(BOT_TOKEN, client);
 
 RTC_DATA_ATTR struct rtc_global_variables rtc_g = {
-    .reboot = false,
+    .ota = false,
 };
  

@@ -94,17 +94,7 @@ static void ft_reply_machine(String text)
     }
     else if (text == "/ota")
     {
-        if (rtc_g.ota == false)
-        {
-            ft_write_spiffs_file("/ota.txt", ACTIVE);
-            rtc_g.reboot = true;
-        }
-        else
-        {
-            rtc_g.ota = false;
-            ft_write_spiffs_file("/ota.txt", CLOSED);
-            rtc_g.reboot = false;
-        }
+        rtc_g.ota = true;
         return;
     }
     else
@@ -156,17 +146,12 @@ void  ft_telegram_check(void)
     short message_count;
 
     if (WiFi.status() != WL_CONNECTED)
-        WiFi.reconnect();
-    else
-    {     
+        ft_wifi_connect();  
+    message_count = bot.getUpdates(bot.last_message_received + 1);
+    while (message_count)
+    {
+        ft_new_messages(message_count);
         message_count = bot.getUpdates(bot.last_message_received + 1);
-        while (message_count)
-        {
-            ft_new_messages(message_count);
-            message_count = bot.getUpdates(bot.last_message_received + 1);
-        }
     }
-    if (rtc_g.reboot)
-        ESP.restart();                              // warning! erases ALL variables values, even from global RTC variables!
 }
  

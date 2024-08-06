@@ -33,14 +33,6 @@ static void  ft_poweron_sequence(void)
         rtc_g.Secret.trim();
         DEBUG_PRINTF("[FILE SYSTEM] The Secret variable value is now:\n%s\n", rtc_g.Secret.c_str());
     }
-    if (!LittleFS.exists("/ota.txt"))
-    {
-        DEBUG_PRINTF("\n[FILE SYSTEM] The ota.txt file does not exist. Creating...\n", "");
-        ft_write_spiffs_file("/ota.txt", CLOSED);
-        DEBUG_PRINTF("[FILE SYSTEM] ota.txt file created. The rtc_g.ota value is recorded as %d\n", ft_read_spiffs_file("/ota.txt").toInt() != 0);
-    }
-    rtc_g.ota = ft_read_spiffs_file("/ota.txt").toInt() != 0;
-    DEBUG_PRINTF("[FILE SYSTEM] The rtc_g.ota variable has been set to %d\n", rtc_g.ota);
     if (!LittleFS.exists("/chat_id.txt"))
     {
         DEBUG_PRINTF("\n[FILE SYSTEM] The chat_id.txt file does not exist. Creating...\n", "");

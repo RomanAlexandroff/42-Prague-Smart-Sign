@@ -35,7 +35,6 @@ void  ft_cluster_number_mode(unsigned int* p_sleep_length)
     intra_connected = false;
     if (WiFi.status() != WL_CONNECTED)
         ft_wifi_connect();
-    ft_telegram_check();
     while (!ft_get_time() && retries < RETRIES_LIMIT)
     {
         retries++;

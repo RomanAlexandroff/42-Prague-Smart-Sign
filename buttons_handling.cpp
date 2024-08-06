@@ -21,13 +21,6 @@ void IRAM_ATTR  isr_ota(void)
 {
     DEBUG_PRINTF("  ---- OTA Button was pressed\n", "");
     rtc_g.ota = !rtc_g.ota;
-    if (rtc_g.ota == true)
-    {
-        ft_write_spiffs_file("/ota.txt", ACTIVE);
-        ESP.restart();
-    }
-    else
-        ft_write_spiffs_file("/ota.txt", CLOSED);
 }
 
 void IRAM_ATTR  isr_warning(void)

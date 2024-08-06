@@ -13,14 +13,12 @@
 #ifndef CONSTANTS_H
 # define CONSTANTS_H
 
-# define SOFTWARE_VERSION        4.04
+# define SOFTWARE_VERSION        4.05
 
 # define CONNECT_TIMEOUT         5                            // in seconds
 # define DEAD_BATTERY_SLEEP      86400000ul                   // in milliseconds, 24 hours
 # define BATTERY_SAMPLES_LIMIT   5
 # define OTA_WAIT_LIMIT          1200                         // for OTA, in quarters of a second, 1200 == 5 minutes
-# define ACTIVE                  "1"                          // for OTA
-# define CLOSED                  "0"                          // for OTA
 # define RETRIES_LIMIT           3
 # define NOT_FOUND               -1
 # define FAILED_TO_COUNT         -128

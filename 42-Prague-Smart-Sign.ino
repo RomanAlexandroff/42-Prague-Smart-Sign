@@ -23,6 +23,7 @@ void  setup(void)
     ft_display_init();
     ft_power_down_recovery();
     ft_battery_check();
+    ft_telegram_check();
 //    ft_ota_init();                 // firewall blocks OTA over Wi-Fi
 }
 

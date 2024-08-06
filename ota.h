@@ -27,7 +27,7 @@ void ft_ota_init(void)
             ft_wifi_connect();
         if (WiFi.status() != WL_CONNECTED)
         {
-            DEBUG_PRINTF("Failed to initialise OTA due to Wi-Fi connection issues\n", "");
+            DEBUG_PRINTF("[OTA] Failed to initialise OTA due to Wi-Fi connection issues\n", "");
             rtc_g.ota = false;
             return;
         }
@@ -47,7 +47,6 @@ void ft_ota_init(void)
                 ft_display_cluster_number(OTA_SUCCESS);
                 DEBUG_PRINTF("\n[OTA] End", "");
                 rtc_g.ota = false;
-                ft_write_spiffs_file("/ota.txt", CLOSED);
                 bot.sendMessage(rtc_g.chat_id, "Successfully updated!", "");
                 ft_delay(5000);
                 ft_clear_display();
@@ -90,7 +89,6 @@ void ft_ota_waiting_loop(void)
             delay(2000);
         }
         rtc_g.ota = false;
-        ft_write_spiffs_file("/ota.txt", CLOSED);
         ft_display_cluster_number(OTA_CANCELED);
         bot.sendMessage(rtc_g.chat_id, "OTA Update port closed", "");
         DEBUG_PRINTF("\n[OTA] OTA Update port closed\n", "");
