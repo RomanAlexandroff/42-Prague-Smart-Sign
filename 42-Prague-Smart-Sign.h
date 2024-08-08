@@ -38,7 +38,7 @@
 /* 42-Prague-Smart-Sign.ino */
 static void           ft_pathfinder(void);
 
-/* Intra_interaction.cpp */
+/* intra_interaction.cpp */
 static void           ft_get_exam_time(String server_response);
 static bool           ft_handle_exams_info(void);
 static void           ft_request_exams_info(const char* server, String* token);
