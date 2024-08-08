@@ -49,7 +49,7 @@ static void ft_preexam_warning(unsigned int* p_preexam_time)
 
 void  ft_exam_mode(unsigned int* p_sleep_length)
 {
-    unsigned int              preexam_time;
+    unsigned int  preexam_time;
 
     if (WiFi.status() != WL_CONNECTED)
         ft_wifi_connect();

@@ -79,14 +79,15 @@ void ft_ota_waiting_loop(void)
 {
     if (rtc_g.ota)
     {
-        uint16_t ota_limit = 0;
+        uint16_t ota_limit;
 
+        ota_limit = 0;
         while (rtc_g.ota && ota_limit < OTA_WAIT_LIMIT)
         {
             ArduinoOTA.handle();
             DEBUG_PRINTF("\n[OTA] Active", "");
             ota_limit++;
-            delay(2000);
+            delay(1000);
         }
         rtc_g.ota = false;
         ft_display_cluster_number(OTA_CANCELED);
