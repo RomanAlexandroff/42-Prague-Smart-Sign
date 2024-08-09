@@ -23,11 +23,11 @@ bool ft_secret_verification(String input)
 
 bool ft_data_restore(String input, int16_t checksum)
 {
-    String  buf;
+    String  buffer;
 
-    buf = ft_read_spiffs_file("/secret.txt");
-    buf.trim();
-    if (!ft_checksum(buf, checksum))
+    buffer = ft_read_spiffs_file("/secret.txt");
+    buffer.trim();
+    if (!ft_checksum(buffer, checksum))
     {
         DEBUG_PRINTF("\nUnable to restore the Secret token. ", "");
         DEBUG_PRINTF("Contacting User %s for assistance...\n", rtc_g.from_name);
@@ -36,7 +36,7 @@ bool ft_data_restore(String input, int16_t checksum)
     }
     else
     {
-        rtc_g.Secret = buf;
+        rtc_g.Secret = buffer;
         DEBUG_PRINTF("\nFound uncorrupted Secret token in the back up. ", "");
         DEBUG_PRINTF("The Secret has been restored.\n", "");
     }
@@ -79,7 +79,7 @@ int16_t ft_checksum(String input, int16_t checksum)
         return (result);
     }
     DEBUG_PRINTF("\n[CHECKSUM] Unknown error.\n", "");
-    return (-1);
+    return (NOT_FOUND);
 }
 
 short  ft_write_spiffs_file(const char* file_name, String input)

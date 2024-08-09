@@ -12,19 +12,6 @@
 
 #include "42-Prague-Smart-Sign.h"
 
-static unsigned int  ft_time_till_wakeup(void)
-{
-    const uint8_t wakeup_hour[] = {6, 9, 12, 15, 18};
-    uint8_t       i;
-
-    if (rtc_g.hour >= 18)
-        return ((wakeup_hour[0] + 24 - rtc_g.hour) * 3600000 - (rtc_g.minute * 60000) - millis());
-    i = 0;
-    while ((wakeup_hour[i] - rtc_g.hour) <= 0)
-        i++;
-    return ((wakeup_hour[i] - rtc_g.hour) * 3600000 - (rtc_g.minute * 60000) - millis());
-}
-
 void  ft_cluster_number_mode(unsigned int* p_sleep_length)
 {
     uint8_t retries;

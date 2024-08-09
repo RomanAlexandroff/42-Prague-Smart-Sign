@@ -21,6 +21,7 @@
 # define BATTERY_SAMPLES_LIMIT   5
 # define OTA_WAIT_LIMIT          600                          // in seconds, 10 minutes
 # define RETRIES_LIMIT           3
+# define WAKE_UP_HOURS           6, 9, 12, 15, 18
 # define NOT_FOUND               -1
 # define FAILED_TO_COUNT         -128
 
