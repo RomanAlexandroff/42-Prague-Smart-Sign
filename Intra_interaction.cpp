@@ -138,14 +138,7 @@ static String ft_get_token(String server_response)
     if (i == NOT_FOUND)
     {
         DEBUG_PRINTF("\n[INTRA] Error! Server response came without the Access Token\n\n", "");
-        if (!ft_checksum(rtc_g.Secret, rtc_g.secret_checksum))
-        {
-            DEBUG_PRINTF("[INTRA] The error occured due to corrupted Secret token. Resolving...\n\n", "");
-            ft_data_restore(rtc_g.Secret, rtc_g.secret_checksum);
-        }
-        else
-            DEBUG_PRINTF("[INTRA] The error occured due to unknown reason.\n\n", "");
-        return ("ERROR");
+        return ("NOT_FOUND");
     }
     token = server_response.substring(i + 17, i + 81);
     DEBUG_PRINTF("[INTRA] Access Token has been extracted:\n%s\n", token.c_str());
@@ -166,7 +159,7 @@ static bool  ft_handle_server_response(const char* server, String* token)
     DEBUG_PRINTF("%s", server_response.c_str());
     DEBUG_PRINTF("\n=============================== SERVER RESPONSE END ===============================\n\n", "");
     *token = ft_get_token(server_response);
-    if (*token == "ERROR")
+    if (*token == "NOT_FOUND")
         return (false);
     ft_get_secret_expiration(server_response);
     return (true);
@@ -189,6 +182,15 @@ static void  ft_access_server(const char* server)
     client1.println();
     client1.println(auth_request);
     auth_request.clear();
+}
+
+static void ft_secret_check(void)
+{
+    if (!ft_checksum(rtc_g.Secret, &rtc_g.secret_checksum))
+    {
+        DEBUG_PRINTF("[INTRA] Secret token is corrupted. Resolving...\n\n", "");
+        ft_data_restore(&rtc_g.Secret, rtc_g.secret_checksum);
+    }
 }
 
 static bool  ft_intra_connect(const char* server)
@@ -217,6 +219,7 @@ bool  ft_fetch_exams(void)
 
     if (!ft_intra_connect(server))
         return (false);
+    ft_secret_check();
     ft_access_server(server);
     if (!ft_handle_server_response(server, &token))
         return (false);

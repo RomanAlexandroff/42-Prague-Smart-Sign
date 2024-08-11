@@ -21,13 +21,13 @@ bool ft_secret_verification(String input)
     return (true);
 }
 
-bool ft_data_restore(String input, int16_t checksum)
+bool ft_data_restore(String* input, int16_t checksum)
 {
     String  buffer;
 
     buffer = ft_read_spiffs_file("/secret.txt");
     buffer.trim();
-    if (!ft_checksum(buffer, checksum))
+    if (!ft_checksum(buffer, &checksum))
     {
         DEBUG_PRINTF("\nUnable to restore the Secret token. ", "");
         DEBUG_PRINTF("Contacting User %s for assistance...\n", rtc_g.from_name);
@@ -36,14 +36,14 @@ bool ft_data_restore(String input, int16_t checksum)
     }
     else
     {
-        rtc_g.Secret = buffer;
+        *input = buffer;
         DEBUG_PRINTF("\nFound uncorrupted Secret token in the back up. ", "");
         DEBUG_PRINTF("The Secret has been restored.\n", "");
     }
     return (true);
 }
 
-int16_t ft_checksum(String input, int16_t checksum)
+int16_t ft_checksum(String input, int16_t* checksum)
 {
     const char *str;
     uint8_t    i;
@@ -62,20 +62,20 @@ int16_t ft_checksum(String input, int16_t checksum)
         result += str[i];
         i++;
     }
-    if (checksum && checksum == result)
+    if (*checksum && *checksum == result)
     {
         DEBUG_PRINTF("\n[CHECKSUM] Test successfully passed.\n", "");
         return (1);
     }
-    if (checksum && checksum != result)
+    if (*checksum && *checksum != result)
     {
         DEBUG_PRINTF("\n[CHECKSUM] Data corruption detected!\n", "");
         return (0);
     }
-    if (!checksum)
+    if (!*checksum)
     {
         DEBUG_PRINTF("\n[CHECKSUM] New checksum was successfully generated.\n", "");
-        rtc_g.secret_checksum = result;
+        *checksum = result;
         return (result);
     }
     DEBUG_PRINTF("\n[CHECKSUM] Unknown error.\n", "");
