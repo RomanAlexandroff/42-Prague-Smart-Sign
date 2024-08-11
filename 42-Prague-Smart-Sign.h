@@ -46,7 +46,6 @@ static void           ft_get_secret_expiration(String server_response);
 static String         ft_get_token(String server_response);
 static bool           ft_handle_server_response(const char* server, String* token);
 static void           ft_access_server(const char* server);
-static void           ft_secret_check(void);
 static bool           ft_intra_connect(const char* server);
 bool                  ft_fetch_exams(void);
 
@@ -82,8 +81,9 @@ void                  ft_exam_mode(unsigned int* p_sleep_length);
 
 /* file_system.cpp */
 bool                  ft_secret_verification(String text);
-bool                  ft_data_restore(String* input, int16_t checksum);
-int16_t               ft_checksum(String input, int16_t* checksum);
+bool                  ft_data_restore(String* p_input, int16_t checksum, const char* file_name);
+int16_t               ft_checksum(String input, int16_t* p_checksum);
+void                  ft_data_integrity_check(void);
 short                 ft_write_spiffs_file(const char* file_name, String input);
 String                ft_read_spiffs_file(const char* file_name);
 void                  ft_spiffs_init(void);
@@ -99,8 +99,7 @@ void                  ft_serial_init(void);
 void                  ft_wifi_connect(void);
 
 /* power_down_recovery.cpp */
-static void IRAM_ATTR ft_brownout_sequence(void);
-static void           ft_poweron_sequence(void);
+static void IRAM_ATTR ft_brownout_handle(void);
 void                  ft_power_down_recovery(void);
 
 /* telegram_bot.cpp */

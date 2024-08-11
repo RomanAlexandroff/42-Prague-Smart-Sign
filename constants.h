@@ -13,7 +13,7 @@
 #ifndef CONSTANTS_H
 # define CONSTANTS_H
 
-# define SOFTWARE_VERSION        4.05
+# define SOFTWARE_VERSION        4.08
 
 /* General constants */
 # define CONNECT_TIMEOUT         5                            // in seconds
@@ -61,6 +61,7 @@
 # define OTA_SUCCESS             10
 # define OTA_FAIL                11
 # define OTA_CANCELED            12
+# define TELEGRAM_ERROR          13
 
 #endif
  

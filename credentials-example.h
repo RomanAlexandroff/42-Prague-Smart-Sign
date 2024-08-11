@@ -33,6 +33,7 @@
 
 # define DEVICE_NAME     "42 Smart Sign"     // for OTA updates
 
+# define BOT_NAME        "@YourTelegramBotUsername_bot"
 # define BOT_TOKEN       "xxxxxxxxxx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"       // Telegram Bot
 # define SECRET          "x-xxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 # define UID             "x-xxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"

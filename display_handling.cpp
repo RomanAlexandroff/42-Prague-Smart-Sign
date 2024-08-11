@@ -181,6 +181,12 @@ void IRAM_ATTR  ft_display_cluster_number(uint8_t mode)
             ft_draw_text("OTA UPDATE CANCELED", 50, 710);
             displaying_now = OTA_CANCELED;
             break;
+        case TELEGRAM_ERROR:
+            if (displaying_now == TELEGRAM_ERROR)
+                return;
+            ft_draw_text("TELEGRAM BOT ERROR", 50, 710);
+            displaying_now = TELEGRAM_ERROR;
+            break;
     }
 }
 

@@ -12,38 +12,10 @@
 
 #include "42-Prague-Smart-Sign.h"
 
-static void IRAM_ATTR  ft_brownout_sequence(void)
+static void IRAM_ATTR  ft_brownout_handle(void)
 {
     DEBUG_PRINTF("\nReset reason: Brown-out reset. Going into extensive sleep\n", "");
     ft_go_to_sleep(DEAD_BATTERY_SLEEP);
-}
-
-static void  ft_poweron_sequence(void)
-{
-    if (!LittleFS.exists("/secret.txt"))
-    {
-        DEBUG_PRINTF("\n[FILE SYSTEM] The secret.txt file does not exist. Creating...\n", "");
-        ft_write_spiffs_file("/secret.txt", SECRET);
-        DEBUG_PRINTF("[FILE SYSTEM] secret.txt file created. It contains:\n%s\n", ft_read_spiffs_file("/secret.txt").c_str());
-    }
-    if (!ft_secret_verification(rtc_g.Secret))
-    {
-        DEBUG_PRINTF("\n[FILE SYSTEM] The Secret variable value is lost. Restoring...\n", "");
-        rtc_g.Secret = ft_read_spiffs_file("/secret.txt");
-        rtc_g.Secret.trim();
-        DEBUG_PRINTF("[FILE SYSTEM] The Secret variable value is now:\n%s\n", rtc_g.Secret.c_str());
-    }
-    if (!LittleFS.exists("/chat_id.txt"))
-    {
-        DEBUG_PRINTF("\n[FILE SYSTEM] The chat_id.txt file does not exist. Creating...\n", "");
-        ft_write_spiffs_file("/chat_id.txt", "00000000000000000");
-        DEBUG_PRINTF("[FILE SYSTEM] chat_id.txt file created. The rtc_g.chat_id value is recorded as %d\n", ft_read_spiffs_file("/chat_id.txt"));
-    }
-    rtc_g.chat_id = ft_read_spiffs_file("/chat_id.txt");
-    rtc_g.chat_id.trim();
-    DEBUG_PRINTF("[FILE SYSTEM] The rtc_g.chat_id variable has been set to %d\n", rtc_g.chat_id);
-    rtc_g.warning_active = false;
-    DEBUG_PRINTF("Power-down Recovery was performed.\n\n", "");
 }
 
 void  ft_power_down_recovery(void)
@@ -55,19 +27,19 @@ void  ft_power_down_recovery(void)
     switch (reset_reason)
     {
         case ESP_RST_BROWNOUT:
-            ft_brownout_sequence();
+            ft_brownout_handle();
             break;
         case ESP_RST_POWERON:
             DEBUG_PRINTF("\nReset reason: Power-on reset\n", "");
-            ft_poweron_sequence();
             break;
         case ESP_RST_SW:
             DEBUG_PRINTF("\nReset reason: Software reset\n", "");
-            ft_poweron_sequence();
             break;
         case ESP_RST_PANIC:
             DEBUG_PRINTF("\nReset reason: Panic/exception reset\n", "");
             break;
     }
+    ft_data_integrity_check();
+    DEBUG_PRINTF("\nPower-down Recovery was performed.\n\n", "");
 }
  

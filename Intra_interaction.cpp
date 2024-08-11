@@ -184,15 +184,6 @@ static void  ft_access_server(const char* server)
     auth_request.clear();
 }
 
-static void ft_secret_check(void)
-{
-    if (!ft_checksum(rtc_g.Secret, &rtc_g.secret_checksum))
-    {
-        DEBUG_PRINTF("[INTRA] Secret token is corrupted. Resolving...\n\n", "");
-        ft_data_restore(&rtc_g.Secret, rtc_g.secret_checksum);
-    }
-}
-
 static bool  ft_intra_connect(const char* server)
 {
     if (WiFi.status() != WL_CONNECTED)
@@ -219,7 +210,6 @@ bool  ft_fetch_exams(void)
 
     if (!ft_intra_connect(server))
         return (false);
-    ft_secret_check();
     ft_access_server(server);
     if (!ft_handle_server_response(server, &token))
         return (false);
