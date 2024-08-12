@@ -13,7 +13,7 @@
 #ifndef CONSTANTS_H
 # define CONSTANTS_H
 
-# define SOFTWARE_VERSION        4.08
+# define SOFTWARE_VERSION        4.09
 
 /* General constants */
 # define CONNECT_TIMEOUT         5                            // in seconds
@@ -21,7 +21,7 @@
 # define BATTERY_SAMPLES_LIMIT   5
 # define OTA_WAIT_LIMIT          600                          // in seconds, 10 minutes
 # define RETRIES_LIMIT           3
-# define WAKE_UP_HOURS           6, 9, 12, 15, 18
+# define WAKE_UP_HOURS           6, 9, 12, 15, 18, 21
 # define NOT_FOUND               -1
 # define FAILED_TO_COUNT         -128
 
