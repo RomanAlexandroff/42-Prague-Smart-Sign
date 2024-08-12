@@ -21,13 +21,18 @@ bool ft_secret_verification(String input)
     return (true);
 }
 
-bool ft_data_restore(String* p_input, int16_t checksum, const char* file_name)
+bool ft_data_restore(String* p_input, int16_t* checksum, const char* file_name)
 {
     String  buffer;
 
     buffer = ft_read_spiffs_file(file_name);
     buffer.trim();
-    if (!ft_checksum(buffer, &checksum))
+    *p_input = buffer;
+    DEBUG_PRINTF("\n[FILE SYSTEM] Found uncorrupted data in the file %s. ", file_name);
+    DEBUG_PRINTF("Сorresponding value has been restored.\n", "");
+    *checksum = 0;
+    ft_checksum(*p_input, checksum);
+    if (!ft_checksum(*p_input, checksum))
     {
         DEBUG_PRINTF("\n[FILE SYSTEM] Unable to restore data from %s. ", file_name);
         if (String(file_name) == "/chat_id.txt")
@@ -47,12 +52,6 @@ bool ft_data_restore(String* p_input, int16_t checksum, const char* file_name)
             bot.sendMessage(rtc_g.chat_id, ft_compose_message(SECRET_CORRUPTED, 0), "");
         }
         return (false);
-    }
-    else
-    {
-        *p_input = buffer;
-        DEBUG_PRINTF("\n[FILE SYSTEM] Found uncorrupted data in the file %s. ", file_name);
-        DEBUG_PRINTF("Сorresponding value has been restored.\n", "");
     }
     return (true);
 }
@@ -90,7 +89,7 @@ int16_t ft_checksum(String input, int16_t* p_checksum)
     {
         DEBUG_PRINTF("\n[CHECKSUM] New checksum was successfully generated.\n", "");
         *p_checksum = result;
-        return (1);
+        return (0);
     }
     DEBUG_PRINTF("\n[CHECKSUM] Unknown error.\n", "");
     return (NOT_FOUND);
@@ -104,10 +103,10 @@ void  ft_data_integrity_check(void)
         ft_write_spiffs_file("/secret.txt", SECRET);
         DEBUG_PRINTF("\n[FILE SYSTEM] secret.txt file created. It contains:\n%s\n", ft_read_spiffs_file("/secret.txt").c_str());
     }
-    if (!ft_checksum(rtc_g.Secret, &rtc_g.secret_checksum))
+    if (!rtc_g.secret_checksum || !ft_checksum(rtc_g.Secret, &rtc_g.secret_checksum))
     {
         DEBUG_PRINTF("\n[FILE SYSTEM] Secret token is corrupted. Resolving...\n\n", "");
-        ft_data_restore(&rtc_g.Secret, rtc_g.secret_checksum, "/secret.txt");
+        ft_data_restore(&rtc_g.Secret, &rtc_g.secret_checksum, "/secret.txt");
         DEBUG_PRINTF("\n[FILE SYSTEM] The Secret variable value is now:\n%s\n", rtc_g.Secret.c_str());
     }
     if (!LittleFS.exists("/chat_id.txt"))
@@ -116,10 +115,10 @@ void  ft_data_integrity_check(void)
         ft_write_spiffs_file("/chat_id.txt", "00000000000000000");
         DEBUG_PRINTF("\n[FILE SYSTEM] chat_id.txt file created. The rtc_g.chat_id value is recorded as %d\n", ft_read_spiffs_file("/chat_id.txt"));
     }
-    if (!ft_checksum(rtc_g.chat_id, &rtc_g.chat_id_checksum))
+    if (!rtc_g.chat_id_checksum || !ft_checksum(rtc_g.chat_id, &rtc_g.chat_id_checksum))
     {
         DEBUG_PRINTF("\n[FILE SYSTEM] Chat_id is corrupted. Resolving...\n\n", "");
-        ft_data_restore(&rtc_g.chat_id, rtc_g.chat_id_checksum, "/chat_id.txt");
+        ft_data_restore(&rtc_g.chat_id, &rtc_g.chat_id_checksum, "/chat_id.txt");
         DEBUG_PRINTF("\n[FILE SYSTEM] The rtc_g.chat_id variable has been set to \n%s\n", rtc_g.chat_id.c_str());
     }
 }

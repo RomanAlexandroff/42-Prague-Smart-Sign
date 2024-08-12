@@ -14,7 +14,7 @@
 
 static void IRAM_ATTR  ft_brownout_handle(void)
 {
-    DEBUG_PRINTF("\nReset reason: Brown-out reset. Going into extensive sleep\n", "");
+    DEBUG_PRINTF("\n[BOOTING INFO] Processor reset reason: Brown-out reset! Going into extensive sleep\n", "");
     ft_go_to_sleep(DEAD_BATTERY_SLEEP);
 }
 
@@ -30,16 +30,16 @@ void  ft_power_down_recovery(void)
             ft_brownout_handle();
             break;
         case ESP_RST_POWERON:
-            DEBUG_PRINTF("\nReset reason: Power-on reset\n", "");
+            DEBUG_PRINTF("\n[BOOTING INFO] Processor reset reason: Power-on reset\n", "");
             break;
         case ESP_RST_SW:
-            DEBUG_PRINTF("\nReset reason: Software reset\n", "");
+            DEBUG_PRINTF("\n[BOOTING INFO] Processor reset reason: Software reset\n", "");
             break;
         case ESP_RST_PANIC:
-            DEBUG_PRINTF("\nReset reason: Panic/exception reset\n", "");
+            DEBUG_PRINTF("\n[BOOTING INFO] Processor reset reason: Panic/exception reset\n", "");
             break;
     }
     ft_data_integrity_check();
-    DEBUG_PRINTF("\nPower-down Recovery was performed.\n\n", "");
+    DEBUG_PRINTF("\n[BOOTING INFO] Power-down Recovery was performed.\n\n", "");
 }
  
