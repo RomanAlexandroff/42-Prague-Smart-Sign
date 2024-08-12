@@ -28,24 +28,24 @@ void  ft_cluster_number_mode(unsigned int* p_sleep_length)
         if (retries == RETRIES_LIMIT)
         {
             ft_display_cluster_number(INTRA_ERROR);
-            DEBUG_PRINTF("ERROR OBTAINING TIME. Cannot proceed. Turning off\n", "");
+            DEBUG_PRINTF("\n[SYSTEM TIME] ERROR OBTAINING TIME. Cannot proceed. Turning off\n", "");
             *p_sleep_length = ft_time_till_wakeup();
             return;
         }
-        DEBUG_PRINTF("\nRetrying in %d minute(s)\n\n", retries * 5);
+        DEBUG_PRINTF("\n[SYSTEM TIME] Retrying in %d minute(s)\n", retries * 5);
         delay (retries * 300000);
     }
     retries = 0;
     while (!intra_connected && retries < RETRIES_LIMIT)
     {
         delay (retries * 300000);
-        DEBUG_PRINTF("Fetching exams data — try #%d\n\n", retries + 1);
+        DEBUG_PRINTF("\n[INTRA] Fetching exams data — try #%d\n\n", retries + 1);
         intra_connected = ft_fetch_exams();
         retries++;
         if (!intra_connected && retries != RETRIES_LIMIT)
-            DEBUG_PRINTF("\nRetrying in %d minute(s)\n\n", retries * 5);
+            DEBUG_PRINTF("\n[INTRA] Retrying in %d minute(s)\n", retries * 5);
     }
-    if (!intra_connected && rtc_g.hour <= 18)
+    if (!intra_connected)
     {
         ft_display_cluster_number(INTRA_ERROR);
         rtc_g.exam_status = false;

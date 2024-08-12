@@ -30,7 +30,7 @@ static void  ft_get_exam_time(String server_response)
             rtc_g.exam_start_hour += 1;
             rtc_g.exam_end_hour += 1;
         }
-        DEBUG_PRINTF("\nEXAMS STATUS: Exam information detected\n", "");
+        DEBUG_PRINTF("\n[INTRA] EXAM STATUS: Exam information detected\n", "");
         DEBUG_PRINTF("-- Begins at %d:", rtc_g.exam_start_hour);
         DEBUG_PRINTF("%d0\n", rtc_g.exam_start_minutes);
         DEBUG_PRINTF("-- Ends at %d:", rtc_g.exam_end_hour);
@@ -39,13 +39,13 @@ static void  ft_get_exam_time(String server_response)
             server_response = server_response.substring(i + 34); 
         else
         {
-            DEBUG_PRINTF("\nEXAMS STATUS: Active Exam found!\n\n", "");
+            DEBUG_PRINTF("\n[INTRA] EXAM STATUS: Active Exam found!\n\n", "");
             rtc_g.exam_status = true;
         }
         if (server_response.indexOf("\"begin_at\":\"") == NOT_FOUND)
             break;
     }
-    DEBUG_PRINTF("\nEXAMS STATUS: All the detected exams have already passed.\n\n", "");
+    DEBUG_PRINTF("\n[INTRA] EXAM STATUS: All the detected exams have already passed.\n\n", "");
     rtc_g.exam_status = false;
 }
 
@@ -59,12 +59,12 @@ static bool  ft_handle_exams_info(void)
     DEBUG_PRINTF("\n=============================== SERVER RESPONSE END ===============================\n\n", "");
     if (server_response.length() <= 0)
     {
-        DEBUG_PRINTF("\nError! Server response to the Exam Time request was not received\n\n", "");
+        DEBUG_PRINTF("\n[INTRA] Error! Server response to the Exam Time request was not received\n\n", "");
         return (false);
     }
     if (server_response.indexOf("\"begin_at\":\"") == NOT_FOUND)
     {
-        DEBUG_PRINTF("\nEXAMS STATUS: As of now, there are no upcoming exams today\n\n", "");
+        DEBUG_PRINTF("\n[INTRA] EXAM STATUS: As of now, there are no upcoming exams today\n\n", "");
         rtc_g.exam_status = false;
         return (true);
     }

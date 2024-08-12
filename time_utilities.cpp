@@ -50,18 +50,18 @@ bool  ft_get_time(void)
         WiFi.reconnect();
     if (WiFi.status() != WL_CONNECTED)
     {
-        DEBUG_PRINTF("Failed to obtain time due to Wi-Fi connection issues\n", "");
+        DEBUG_PRINTF("\n[SYSTEM TIME] Failed to obtain time due to Wi-Fi connection issues\n", "");
         return (false);
     }
     configTime(gmt_offset_sec, daylight_offset_sec, ntp_server);
     if(!getLocalTime(&time_info))
     {
-        DEBUG_PRINTF("Failed to obtain time from the NTP server\n", "");
+        DEBUG_PRINTF("\n[SYSTEM TIME] Failed to obtain time from the NTP server\n", "");
         return (false);
     }
     if (time_info.tm_isdst < 0)
     {
-        DEBUG_PRINTF("Daylight Saving Time is not available\n", "");
+        DEBUG_PRINTF("\n[SYSTEM TIME] Daylight Saving Time is not available\n", "");
         return (false);
     }
     rtc_g.hour = time_info.tm_hour;
@@ -70,7 +70,7 @@ bool  ft_get_time(void)
     rtc_g.month = 1 + time_info.tm_mon;
     rtc_g.year = 1900 + time_info.tm_year;
     rtc_g.daylight_flag = time_info.tm_isdst;
-    DEBUG_PRINTF("\nObtained time from the NTP server is as follows:\n", "");
+    DEBUG_PRINTF("\n[SYSTEM TIME] Obtained time from the NTP server as follows:\n", "");
     if (rtc_g.daylight_flag)
         DEBUG_PRINTF("  --daylight saving time is ACTIVE (summer time)\n", "");
     else
