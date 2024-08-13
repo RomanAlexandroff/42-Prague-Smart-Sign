@@ -212,10 +212,16 @@ bool  ft_fetch_exams(void)
         return (false);
     ft_access_server(server);
     if (!ft_handle_server_response(server, &token))
+    {
+        client1.stop();
         return (false);
+    }
     ft_request_exams_info(server, &token);
     if (!ft_handle_exams_info())
+    {
+        client1.stop();
         return (false);
+    }
     client1.stop();
     return (true);
 }
