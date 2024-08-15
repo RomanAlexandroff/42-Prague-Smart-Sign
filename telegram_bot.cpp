@@ -44,14 +44,6 @@ String  ft_compose_message(uint8_t subject, int8_t days_left)
         output += "/s-xxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n\n";
         output += "After it is done, I will leave you in pease for another month =)";
     }
-    if (subject == SECRET_CORRUPTED)
-    {
-        output += "I detected that the SECRET token in my memory has been corrupted. ";
-        output += "And now I really need you to send it to me again. ";
-        output += "You do not have to generate a new one if the old one is still good. ";
-        output += "Just don't forget to start the message with a forward slash (/). ";
-        output += "Sorry about this! I very appreciate your help!";
-    }
     if (subject == LOW_BATTERY)
     {
         output += "My battery is low. I am currently sitting on 3%";
@@ -104,7 +96,6 @@ static void ft_reply_machine(String text)
         {
             rtc_g.Secret = text;
             ft_write_spiffs_file("/secret.txt", text);
-            rtc_g.secret_checksum = ft_checksum(rtc_g.Secret, 0);
             message = "Accepted!\nThe SECRET token has been renewed.\n\n";
             message += "Current token now is:\n" + rtc_g.Secret;
             bot.sendMessage(rtc_g.chat_id, message, "");

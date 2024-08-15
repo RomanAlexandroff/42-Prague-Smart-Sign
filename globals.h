@@ -32,10 +32,8 @@ struct rtc_global_variables {
     bool     warning_active;
     bool     ota;
     String   Secret;
-    int16_t  secret_checksum;
     time_t   secret_expiration;
     String   chat_id;
-    int16_t  chat_id_checksum;
     String   from_name;
     bool     exam_status;
     uint16_t exam_start_hour;

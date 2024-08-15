@@ -16,7 +16,7 @@ void  ft_go_to_sleep(uint64_t time_in_millis)
 {
     if (time_in_millis < 10)
         time_in_millis = 10;
-    client.stop();
+//    client.stop();
     display.powerOff();
     ft_buttons_deinit();
     DEBUG_PRINTF("The device was running for %d second(s) this time\n", (millis() / 1000));

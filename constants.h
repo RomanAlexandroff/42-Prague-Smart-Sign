@@ -13,7 +13,7 @@
 #ifndef CONSTANTS_H
 # define CONSTANTS_H
 
-# define SOFTWARE_VERSION        4.10
+# define SOFTWARE_VERSION        4.11
 
 /* General constants */
 # define CONNECT_TIMEOUT         5                            // in seconds
@@ -52,16 +52,15 @@
 # define DEFAULT                 1
 # define INTRA_ERROR             2
 # define SECRET_EXPIRED          3
-# define SECRET_CORRUPTED        4
-# define EXAM_DAY                5
-# define LOW_BATTERY             6
-# define DEAD_BATTERY            7
-# define OTA_WAITING             8
-# define OTA_UPDATING            9
-# define OTA_SUCCESS             10
-# define OTA_FAIL                11
-# define OTA_CANCELED            12
-# define TELEGRAM_ERROR          13
+# define EXAM_DAY                4
+# define LOW_BATTERY             5
+# define DEAD_BATTERY            6
+# define OTA_WAITING             7
+# define OTA_UPDATING            8
+# define OTA_SUCCESS             9
+# define OTA_FAIL                10
+# define OTA_CANCELED            11
+# define TELEGRAM_ERROR          12
 
 #endif
  
