@@ -111,6 +111,7 @@ void                  ft_telegram_check(void);
 int8_t                ft_expiration_counter(void);
 bool                  ft_unix_timestamp_decoder(uint8_t* p_day, uint8_t* p_month, uint16_t* p_year);
 bool                  ft_get_time(void);
+static int            ft_find_last_element(const uint8_t *wakeup_hour);
 unsigned int          ft_time_till_wakeup(void);
 unsigned int          ft_time_till_event(int8_t hours, uint8_t minutes);
 int                   ft_time_sync(unsigned int preexam_time);
