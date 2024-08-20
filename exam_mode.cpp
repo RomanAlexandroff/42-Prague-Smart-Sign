@@ -66,6 +66,6 @@ void  ft_exam_mode(unsigned int* p_sleep_length)
         preexam_time = 0;
     }
     ft_get_time();
-    *p_sleep_length = ft_exam();
+    ft_go_to_sleep(ft_exam());
 }
  
