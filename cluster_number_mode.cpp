@@ -53,7 +53,7 @@ void  ft_cluster_number_mode(unsigned int* p_sleep_length)
     if (rtc_g.exam_status)
     {
         if (rtc_g.hour >= (rtc_g.exam_start_hour - 1) && rtc_g.hour <= rtc_g.exam_end_hour)
-            *p_sleep_length = 10;
+            *p_sleep_length = REBOOT;
         else
         {
             ft_display_cluster_number(EXAM_DAY);

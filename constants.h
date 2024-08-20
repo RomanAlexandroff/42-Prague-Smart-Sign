@@ -13,11 +13,12 @@
 #ifndef CONSTANTS_H
 # define CONSTANTS_H
 
-# define SOFTWARE_VERSION        4.11
+# define SOFTWARE_VERSION        4.12
 
 /* General constants */
 # define CONNECT_TIMEOUT         5                            // in seconds
 # define DEAD_BATTERY_SLEEP      86400000ul                   // in milliseconds, 24 hours
+# define REBOOT                  1000
 # define BATTERY_SAMPLES_LIMIT   5
 # define OTA_WAIT_LIMIT          600                          // in seconds, 10 minutes
 # define RETRIES_LIMIT           3
