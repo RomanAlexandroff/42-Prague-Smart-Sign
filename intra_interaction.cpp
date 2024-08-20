@@ -41,6 +41,7 @@ static void  ft_get_exam_time(String server_response)
         {
             DEBUG_PRINTF("\n[INTRA] EXAM STATUS: Active Exam found!\n\n", "");
             rtc_g.exam_status = true;
+            return;
         }
         if (server_response.indexOf("\"begin_at\":\"") == NOT_FOUND)
             break;
