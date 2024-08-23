@@ -1,0 +1,17 @@
+
+
+
+NAME				SIZE		USAGE					NOTES
+
+github_repo_img.png		1280 × 640	GitHub repository description
+telegram_bot_logo.png		512 × 512	Telegram Bot logo in Telegram app
+cluster_number_img.bmp		630 × 480	Default UI outside of exams		Does not cover the whole screen - to be used with 170×480 images.
+default_cluster_icons.bmp	170 × 480	Default UI outside of exams		Means that there are no exams and no issues. 
+reserve_note_img.bmp		170 × 480	UI. On exam days			Shows the exact time of the closest exam that day.
+secret_expire_img.bmp		170 × 480	UI. Error message			Notifies that the Secret token is expired and the Sign cannot proceed its work.
+intra_error_img.bmp		170 × 480	UI. Error message			The Sign cannot retrieve the exam info because of an issue not caused by the Secret.
+low_battery_img.bmp		170 × 480	UI. Error message			Notifies that the Sign has to be charged as soon as possible	
+preexam_50mins_img.bmp		800 × 480	UI. On exam days, 1 hour before exam	Warns students to leave the cluster. 50 minutes left until the exam				
+preexam_25mins_img.bmp		800 × 480	UI. On exam days, 1 hour before exam	Warns students to leave the cluster. 25 minutes left until the exam
+preexam_5mins_img.bmp		800 × 480	UI. On exam days, 1 hour before exam	Warns students to leave the cluster. 5 minutes left until the exam
+exam_warning_img.bmp		800 × 480	UI. On exam days, during the exam	Warns students not to enter
