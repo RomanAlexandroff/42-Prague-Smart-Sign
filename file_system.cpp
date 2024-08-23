@@ -25,6 +25,10 @@ void ft_data_restore(String* p_input, const char* file_name)
 {
     String  buffer;
 
+    if (p_input == NULL)
+        return;
+    if (!file_name)
+        return;
     buffer = ft_read_spiffs_file(file_name);
     buffer.trim();
     *p_input = buffer;
@@ -61,6 +65,10 @@ short  ft_write_spiffs_file(const char* file_name, String input)
     short i;
 
     i = 1;
+    if (!file_name)
+        return (0);
+    if (input.isEmpty())
+        return (0);
     File file = LittleFS.open(file_name, "w");
     while (!file && i <= 5)
     {
@@ -88,6 +96,8 @@ String  ft_read_spiffs_file(const char* file_name)
     String  output;
 
     i = 1;
+    if (!file_name)
+        return ("0");
     File file = LittleFS.open(file_name, "r");
     while (!file && i <= 5)
     {
