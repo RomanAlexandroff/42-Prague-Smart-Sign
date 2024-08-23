@@ -85,7 +85,7 @@ bool  ft_get_time(void)
 
 static int  ft_find_last_element(const uint8_t *wakeup_hour)
 {
-    return (sizeof(wakeup_hour) / sizeof(wakeup_hour[0]));
+    return (sizeof(wakeup_hour) / sizeof(wakeup_hour[0]) - 1);
 }
 
 unsigned int  ft_time_till_wakeup(void)
