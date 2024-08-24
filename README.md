@@ -57,9 +57,9 @@ The 42 Prague Smart Sign is designed with low-maintenance in mind. The battery c
 
 ## License
 
-The 42 Prague Smart Sign project is licensed under the [MIT License](https://github.com/RomanAlexandroff/42-Prague-Smart-Sign?tab=License-1-ov-file#). You are free to use, modify, and distribute the code according to the terms and conditions of the license.
+The 42 Prague Smart Sign project is licensed. Please, familiarise yourself with the license before using the software or working on it. The text of the license can be found in this repository.
 
-Please note that while the project strives to provide accurate information, it is provided "as is" without any warranty. Use the project at your ownrisk.
+Please note that while the project strives to provide accurate information, it is provided "as is" without any warranty. Use the project at your own risk.
 
 
 ## Regards
@@ -73,6 +73,8 @@ This project is a group effort of various 42 students with support from the 42 P
 - jrathelo, 42 Nice — memory wizard. Helped resolve the microcontroller's RAM overflow.
 
 The project is based on Jean-Marc Zingg's [GxEPD2](https://github.com/ZinggJM/GxEPD2) library for e-paper displays.
+The project uses the [ArduinoOTA](https://github.com/jandrassy/ArduinoOTA) library by Juraj Andrassy for the Over-The-Air software update functionality.
+The Sign's Telegram Bot functionality is provided by Brian Lough's [UniversalTelegramBot](https://github.com/witnessmenow/Universal-Arduino-Telegram-Bot) library.
 
 
 ## Contributing
