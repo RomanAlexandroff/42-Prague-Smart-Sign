@@ -57,7 +57,7 @@ The 42 Prague Smart Sign is designed with low-maintenance in mind. The battery c
 
 ## License
 
-The 42 Prague Smart Sign project is licensed under the [MIT License](https://opensource.org/licenses/MIT). You are free to use, modify, and distribute the code according to the terms and conditions of the license.
+The 42 Prague Smart Sign project is licensed under the [MIT License](https://github.com/RomanAlexandroff/42-Prague-Smart-Sign?tab=License-1-ov-file#). You are free to use, modify, and distribute the code according to the terms and conditions of the license.
 
 Please note that while the project strives to provide accurate information, it is provided "as is" without any warranty. Use the project at your ownrisk.
 
