@@ -1,3 +1,19 @@
+
+DISCLAMER: The « 42 » logo, represented in this project, is the exclusive 
+property of Association 42 and is not included in the MIT lisense of 
+the project. The « 42 » logo constitutes a work protected by current 
+intellectual property laws and owned by Association 42. Any use, reproduction 
+and/or modification and/or representation, partial or whole, of the « 42 » 
+logo performed without prior written consent of Association 42 can constitute 
+an infringement in terms of the Intellectual Property Code and can engage 
+the civil and/or penal liability of the infringer. Obtaining the « 42 » logo
+with the software from this repository does not remove the obligation to have
+the written consent of Association 42 in order to use the software as is.
+If you cannot or do not want to request the consent, please, remove the « 42 »
+logo from the software files before using the software, namely from the image
+called default_cluster_icons, located in the bitmap_library.h file.
+
+
 MIT License
 
 Copyright (c) 2024 RomanAlexandroff
