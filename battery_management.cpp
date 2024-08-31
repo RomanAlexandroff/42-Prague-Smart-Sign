@@ -6,68 +6,38 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 12:59:29 by raleksan          #+#    #+#             */
-/*   Updated: 2024/04/09 12:59:32 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/08/31 09:00:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "42-Prague-Smart-Sign.h"
 
-static bool ft_charging_detection(int16_t battery)
-{
-    int8_t   i;
-    int8_t   counter;
-    int16_t  new_result;
-
-    i = 0;
-    counter = 0;
-    while(i < BATTERY_SAMPLES_LIMIT)
-    {
-        new_result = adc1_get_raw(ADC1_CHANNEL_0);
-        if (new_result < 550)
-            return (false);
-        if ((battery - new_result) > 0)
-            counter++;
-        battery = new_result;
-        i++;
-        delay(60000);
-    }
-    if (counter >= 4)
-        return (false);
-    return (true);
-}
-
 void  ft_battery_check(void)
 {
-    int8_t  i;
+    int8_t  samples_count;
     int16_t battery;
 
-    i = 0;
-    while (i < BATTERY_SAMPLES_LIMIT)
+    samples_count = 0;
+    battery = 0;
+    while (samples_count < BATTERY_SAMPLES_LIMIT)
     {
         battery += adc1_get_raw(ADC1_CHANNEL_0);
         delay(100);
-        i++;
+        samples_count++;
     }
-    battery = battery / i;
-    if (battery >= 800)
+    battery = battery / samples_count;
+    if (battery >= BATTERY_GOOD)
         return;
-    ft_wifi_connect();    
-    if (battery < 400)
+    if (WiFi.status() != WL_CONNECTED)
+        ft_wifi_connect();    
+    if (battery < BATTERY_CRITICAL)
     {
         ft_display_cluster_number(LOW_BATTERY);
         DEBUG_PRINTF("\nBattery is too low. Going into extensive sleep\n", "");
         bot.sendMessage(rtc_g.chat_id, ft_compose_message(DEAD_BATTERY, 0), "");
         ft_go_to_sleep(DEAD_BATTERY_SLEEP);
     }
-    if (battery < 700 && battery > 600)
-    {
-        if (ft_charging_detection(battery))
-        {
-            DEBUG_PRINTF("\nThe device is charging...\n", "");
-            return;
-        }
-    }
-    if (battery < 800)
+    else if (battery < BATTERY_GOOD)
     {
         ft_display_cluster_number(LOW_BATTERY);
         DEBUG_PRINTF("\nLow battery! Need charging!\n", "");
