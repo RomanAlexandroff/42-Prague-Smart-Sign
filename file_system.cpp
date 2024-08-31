@@ -6,7 +6,7 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:02:40 by raleksan          #+#    #+#             */
-/*   Updated: 2024/04/09 13:02:46 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/08/31 16:00:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,7 @@ void ft_data_restore(String* p_input, const char* file_name)
 {
     String  buffer;
 
-    if (p_input == NULL)
-        return;
-    if (!file_name)
+    if (!p_input || !file_name)
         return;
     buffer = ft_read_spiffs_file(file_name);
     buffer.trim();
@@ -62,18 +60,18 @@ void  ft_data_integrity_check(void)
 
 short  ft_write_spiffs_file(const char* file_name, String input)
 {
+    File  file;
     short i;
 
-    i = 1;
-    if (!file_name)
+    i = 0;
+    if (!file_name || input.isEmpty())
         return (0);
-    if (input.isEmpty())
-        return (0);
-    File file = LittleFS.open(file_name, "w");
-    while (!file && i <= 5)
+    while (i < 5)
     {
-        DEBUG_PRINTF("[FILE SYSTEM] An error occurred while opening %s file for writing in LittleFS. Retry.\n", file_name);
         file = LittleFS.open(file_name, "w");
+        if (file)
+            break;
+        DEBUG_PRINTF("[FILE SYSTEM] An error occurred while opening %s file for writing in LittleFS. Retrying.\n", file_name);
         i++;
         delay(100);
     }
@@ -92,24 +90,26 @@ short  ft_write_spiffs_file(const char* file_name, String input)
 
 String  ft_read_spiffs_file(const char* file_name)
 {
+    File    file;
     short   i;
     String  output;
 
-    i = 1;
+    i = 0;
     if (!file_name)
         return ("0");
-    File file = LittleFS.open(file_name, "r");
-    while (!file && i <= 5)
+    while (i < 5)
     {
-        DEBUG_PRINTF("[FILE SYSTEM] An error occurred while opening %s file for reading in LittleFS. Retry.\n", file_name);
-        file = LittleFS.open(file_name, "r");
+        file = LittleFS.open(file_name, "w");
+        if (file)
+            break;
+        DEBUG_PRINTF("[FILE SYSTEM] An error occurred while opening %s file for reading in LittleFS. Retrying.\n", file_name);
         i++;
         delay(100);
     }
     if (!file)
     {
         DEBUG_PRINTF("[FILE SYSTEM] Failed to open %s file for reading in LittleFS. Its dependant function will be unavailable during this programm cycle.\n", file_name);
-        file.close();
+        return ("0");
     }  
     else
     {
@@ -123,12 +123,12 @@ void  ft_spiffs_init(void)
 {
     short i;
 
-    i = 3;
-    if (!LittleFS.begin(true) && i)
+    i = 0;
+    if (!LittleFS.begin(true) && i < 5)
     {
         DEBUG_PRINTF("\n[FILE SYSTEM] Failed to initialise SPIFFS. Retrying...\n", "");
         ft_delay(1000);
-        i--;
+        i++;
     }
     else
     {
