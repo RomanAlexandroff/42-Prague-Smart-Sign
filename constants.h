@@ -6,19 +6,21 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:00:36 by raleksan          #+#    #+#             */
-/*   Updated: 2024/08/08 11:00:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/08/31 09:00:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CONSTANTS_H
 # define CONSTANTS_H
 
-# define SOFTWARE_VERSION        4.12
+# define SOFTWARE_VERSION        4.14
 
 /* General constants */
 # define CONNECT_TIMEOUT         5                            // in seconds
+# define REBOOT                  1000                         // do not change!
 # define DEAD_BATTERY_SLEEP      86400000ul                   // in milliseconds, 24 hours
-# define REBOOT                  1000                         // do not alter!
+# define BATTERY_CRITICAL        400
+# define BATTERY_GOOD            800
 # define BATTERY_SAMPLES_LIMIT   5
 # define OTA_WAIT_LIMIT          600                          // in seconds, 10 minutes
 # define RETRIES_LIMIT           3
