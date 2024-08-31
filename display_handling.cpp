@@ -6,25 +6,18 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:00:56 by raleksan          #+#    #+#             */
-/*   Updated: 2024/04/09 13:00:57 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/08/31 13:00:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "42-Prague-Smart-Sign.h"
 
-void  ft_draw_colour_bitmap(const unsigned char* black_image, const unsigned char* red_image)
-{
-    display.setRotation(0);
-    display.setFullWindow();
-    display.firstPage();
-    do
-    {
-        display.fillScreen(GxEPD_BLACK);
-        display.drawBitmap(0, 0, black_image, 800, 480, GxEPD_WHITE);
-        display.drawBitmap(0, 0, red_image, 800, 480, GxEPD_RED);
-    }
-    while (display.nextPage());
-}
+
+/*
+*   For all the text notes on the right side
+*   (480x170 window) of the cluster number.
+*   Partial display update, text only, no images
+*/
 
 static void  ft_draw_text(String output, uint16_t x, uint16_t y)
 {
@@ -46,6 +39,14 @@ static void  ft_draw_text(String output, uint16_t x, uint16_t y)
     }
     while (display.nextPage());
 }
+
+
+/*
+*   Only for the text note about the exam start
+*   time on the right side (480x170 window) of
+*   the cluster number.
+*   Partial display update, text only, no images
+*/
 
 static void  ft_draw_exam_start_time(void)
 {
@@ -78,6 +79,12 @@ static void  ft_draw_exam_start_time(void)
     display.powerOff();
 }
 
+
+/*
+*   Only for the right-side (480x170) images
+*   Partial display update, Black and white only
+*/
+
 static void ft_draw_bitmap_partial_update(const unsigned char* image, uint16_t width, uint16_t height)
 {
     display.setRotation(0);
@@ -92,6 +99,32 @@ static void ft_draw_bitmap_partial_update(const unsigned char* image, uint16_t w
     display.powerOff();
 }
 
+
+/*
+*   For full-screen b/r/w images.
+*   Full display update, Black-Red-White only
+*/
+
+void  ft_draw_colour_bitmap(const unsigned char* black_image, const unsigned char* red_image)
+{
+    display.setRotation(0);
+    display.setFullWindow();
+    display.firstPage();
+    do
+    {
+        display.fillScreen(GxEPD_BLACK);
+        display.drawBitmap(0, 0, black_image, 800, 480, GxEPD_WHITE);
+        display.drawBitmap(0, 0, red_image, 800, 480, GxEPD_RED);
+    }
+    while (display.nextPage());
+}
+
+
+/*
+*   For any size b/w images.
+*   Full display update, Black-White only
+*/
+
 static void ft_draw_bitmap_full_update(const unsigned char* image, uint16_t width, uint16_t height)
 {
     display.setRotation(0);
@@ -104,6 +137,17 @@ static void ft_draw_bitmap_full_update(const unsigned char* image, uint16_t widt
     }
     while (display.nextPage());
 }
+
+
+/*
+*   This function displays the number of the cluster and
+*   any additional image/message separately.
+*   The function makes sure that whatever is already drawn
+*   on the display does not get drawn repeatedly.
+*   
+*   "displaying_now = CLUSTER" is there to unblock drawing
+*   of ALL the additional images/messages. Useful after exams.
+*/
 
 void IRAM_ATTR  ft_display_cluster_number(uint8_t mode)
 {
