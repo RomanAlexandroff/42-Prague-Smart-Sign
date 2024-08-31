@@ -103,7 +103,7 @@ static void ft_reply_machine(String text)
         else
         {
             message = "I am sorry, but I do not understand \"";
-            message += text + "\"\n\n";
+            message += text + "\".\n";
             message += "You may try to use \"/status\" command";
             bot.sendMessage(rtc_g.chat_id, message, "");
         }
