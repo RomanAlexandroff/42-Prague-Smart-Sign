@@ -6,7 +6,7 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:01:07 by raleksan          #+#    #+#             */
-/*   Updated: 2024/04/09 13:01:09 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/08/31 16:00:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,22 @@ static void ft_preexam_warning(unsigned int* p_preexam_time)
     *p_preexam_time = 0;
 }
 
-void  ft_exam_mode(unsigned int* p_sleep_length)
+
+/*
+*   Under normal circumstances the execution
+*   time of this function is precisely 1 hour.
+*   The function also accounts for situations
+*   when it starts executing too early or too
+*   late due to any timing errors.
+*   
+*   Two calls to get time are not redundant.
+*/
+
+void  ft_exam_mode(void)
 {
     unsigned int  preexam_time;
 
+    preexam_time = 0;
     if (WiFi.status() != WL_CONNECTED)
         ft_wifi_connect();
     ft_get_time();

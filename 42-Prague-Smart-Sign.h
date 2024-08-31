@@ -50,7 +50,6 @@ static bool           ft_intra_connect(const char* server);
 bool                  ft_fetch_exams(void);
 
 /* battery_management.cpp */
-static bool           ft_charging_detection(int16_t battery);
 void                  ft_battery_check(void);
 void                  ft_battery_init(void);
 
@@ -65,10 +64,10 @@ void IRAM_ATTR        isr_warning(void);
 void                  ft_cluster_number_mode(unsigned int* p_sleep_length);
 
 /* display_handling.cpp */
-void                  ft_draw_colour_bitmap(const unsigned char* black_image, const unsigned char* red_image);
 static void           ft_draw_text(String output, uint16_t x, uint16_t y);
 static void           ft_draw_exam_start_time(void);
 static void           ft_draw_bitmap_partial_update(const unsigned char* image, uint16_t width, uint16_t height);
+void                  ft_draw_colour_bitmap(const unsigned char* black_image, const unsigned char* red_image);
 static void           ft_draw_bitmap_full_update(const unsigned char* image, uint16_t width, uint16_t height);
 void IRAM_ATTR        ft_display_cluster_number(uint8_t mode);
 void                  ft_clear_display(void);
@@ -77,7 +76,7 @@ void IRAM_ATTR        ft_display_init(void);
 /* exam_mode.cpp */
 static unsigned int   ft_exam(void);
 static void           ft_preexam_warning(unsigned int* p_preexam_time);
-void                  ft_exam_mode(unsigned int* p_sleep_length);
+void                  ft_exam_mode(void);
 
 /* file_system.cpp */
 bool                  ft_secret_verification(String text);
