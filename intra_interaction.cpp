@@ -54,7 +54,7 @@ static bool  ft_handle_exams_info(void)
 {
     String  server_response;
 
-    server_response = client1.readString();
+    server_response = Intra_client.readString();
     DEBUG_PRINTF("\n============================== SERVER RESPONSE BEGIN ==============================\n\n", "");
     DEBUG_PRINTF("%s", server_response.c_str());
     DEBUG_PRINTF("\n=============================== SERVER RESPONSE END ===============================\n\n", "");
@@ -95,15 +95,15 @@ static void  ft_request_exams_info(const char* server, String* token)
     api_call += "&range[begin_at]=";
     api_call += String(rtc_g.year) + "-" + month + "-" + day + "T05:00:00.000Z,";
     api_call += String(rtc_g.year) + "-" + month + "-" + day + "T21:00:00.000Z";
-    client1.print("GET ");
-    client1.print(api_call);
-    client1.println(" HTTP/1.1");
-    client1.print("Host: ");
-    client1.println(server);
-    client1.print("Authorization: Bearer ");
-    client1.println(*token);
-    client1.println("Connection: close");
-    client1.println();
+    Intra_client.print("GET ");
+    Intra_client.print(api_call);
+    Intra_client.println(" HTTP/1.1");
+    Intra_client.print("Host: ");
+    Intra_client.println(server);
+    Intra_client.print("Authorization: Bearer ");
+    Intra_client.println(*token);
+    Intra_client.println("Connection: close");
+    Intra_client.println();
 }
 
 static void ft_get_secret_expiration(String server_response)
@@ -150,7 +150,7 @@ static bool  ft_handle_server_response(const char* server, String* token)
 {
     String  server_response;
 
-    server_response = client1.readString();
+    server_response = Intra_client.readString();
     if (server_response.length() <= 0)
     {
         DEBUG_PRINTF("\n[INTRA] Error! Server response to the Access Token request was not received\n\n", "");
@@ -174,14 +174,14 @@ static void  ft_access_server(const char* server)
     auth_request += UID;
     auth_request += "&client_secret=";
     auth_request += rtc_g.Secret;
-    client1.print("POST https://api.intra.42.fr/oauth/token HTTP/1.1\r\n");
-    client1.print("Host: ");
-    client1.println(server);
-    client1.println("Content-Type: application/x-www-form-urlencoded");
-    client1.print("Content-Length: ");
-    client1.println(auth_request.length());
-    client1.println();
-    client1.println(auth_request);
+    Intra_client.print("POST https://api.intra.42.fr/oauth/token HTTP/1.1\r\n");
+    Intra_client.print("Host: ");
+    Intra_client.println(server);
+    Intra_client.println("Content-Type: application/x-www-form-urlencoded");
+    Intra_client.print("Content-Length: ");
+    Intra_client.println(auth_request.length());
+    Intra_client.println();
+    Intra_client.println(auth_request);
     auth_request.clear();
 }
 
@@ -194,9 +194,9 @@ static bool  ft_intra_connect(const char* server)
         DEBUG_PRINTF("\n[INTRA] Unable to connect to Wi-Fi\n\n", "");
         return (false);
     }
-    client1.setInsecure();
-    client1.setTimeout(10);
-    if (!client1.connect(server, 443))
+    Intra_client.setInsecure();
+    Intra_client.setTimeout(10);
+    if (!Intra_client.connect(server, 443))
     {
         DEBUG_PRINTF("\n[INTRA] Connection to the server failed\n\n", "");
         return (false);
@@ -214,16 +214,16 @@ bool  ft_fetch_exams(void)
     ft_access_server(server);
     if (!ft_handle_server_response(server, &token))
     {
-        client1.stop();
+        Intra_client.stop();
         return (false);
     }
     ft_request_exams_info(server, &token);
     if (!ft_handle_exams_info())
     {
-        client1.stop();
+        Intra_client.stop();
         return (false);
     }
-    client1.stop();
+    Intra_client.stop();
     return (true);
 }
  

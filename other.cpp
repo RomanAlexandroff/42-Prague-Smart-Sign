@@ -40,7 +40,7 @@ void  ft_wifi_connect(void)
     i = 0;
     WiFi.mode(WIFI_STA);
     WiFi.persistent(true);
-    client.setCACert(TELEGRAM_CERTIFICATE_ROOT);
+    Telegram_client.setCACert(TELEGRAM_CERTIFICATE_ROOT);
     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
     while ((WiFi.status() != WL_CONNECTED) && i < CONNECT_TIMEOUT)
     {
