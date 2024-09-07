@@ -12,6 +12,31 @@
 
 #include "42-Prague-Smart-Sign.h"
 
+/*
+*   Checks only within SUBS_CHECK_TIME_LIMIT before the exam.
+*/
+static void  ft_check_exam_subscribers(String server_response)
+{
+    int i;
+    int subscribers;
+
+    i = 0;
+    subscribers = 0;
+    if (ft_time_till_event(rtc_g.exam_start_hour, rtc_g.exam_start_minutes) > SUBS_CHECK_TIME_LIMIT)
+        return;
+    i = server_response.indexOf("\"nbr_subscribers\":\"");
+    if (i == NOT_FOUND)
+        return;
+    subscribers = server_response.substring(i + 18, i + 19).toInt();
+    if (subscribers == 0)
+    {
+        DEBUG_PRINTF("\n[INTRA] Noone has subscribed to this exam. Exam mode canceled.\n\n", "");
+        rtc_g.exam_status = false;
+    }
+    else
+        DEBUG_PRINTF("\n[INTRA] Subscribers detected. Continuing with the Exam mode.\n\n", "");
+}
+
 static void  ft_get_exam_time(String server_response)
 {
     int i;
@@ -70,7 +95,10 @@ static bool  ft_handle_exams_info(void)
         return (true);
     }
     else
+    {
         ft_get_exam_time(server_response);
+        ft_check_exam_subscribers(server_response);
+    }
     return (true);
 }
 

@@ -13,7 +13,7 @@
 #ifndef CONSTANTS_H
 # define CONSTANTS_H
 
-# define SOFTWARE_VERSION        4.14
+# define SOFTWARE_VERSION        4.15
 
 /* General constants */
 # define CONNECT_TIMEOUT         5                            // in seconds
@@ -26,6 +26,7 @@
 # define RETRIES_LIMIT           3
 # define WAKE_UP_HOURS           6, 9, 12, 15, 18, 21
 # define NOT_FOUND               -1
+# define SUBS_CHECK_TIME_LIMIT   3900000ul                    // in milliseconds, 1 hour 5 minutes
 # define FAILED_TO_COUNT         -128
 
 /* Buttons */
