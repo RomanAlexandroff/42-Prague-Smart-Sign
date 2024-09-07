@@ -6,7 +6,7 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:03:05 by raleksan          #+#    #+#             */
-/*   Updated: 2024/04/09 13:03:07 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/09/07 10:00:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,13 @@ unsigned int  ft_time_till_wakeup(void)
         i++;
     return ((wakeup_hour[i] - rtc_g.hour) * 3600000 - (rtc_g.minute * 60000) - millis());
 }
+
+
+/*
+*   Returns value in milliseconds. Max limit
+*   is 24 hours. Min limit is 0,01 seconds.
+*   Limits prevent long sleep.
+*/
 
 unsigned int  ft_time_till_event(int8_t hours, uint8_t minutes)
 {
