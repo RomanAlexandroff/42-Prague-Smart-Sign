@@ -39,7 +39,8 @@
 static void           ft_pathfinder(void);
 
 /* intra_interaction.cpp */
-static void           ft_get_exam_time(String server_response);
+static void           ft_check_exam_subscribers(String &server_response);
+static void           ft_get_exam_time(String &server_response);
 static bool           ft_handle_exams_info(void);
 static void           ft_request_exams_info(const char* server, String* token);
 static void           ft_get_secret_expiration(String server_response);

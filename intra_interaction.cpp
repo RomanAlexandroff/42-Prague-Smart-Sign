@@ -15,7 +15,7 @@
 /*
 *   Checks only within SUBS_CHECK_TIME_LIMIT before the exam.
 */
-static void  ft_check_exam_subscribers(String server_response)
+static void  ft_check_exam_subscribers(String &server_response)
 {
     int i;
     int subscribers;
@@ -37,7 +37,7 @@ static void  ft_check_exam_subscribers(String server_response)
         DEBUG_PRINTF("\n[INTRA] Subscribers detected. Continuing with the Exam mode.\n\n", "");
 }
 
-static void  ft_get_exam_time(String server_response)
+static void  ft_get_exam_time(String &server_response)
 {
     int i;
 
@@ -61,7 +61,7 @@ static void  ft_get_exam_time(String server_response)
         DEBUG_PRINTF("-- Ends at %d:", rtc_g.exam_end_hour);
         DEBUG_PRINTF("%d0\n", rtc_g.exam_end_minutes);
         if (rtc_g.exam_end_hour <= rtc_g.hour)
-            server_response = server_response.substring(i + 34); 
+            server_response = server_response.substring(i + 87);              // remove data of a past exam
         else
         {
             DEBUG_PRINTF("\n[INTRA] EXAM STATUS: Active Exam found!\n\n", "");
