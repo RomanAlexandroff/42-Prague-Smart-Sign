@@ -24,6 +24,8 @@ String  ft_compose_message(uint8_t subject, int8_t days_left)
 {
     String  output;
 
+    if (rtc_g.from_name.isEmpty())
+        rtc_g.from_name = "User";
     output = "Dear " + rtc_g.from_name;
     output += ", I need your assistance! ";
     if (subject == SECRET_EXPIRED)
