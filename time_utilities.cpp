@@ -83,17 +83,12 @@ bool  ft_get_time(void)
     return (true);
 }
 
-static int  ft_find_last_element(const uint8_t *wakeup_hour)
-{
-    return (sizeof(wakeup_hour) / sizeof(wakeup_hour[0]) - 1);
-}
-
 unsigned int  ft_time_till_wakeup(void)
 {
     const uint8_t wakeup_hour[] = {WAKE_UP_HOURS};
     uint8_t       i;
 
-    i = ft_find_last_element(wakeup_hour);
+    i = sizeof(wakeup_hour) / sizeof(wakeup_hour[0]) - 1;
     if (rtc_g.hour >= wakeup_hour[i])
         return ((wakeup_hour[0] + 24 - rtc_g.hour) * 3600000 - (rtc_g.minute * 60000) - millis());
     i = 0;
