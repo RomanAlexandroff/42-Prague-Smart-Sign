@@ -81,7 +81,7 @@ void                  ft_exam_mode(void);
 
 /* file_system.cpp */
 bool                  ft_secret_verification(String text);
-void                  ft_data_restore(String* p_input, const char* file_name);
+void                  ft_data_restore(const char* file_name);
 void                  ft_data_integrity_check(void);
 short                 ft_write_spiffs_file(const char* file_name, String input);
 String                ft_read_spiffs_file(const char* file_name);

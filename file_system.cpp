@@ -21,15 +21,25 @@ bool ft_secret_verification(String input)
     return (true);
 }
 
-void ft_data_restore(String* p_input, const char* file_name)
+void ft_data_restore(const char* file_name)
 {
     String  buffer;
 
-    if (!p_input || !file_name)
+    if (!file_name)
         return;
     buffer = ft_read_spiffs_file(file_name);
     buffer.trim();
-    *p_input = buffer;
+    if (buffer.length() == 0)
+    {
+        DEBUG_PRINTF("[FILE SYSTEM] Warning: Read empty data from %s\n", file_name);
+        return;
+    }
+    if (file_name == "/secret.txt")
+        rtc_g.Secret = buffer;
+    else if (file_name == "/chat_id.txt")
+        rtc_g.chat_id = buffer;
+    else
+        return;
     DEBUG_PRINTF("\n[FILE SYSTEM] Found uncorrupted data in the file %s. ", file_name);
     DEBUG_PRINTF("Сorresponding value has been restored.\n", "");
 }
@@ -52,9 +62,9 @@ void  ft_data_integrity_check(void)
         DEBUG_PRINTF("then restart the device or wait for its next wake-up.", "");
         ft_display_cluster_number(TELEGRAM_ERROR);
     }
-    ft_data_restore(&rtc_g.Secret, "/secret.txt");
+    ft_data_restore("/secret.txt");
     DEBUG_PRINTF("\n[FILE SYSTEM] The Secret variable value is now:\n%s\n", rtc_g.Secret.c_str());
-    ft_data_restore(&rtc_g.chat_id, "/chat_id.txt");
+    ft_data_restore("/chat_id.txt");
     DEBUG_PRINTF("\n[FILE SYSTEM] The rtc_g.chat_id variable has been set to \n%s\n", rtc_g.chat_id.c_str());
 }
 
@@ -99,7 +109,7 @@ String  ft_read_spiffs_file(const char* file_name)
         return ("0");
     while (i < 5)
     {
-        file = LittleFS.open(file_name, "w");
+        file = LittleFS.open(file_name, "r");
         if (file)
             break;
         DEBUG_PRINTF("[FILE SYSTEM] An error occurred while opening %s file for reading in LittleFS. Retrying.\n", file_name);
