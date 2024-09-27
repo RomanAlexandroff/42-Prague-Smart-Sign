@@ -34,8 +34,9 @@ The device operates fully automatically and does not require any input from the 
 
 ## Features
 
-- Automatic check of exam dates and time on Intra;
-- Automatic battery charge monitoring;
+- Automatic exam time check: the Sign keeps track of the exams published on Intra on its own;
+- Exam subscribers check: if there is noone undertaking the exam, there is no need in blocking the room;
+- Automatic battery charge monitoring: you will surely know when to charge the device;
 - Deep Sleep mode: the microcontroller wakes up only when it has a task to do, drastically saving the battery charge;
 - Telegram enabled: control the Sign, update its security token, and receive operational information — all remotely, via your Telegram chat;
 - Over The Air firmware update: develop and upload new features from anywhere on the campus.
@@ -48,6 +49,8 @@ The following components are used in the 42 Prague Smart Sign:
 2. **Good Display GDEY075Z08 7.5" 800x480 ePaper black/red/white SPI display**: a high-resolution display that allows for clear and easy-to-read information.
 3. **Good Display DESPI-C02 universal SPI e-Paper adapter**: transforms display's FPC interface into microcontroller's SPI.
 4. **4000mAh Li-ion battery with overcharge and undercharge protection**: powers the device and ensures continuous operation.
+5. **IKEA RÖDALM photo frame, black, 13x18 cm**: made a good enclosure.
+6. **Custom 3D-printed board**: to hold all the electronics in place.
 
 
 ## Maintenance
