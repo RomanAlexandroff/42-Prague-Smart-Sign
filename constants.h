@@ -13,7 +13,7 @@
 #ifndef CONSTANTS_H
 # define CONSTANTS_H
 
-# define SOFTWARE_VERSION        4.17
+# define SOFTWARE_VERSION        4.18
 
 /* General constants */
 # define CONNECT_TIMEOUT         5                            // in seconds
