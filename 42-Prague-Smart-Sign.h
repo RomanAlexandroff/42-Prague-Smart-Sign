@@ -35,19 +35,7 @@
 # include "bitmap_library.h"
 # include "globals.h"
 
-/* 42-Prague-Smart-Sign.ino */
-static void           ft_pathfinder(void);
-
 /* intra_interaction.cpp */
-static void           ft_check_exam_subscribers(String &server_response);
-static void           ft_get_exam_time(String &server_response);
-static bool           ft_handle_exams_info(void);
-static void           ft_request_exams_info(const char* server, String* token);
-static void           ft_get_secret_expiration(String server_response);
-static String         ft_get_token(String server_response);
-static bool           ft_handle_server_response(const char* server, String* token);
-static void           ft_access_server(const char* server);
-static bool           ft_intra_connect(const char* server);
 bool                  ft_fetch_exams(void);
 
 /* battery_management.cpp */
@@ -65,18 +53,12 @@ void IRAM_ATTR        isr_warning(void);
 void                  ft_cluster_number_mode(unsigned int* p_sleep_length);
 
 /* display_handling.cpp */
-static void           ft_draw_text(String output, uint16_t x, uint16_t y);
-static void           ft_draw_exam_start_time(void);
-static void           ft_draw_bitmap_partial_update(const unsigned char* image, uint16_t width, uint16_t height);
 void                  ft_draw_colour_bitmap(const unsigned char* black_image, const unsigned char* red_image);
-static void           ft_draw_bitmap_full_update(const unsigned char* image, uint16_t width, uint16_t height);
 void IRAM_ATTR        ft_display_cluster_number(uint8_t mode);
 void                  ft_clear_display(void);
 void IRAM_ATTR        ft_display_init(void);
 
 /* exam_mode.cpp */
-static unsigned int   ft_exam(void);
-static void           ft_preexam_warning(unsigned int* p_preexam_time);
 void                  ft_exam_mode(void);
 
 /* file_system.cpp */
@@ -98,20 +80,16 @@ void                  ft_serial_init(void);
 void                  ft_wifi_connect(void);
 
 /* power_down_recovery.cpp */
-static void IRAM_ATTR ft_brownout_handle(void);
 void                  ft_power_down_recovery(void);
 
 /* telegram_bot.cpp */
 String                ft_compose_message(uint8_t subject, int8_t days_left);
-static void           ft_reply_machine(String text);
-static void           ft_new_messages(short message_count);
 void                  ft_telegram_check(void);
 
 /* time_utilities.cpp */
 int8_t                ft_expiration_counter(void);
 bool                  ft_unix_timestamp_decoder(uint8_t* p_day, uint8_t* p_month, uint16_t* p_year);
 bool                  ft_get_time(void);
-static int            ft_find_last_element(const uint8_t *wakeup_hour);
 unsigned int          ft_time_till_wakeup(void);
 unsigned int          ft_time_till_event(int8_t hours, uint8_t minutes);
 int                   ft_time_sync(unsigned int preexam_time);
