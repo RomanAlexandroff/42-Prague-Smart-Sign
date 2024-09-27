@@ -20,8 +20,7 @@ static void IRAM_ATTR  ft_brownout_handle(void)
 
 void  ft_power_down_recovery(void)
 {
-    esp_reset_reason_t        reset_reason;
-    esp_sleep_wakeup_cause_t  wakeup_reason;
+    esp_reset_reason_t  reset_reason;
 
     reset_reason = esp_reset_reason();
     switch (reset_reason)
