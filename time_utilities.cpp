@@ -29,7 +29,6 @@ int8_t  ft_expiration_counter(void)
     uint8_t   expire_day;
     uint8_t   expire_month;
     uint16_t  expire_year;
-    int       month;
 
     if (!ft_unix_timestamp_decoder(&expire_day, &expire_month, &expire_year))
         return (FAILED_TO_COUNT);
