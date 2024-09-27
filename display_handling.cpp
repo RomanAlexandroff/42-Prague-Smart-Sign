@@ -21,15 +21,15 @@
 
 static void  ft_draw_text(String output, uint16_t x, uint16_t y)
 {
-    int16_t         text_box_x;
-    int16_t         text_box_y;
-    uint16_t        text_width;
-    uint16_t        text_height;
+    const int16_t   text_box_x PROGMEM = 224;
+    const int16_t   text_box_y PROGMEM = 732;
+    const uint16_t  text_width PROGMEM = 140;
+    const uint16_t  text_height PROGMEM = 40;
 
     display.setRotation(3);
     display.setFont(&FreeSansBold24pt7b);
     display.setTextColor(GxEPD_BLACK);
-    display.setPartialWindow(224, 732, 140, 40);
+    display.setPartialWindow(text_box_x, text_box_y, text_width, text_height);
     display.firstPage();
     do
     {
@@ -50,13 +50,13 @@ static void  ft_draw_text(String output, uint16_t x, uint16_t y)
 
 static void  ft_draw_exam_start_time(void)
 {
-    String   text;
-    int16_t  text_x = 27;
-    int16_t  text_y = 776;
-    int16_t  window_x = 0;
-    int16_t  window_y = 740;
-    int16_t  window_width = 480;
-    int16_t  window_height = 40;
+    String         text;
+    const int16_t  text_x PROGMEM = 27;
+    const int16_t  text_y PROGMEM = 776;
+    const int16_t  window_x PROGMEM = 0;
+    const int16_t  window_y PROGMEM = 740;
+    const int16_t  window_width PROGMEM = 480;
+    const int16_t  window_height PROGMEM = 40;
 
     text = "TODAY AT ";
     text += String(rtc_g.exam_start_hour);
