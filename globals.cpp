@@ -17,7 +17,16 @@ WiFiClientSecure Telegram_client;
 WiFiClientSecure Intra_client;
 UniversalTelegramBot bot(BOT_TOKEN, Telegram_client);
 
-RTC_DATA_ATTR struct rtc_global_variables rtc_g = {
-    .ota = false,
+RTC_DATA_ATTR struct rtc_global_variables rtc_g;
+
+struct common_global_variables com_g = {
+    .exam_end_hour = 0,
+    .exam_end_minutes = 0,
+    .daylight_flag = false,
+    .hour = 0,
+    .minute = 0,
+    .day = 0,
+    .month = 0,
+    .year = 0,
 };
  

@@ -29,15 +29,19 @@ extern WiFiClientSecure Intra_client;
 extern UniversalTelegramBot bot;
 
 struct rtc_global_variables {
-    bool     warning_active;
-    bool     ota;
-    String   Secret;
     time_t   secret_expiration;
-    String   chat_id;
-    String   from_name;
-    bool     exam_status;
     uint16_t exam_start_hour;
     uint16_t exam_start_minutes;
+    bool     warning_active;
+    bool     exam_status;
+    bool     ota;
+    String   Secret;
+    String   chat_id;
+    String   from_name;
+};
+extern struct rtc_global_variables rtc_g;
+
+struct common_global_variables {
     uint8_t  exam_end_hour;
     uint8_t  exam_end_minutes;
     bool     daylight_flag;
@@ -47,7 +51,7 @@ struct rtc_global_variables {
     uint8_t  month;
     uint16_t year;
 };
-extern struct rtc_global_variables rtc_g;
+extern struct common_global_variables com_g;
 
 #endif
  

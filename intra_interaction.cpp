@@ -48,19 +48,19 @@ static void  ft_get_exam_time(String &server_response)
         rtc_g.exam_start_hour = server_response.substring(i + 23, i + 25).toInt() + TIME_ZONE;
         rtc_g.exam_start_minutes = server_response.substring(i + 26, i + 28).toInt();
         i = server_response.indexOf("\"end_at\":\"");
-        rtc_g.exam_end_hour = server_response.substring(i + 21, i + 23).toInt() + TIME_ZONE;
-        rtc_g.exam_end_minutes = server_response.substring(i + 24, i + 26).toInt();
-        if (rtc_g.daylight_flag)
+        com_g.exam_end_hour = server_response.substring(i + 21, i + 23).toInt() + TIME_ZONE;
+        com_g.exam_end_minutes = server_response.substring(i + 24, i + 26).toInt();
+        if (com_g.daylight_flag)
         {
             rtc_g.exam_start_hour += 1;
-            rtc_g.exam_end_hour += 1;
+            com_g.exam_end_hour += 1;
         }
         DEBUG_PRINTF("\n[INTRA] EXAM STATUS: Exam information detected\n", "");
         DEBUG_PRINTF("-- Begins at %d:", rtc_g.exam_start_hour);
         DEBUG_PRINTF("%d0\n", rtc_g.exam_start_minutes);
-        DEBUG_PRINTF("-- Ends at %d:", rtc_g.exam_end_hour);
-        DEBUG_PRINTF("%d0\n", rtc_g.exam_end_minutes);
-        if (rtc_g.exam_end_hour <= rtc_g.hour)
+        DEBUG_PRINTF("-- Ends at %d:", com_g.exam_end_hour);
+        DEBUG_PRINTF("%d0\n", com_g.exam_end_minutes);
+        if (com_g.exam_end_hour <= com_g.hour)
             server_response = server_response.substring(i + 87);              // remove data of a past exam
         else
         {
@@ -108,21 +108,21 @@ static void  ft_request_exams_info(const char* server, String* token)
     String  month;
     String  api_call;
 
-    if (rtc_g.month < 10)
-        month = "0" + String(rtc_g.month);
+    if (com_g.month < 10)
+        month = "0" + String(com_g.month);
     else
-        month = String(rtc_g.month);
-    if (rtc_g.day < 10)
-        day = "0" + String(rtc_g.day);
+        month = String(com_g.month);
+    if (com_g.day < 10)
+        day = "0" + String(com_g.day);
     else
-        day = String(rtc_g.day);
+        day = String(com_g.day);
     api_call = "https://api.intra.42.fr/v2/campus/";
     api_call += CAMPUS_ID;
     api_call += "/exams?filter[location]=";
     api_call += CLUSTER_ID;
     api_call += "&range[begin_at]=";
-    api_call += String(rtc_g.year) + "-" + month + "-" + day + "T05:00:00.000Z,";
-    api_call += String(rtc_g.year) + "-" + month + "-" + day + "T21:00:00.000Z";
+    api_call += String(com_g.year) + "-" + month + "-" + day + "T05:00:00.000Z,";
+    api_call += String(com_g.year) + "-" + month + "-" + day + "T21:00:00.000Z";
     Intra_client.print("GET ");
     Intra_client.print(api_call);
     Intra_client.println(" HTTP/1.1");
@@ -216,7 +216,7 @@ static void  ft_access_server(const char* server)
 static bool  ft_intra_connect(const char* server)
 {
     if (WiFi.status() != WL_CONNECTED)
-        WiFi.reconnect();
+        ft_wifi_connect();
     if (WiFi.status() != WL_CONNECTED)
     {
         DEBUG_PRINTF("\n[INTRA] Unable to connect to Wi-Fi\n\n", "");

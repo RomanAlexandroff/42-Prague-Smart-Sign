@@ -32,10 +32,10 @@ int8_t  ft_expiration_counter(void)
 
     if (!ft_unix_timestamp_decoder(&expire_day, &expire_month, &expire_year))
         return (FAILED_TO_COUNT);
-    if (expire_month == rtc_g.month)
-        return (expire_day - rtc_g.day);
+    if (expire_month == com_g.month)
+        return (expire_day - com_g.day);
     else
-        return (expire_day + months_days[rtc_g.month - 1] - rtc_g.day);
+        return (expire_day + months_days[com_g.month - 1] - com_g.day);
 }
 
 bool  ft_get_time(void)
@@ -46,7 +46,7 @@ bool  ft_get_time(void)
     struct tm   time_info;
 
     if (WiFi.status() != WL_CONNECTED)
-        WiFi.reconnect();
+        ft_wifi_connect();
     if (WiFi.status() != WL_CONNECTED)
     {
         DEBUG_PRINTF("\n[SYSTEM TIME] Failed to obtain time due to Wi-Fi connection issues\n", "");
@@ -63,22 +63,22 @@ bool  ft_get_time(void)
         DEBUG_PRINTF("\n[SYSTEM TIME] Daylight Saving Time is not available\n", "");
         return (false);
     }
-    rtc_g.hour = time_info.tm_hour;
-    rtc_g.minute = time_info.tm_min;
-    rtc_g.day = time_info.tm_mday;
-    rtc_g.month = 1 + time_info.tm_mon;
-    rtc_g.year = 1900 + time_info.tm_year;
-    rtc_g.daylight_flag = time_info.tm_isdst;
+    com_g.hour = time_info.tm_hour;
+    com_g.minute = time_info.tm_min;
+    com_g.day = time_info.tm_mday;
+    com_g.month = 1 + time_info.tm_mon;
+    com_g.year = 1900 + time_info.tm_year;
+    com_g.daylight_flag = time_info.tm_isdst;
     DEBUG_PRINTF("\n[SYSTEM TIME] Obtained time from the NTP server as follows:\n", "");
-    if (rtc_g.daylight_flag)
+    if (com_g.daylight_flag)
         DEBUG_PRINTF("  --daylight saving time is ACTIVE (summer time)\n", "");
     else
         DEBUG_PRINTF("  --daylight saving time is INACTIVE (winter time)\n", "");
-    DEBUG_PRINTF("  --hour:   %d\n", rtc_g.hour);
-    DEBUG_PRINTF("  --minute: %d\n", rtc_g.minute);
-    DEBUG_PRINTF("  --day:    %d\n", rtc_g.day);
-    DEBUG_PRINTF("  --month:  %d\n", rtc_g.month);
-    DEBUG_PRINTF("  --year:   %d\n\n", rtc_g.year);
+    DEBUG_PRINTF("  --hour:   %d\n", com_g.hour);
+    DEBUG_PRINTF("  --minute: %d\n", com_g.minute);
+    DEBUG_PRINTF("  --day:    %d\n", com_g.day);
+    DEBUG_PRINTF("  --month:  %d\n", com_g.month);
+    DEBUG_PRINTF("  --year:   %d\n\n", com_g.year);
     return (true);
 }
 
@@ -88,27 +88,26 @@ unsigned int  ft_time_till_wakeup(void)
     uint8_t       i;
 
     i = sizeof(wakeup_hour) / sizeof(wakeup_hour[0]) - 1;
-    if (rtc_g.hour >= wakeup_hour[i])
-        return ((wakeup_hour[0] + 24 - rtc_g.hour) * 3600000 - (rtc_g.minute * 60000) - millis());
+    if (com_g.hour >= wakeup_hour[i])
+        return ((wakeup_hour[0] + 24 - com_g.hour) * 3600000 - (com_g.minute * 60000) - millis());
     i = 0;
-    while ((wakeup_hour[i] - rtc_g.hour) <= 0)
+    while ((wakeup_hour[i] - com_g.hour) <= 0)
         i++;
-    return ((wakeup_hour[i] - rtc_g.hour) * 3600000 - (rtc_g.minute * 60000) - millis());
+    return ((wakeup_hour[i] - com_g.hour) * 3600000 - (com_g.minute * 60000) - millis());
 }
 
 
 /*
 *   Returns value in milliseconds. Max limit
 *   is 24 hours. Min limit is 0,01 seconds.
-*   Limits prevent long sleep.
+*   Limits prevent indefinite sleep.
 */
-
 unsigned int  ft_time_till_event(int8_t hours, uint8_t minutes)
 {
     unsigned int result;
 
-    result = (hours - rtc_g.hour) * 3600000;
-    result += (minutes * 60000) - (rtc_g.minute * 60000);
+    result = (hours - com_g.hour) * 3600000;
+    result += (minutes * 60000) - (com_g.minute * 60000);
     if (result > 86400000)
         result = 86400000;
     if (result < 10)

@@ -25,6 +25,11 @@ void  ft_go_to_sleep(uint64_t time_in_millis)
     esp_deep_sleep_start();
 }
 
+/*
+*   Also puts to sleep Wi-Fi and
+*   Bluetooth modems to preserve
+*   the battery charge
+*/
 void IRAM_ATTR  ft_delay(uint64_t time_in_millis)
 {
     if (time_in_millis < 10)

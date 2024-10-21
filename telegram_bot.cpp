@@ -68,7 +68,12 @@ static void ft_reply_machine(String text)
 
     if (text == "/status")
     {
-        message = "Connected to " + String(WiFi.SSID());   
+        if (!rtc_g.from_name.isEmpty())
+        {
+            message = "Dear " + rtc_g.from_name;
+            message += ", I am ";
+        }
+        message += "Connected to " + String(WiFi.SSID());   
         message += ", Signal strength is " + String(WiFi.RSSI()) + " dBm, ";
         message += "Software version " + String(SOFTWARE_VERSION);
         message += ", Exams status: ";

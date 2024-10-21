@@ -16,7 +16,7 @@ static unsigned int ft_exam(void)
 {
     unsigned int  exam_remaining_time;
 
-    exam_remaining_time = ft_time_till_event(rtc_g.exam_end_hour, rtc_g.exam_end_minutes);
+    exam_remaining_time = ft_time_till_event(com_g.exam_end_hour, com_g.exam_end_minutes);
     ft_draw_colour_bitmap(exam_warning_black, exam_warning_red);                          // execution takes 25 sec
     rtc_g.exam_status = false;
     return (exam_remaining_time);
