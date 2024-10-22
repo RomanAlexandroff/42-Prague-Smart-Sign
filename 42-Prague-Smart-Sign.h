@@ -86,7 +86,7 @@ void                  ft_power_down_recovery(void);
 void                  ft_telegram_check(void);
 
 /* telegram_compose_message.cpp */
-String                ft_compose_message(uint16_t subject, int8_t days_left);
+String                ft_compose_message(int32_t subject, int8_t days_left);
 
 /* time_utilities.cpp */
 int8_t                ft_expiration_counter(void);

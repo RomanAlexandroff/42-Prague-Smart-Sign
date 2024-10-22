@@ -93,7 +93,7 @@ static String ft_about_expired_secret(String output, int8_t days_left)
     return (output);
 }
 
-String  ft_compose_message(uint16_t subject, int8_t days_left)
+String  ft_compose_message(int32_t subject, int8_t days_left)
 {
     String  output;
 
