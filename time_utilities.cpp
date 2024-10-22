@@ -38,7 +38,7 @@ int8_t  ft_expiration_counter(void)
         return (expire_day + months_days[com_g.month - 1] - com_g.day);
 }
 
-bool  ft_get_time(void)
+ERROR_t  ft_get_time(void)
 {
     const char* ntp_server PROGMEM = "pool.ntp.org";
     const long  gmt_offset_sec = TIME_ZONE * 3600;
@@ -50,18 +50,18 @@ bool  ft_get_time(void)
     if (WiFi.status() != WL_CONNECTED)
     {
         DEBUG_PRINTF("\n[SYSTEM TIME] Failed to obtain time due to Wi-Fi connection issues\n", "");
-        return (false);
+        return (TIME_NO_WIFI);
     }
     configTime(gmt_offset_sec, daylight_offset_sec, ntp_server);
     if(!getLocalTime(&time_info))
     {
         DEBUG_PRINTF("\n[SYSTEM TIME] Failed to obtain time from the NTP server\n", "");
-        return (false);
+        return (TIME_NO_SERVER);
     }
     if (time_info.tm_isdst < 0)
     {
         DEBUG_PRINTF("\n[SYSTEM TIME] Daylight Saving Time is not available\n", "");
-        return (false);
+        return (TIME_NO_DST);
     }
     com_g.hour = time_info.tm_hour;
     com_g.minute = time_info.tm_min;
@@ -79,7 +79,7 @@ bool  ft_get_time(void)
     DEBUG_PRINTF("  --day:    %d\n", com_g.day);
     DEBUG_PRINTF("  --month:  %d\n", com_g.month);
     DEBUG_PRINTF("  --year:   %d\n\n", com_g.year);
-    return (true);
+    return (TIME_OK);
 }
 
 unsigned int  ft_time_till_wakeup(void)

@@ -91,7 +91,7 @@ String                ft_compose_message(int32_t subject, int8_t days_left);
 /* time_utilities.cpp */
 int8_t                ft_expiration_counter(void);
 bool                  ft_unix_timestamp_decoder(uint8_t* p_day, uint8_t* p_month, uint16_t* p_year);
-bool                  ft_get_time(void);
+ERROR_t               ft_get_time(void);
 unsigned int          ft_time_till_wakeup(void);
 unsigned int          ft_time_till_event(int8_t hours, uint8_t minutes);
 int                   ft_time_sync(unsigned int preexam_time);

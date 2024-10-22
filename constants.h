@@ -13,7 +13,7 @@
 #ifndef CONSTANTS_H
 # define CONSTANTS_H
 
-# define SOFTWARE_VERSION        4.20
+# define SOFTWARE_VERSION        4.21
 
 /* General constants */
 # define CONNECT_TIMEOUT         5                            // in seconds
@@ -32,6 +32,10 @@
 /* Errors constants */
 typedef enum {
     UNKNOWN = 0,
+    TIME_OK = 100,
+    TIME_NO_WIFI = 102,
+    TIME_NO_SERVER = 103,
+    TIME_NO_DST = 104,
     INTRA_OK = 200,
     INTRA_NO_SERVER = 503,
     INTRA_NO_TOKEN = 401,

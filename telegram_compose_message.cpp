@@ -56,6 +56,45 @@ static String ft_about_intra_server(String output)
     return (output);
 }
 
+static String ft_about_time_daylight(String output)                                    // TO-DO: THE FUNCTION AND THE TEXT IS WRONG
+{
+    output += "I am writing to report an exceptional situation! Code: INTRA 503\n\n";
+    output += "After several retries, I was unable to connect to the Intra server. ";
+    output += "Since you see this message, the problem is probably not with the Wi-Fi connection, ";
+    output += "but on the Intra server's side. Likely, you can hardly do anything but wait. ";
+    output += "I cannot inform students about exams, so if there is one today, ";
+    output += "you probably should notify them yourself.\n\n";
+    output += "I will try to connect to Intra in a few hours. ";
+    output += "If you do not get this message again, it means that I was successful.";
+    return (output);
+}
+
+static String ft_about_time_server(String output)                                    // TO-DO: THE FUNCTION AND THE TEXT IS WRONG
+{
+    output += "I am writing to report an exceptional situation! Code: INTRA 503\n\n";
+    output += "After several retries, I was unable to connect to the Intra server. ";
+    output += "Since you see this message, the problem is probably not with the Wi-Fi connection, ";
+    output += "but on the Intra server's side. Likely, you can hardly do anything but wait. ";
+    output += "I cannot inform students about exams, so if there is one today, ";
+    output += "you probably should notify them yourself.\n\n";
+    output += "I will try to connect to Intra in a few hours. ";
+    output += "If you do not get this message again, it means that I was successful.";
+    return (output);
+}
+
+static String ft_about_time_wifi(String output)                                    // TO-DO: THE FUNCTION AND THE TEXT IS WRONG
+{
+    output += "I am writing to report an exceptional situation! Code: INTRA 503\n\n";
+    output += "After several retries, I was unable to connect to the Intra server. ";
+    output += "Since you see this message, the problem is probably not with the Wi-Fi connection, ";
+    output += "but on the Intra server's side. Likely, you can hardly do anything but wait. ";
+    output += "I cannot inform students about exams, so if there is one today, ";
+    output += "you probably should notify them yourself.\n\n";
+    output += "I will try to connect to Intra in a few hours. ";
+    output += "If you do not get this message again, it means that I was successful.";
+    return (output);
+}
+
 static String ft_about_dead_battery(String output)
 {
     output += "I need your assistance! ";
@@ -107,6 +146,12 @@ String  ft_compose_message(int32_t subject, int8_t days_left)
         output = ft_about_low_battery(output);
     else if (subject == DEAD_BATTERY)
         output = ft_about_dead_battery(output);
+    else if (subject == TIME_NO_WIFI)
+        output = ft_about_time_wifi(output);
+    else if (subject == TIME_NO_SERVER)
+        output = ft_about_time_server(output);
+    else if (subject == TIME_NO_DST)
+        output = ft_about_time_daylight(output);   
     else if (subject == INTRA_NO_SERVER)
         output = ft_about_intra_server(output);
     else if (subject == INTRA_NO_TOKEN)
