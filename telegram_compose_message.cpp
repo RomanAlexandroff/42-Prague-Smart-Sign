@@ -6,11 +6,10 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 17:20:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/10/21 17:20:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/10/22 16:00:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /*                                                                            */
-/*   These functions are for creating Telegram messages from the Sign to      */
-/*   the User.                                                                */
+/*   Creating Telegram messages from the Sign to the User.                    */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,42 +55,43 @@ static String ft_about_intra_server(String output)
     return (output);
 }
 
-static String ft_about_time_daylight(String output)                                    // TO-DO: THE FUNCTION AND THE TEXT IS WRONG
+static String ft_about_time_daylight(String output)
 {
-    output += "I am writing to report an exceptional situation! Code: INTRA 503\n\n";
-    output += "After several retries, I was unable to connect to the Intra server. ";
-    output += "Since you see this message, the problem is probably not with the Wi-Fi connection, ";
-    output += "but on the Intra server's side. Likely, you can hardly do anything but wait. ";
-    output += "I cannot inform students about exams, so if there is one today, ";
-    output += "you probably should notify them yourself.\n\n";
-    output += "I will try to connect to Intra in a few hours. ";
-    output += "If you do not get this message again, it means that I was successful.";
+    output += "I am writing to report an exceptional situation! Code: GET_TIME 104\n\n";
+    output += "After several retries, I was unable to get the Daylight Saving Time data. ";
+    output += "Without it my time calculations may be wrong by 1 whole hour. ";
+    output += "This is why I am unable to continue and currently displaying an error.\n\n";
+    output += "I understand that you can hardly do anything about it. ";
+    output += "I just wanted to let you know that now I cannot inform students about exams. ";
+    output += "So, if there is one today, you probably should notify them yourself.\n\n";
+    output += "I will try to get the Daylight Saving Time data in a few hours. ";
+    output += "If you do not receive this message again, it means that I was successful.";
     return (output);
 }
 
-static String ft_about_time_server(String output)                                    // TO-DO: THE FUNCTION AND THE TEXT IS WRONG
+static String ft_about_time_server(String output)
 {
-    output += "I am writing to report an exceptional situation! Code: INTRA 503\n\n";
-    output += "After several retries, I was unable to connect to the Intra server. ";
-    output += "Since you see this message, the problem is probably not with the Wi-Fi connection, ";
-    output += "but on the Intra server's side. Likely, you can hardly do anything but wait. ";
-    output += "I cannot inform students about exams, so if there is one today, ";
-    output += "you probably should notify them yourself.\n\n";
-    output += "I will try to connect to Intra in a few hours. ";
-    output += "If you do not get this message again, it means that I was successful.";
+    output += "I am writing to report an exceptional situation! Code: GET_TIME 103\n\n";
+    output += "After several retries, I was unable to connect to the NTP server ";
+    output += "and I do not know what time it is now. The issue is on the server side.\n\n";
+    output += "I understand that you can hardly do anything about it. ";
+    output += "I just wanted to let you know that now I cannot inform students about exams. ";
+    output += "So, if there is one today, you probably should notify them yourself.\n\n";
+    output += "I will try to connect to the NTP server and to get time in a few hours. ";
+    output += "If you do not receive this message again, it means that I was successful.";
     return (output);
 }
 
-static String ft_about_time_wifi(String output)                                    // TO-DO: THE FUNCTION AND THE TEXT IS WRONG
+static String ft_about_time_wifi(String output)
 {
-    output += "I am writing to report an exceptional situation! Code: INTRA 503\n\n";
-    output += "After several retries, I was unable to connect to the Intra server. ";
-    output += "Since you see this message, the problem is probably not with the Wi-Fi connection, ";
-    output += "but on the Intra server's side. Likely, you can hardly do anything but wait. ";
-    output += "I cannot inform students about exams, so if there is one today, ";
+    output += "I am writing to report an exceptional situation! Code: GET_TIME 102\n\n";
+    output += "After several retries, I was unable to connect to Wi-Fi to get current time. ";
+    output += "If you see this message, the problem has been probably solved already. ";
+    output += "Unfortunatelly, because of this issue I am displaying an Intra error and ";
+    output += "I cannot inform students about exams. So, if there is one today, ";
     output += "you probably should notify them yourself.\n\n";
-    output += "I will try to connect to Intra in a few hours. ";
-    output += "If you do not get this message again, it means that I was successful.";
+    output += "I will try to restore my work in a few hours. ";
+    output += "If you do not receive this message again, it means that I was successful.";
     return (output);
 }
 
