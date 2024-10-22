@@ -28,6 +28,10 @@ extern WiFiClientSecure Telegram_client;
 extern WiFiClientSecure Intra_client;
 extern UniversalTelegramBot bot;
 
+/*
+*   RTC globals preserve their values
+*   over deep sleep. Others do not.
+*/
 struct rtc_global_variables {
     time_t   secret_expiration;
     uint16_t exam_start_hour;
