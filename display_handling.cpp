@@ -142,7 +142,7 @@ static void ft_draw_bitmap_full_update(const unsigned char* image, uint16_t widt
 /*
 *   This function displays the number of the cluster and
 *   any additional image/message separately.
-*   The function makes sure that whatever is already drawn
+*   The function ensures that whatever is already drawn
 *   on the display does not get drawn repeatedly.
 *   
 *   "displaying_now = CLUSTER" is there to unblock drawing

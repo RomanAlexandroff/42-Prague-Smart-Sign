@@ -20,45 +20,6 @@
 
 #include "42-Prague-Smart-Sign.h"
 
-String  ft_compose_message(uint8_t subject, int8_t days_left)
-{
-    String  output;
-
-    if (rtc_g.from_name.isEmpty())
-        rtc_g.from_name = "User";
-    output = "Dear " + rtc_g.from_name;
-    output += ", I need your assistance! ";
-    if (subject == SECRET_EXPIRED)
-    {
-        output += "My SECRET token ";
-        if (days_left > 1)
-            output += "expires in " + String(days_left) + " days. ";
-        if (days_left == 1)
-            output += "expires tomorrow! ";
-        if (days_left <= 0)
-            output += "has already expired!!! ";
-        output += "And without it I would not be able to do my job. ";
-        output += "Please, retreive a new SECRET token from the Intra API page ";
-        output += "and send it to me in this chat. ";
-        output += "Your message should start with a forward slash (/), ";
-        output += "so I could recognise it.\n\n";
-        output += "Here is an example:\n";
-        output += "/s-xxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n\n";
-        output += "After it is done, I will leave you in pease for another month =)";
-    }
-    if (subject == LOW_BATTERY)
-    {
-        output += "My battery is low. I am currently sitting on 3%";
-        output += " and it keeps on draining. Please, charge me as soon as possible.";
-    }
-    if (subject == DEAD_BATTERY)
-    {
-        output += "My battery is dead, so I am stopping all the processes and turning off. ";
-        output += "Please, charge me and I will turn back on again.";
-    }
-    return (output);
-}
-
 static void ft_reply_machine(String text)
 {
     String      message;

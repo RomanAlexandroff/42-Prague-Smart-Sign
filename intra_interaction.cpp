@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/09 13:01:50 by raleksan          #+#    #+#             */
-/*   Updated: 2024/04/09 13:01:52 by raleksan         ###   ########.fr       */
+/*   Created: 2024/04/09 13:01:00 by raleksan          #+#    #+#             */
+/*   Updated: 2024/10/21 13:01:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,26 +232,26 @@ static bool  ft_intra_connect(const char* server)
     return (true);
 }
 
-bool  ft_fetch_exams(void)
+ERROR_t ft_fetch_exams(void)
 {
     const char* server PROGMEM = "api.intra.42.fr";
     String      token;
 
     if (!ft_intra_connect(server))
-        return (false);
+        return INTRA_NO_SERVER;
     ft_access_server(server);
     if (!ft_handle_server_response(server, &token))
     {
         Intra_client.stop();
-        return (false);
+        return INTRA_NO_TOKEN;
     }
     ft_request_exams_info(server, &token);
     if (!ft_handle_exams_info())
     {
         Intra_client.stop();
-        return (false);
+        return INTRA_NO_INFO;
     }
     Intra_client.stop();
-    return (true);
+    return INTRA_OK;
 }
  

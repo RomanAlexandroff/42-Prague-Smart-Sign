@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/09 12:59:10 by raleksan          #+#    #+#             */
-/*   Updated: 2024/05/29 12:59:16 by raleksan         ###   ########.fr       */
+/*   Created: 2024/04/09 12:59:00 by raleksan          #+#    #+#             */
+/*   Updated: 2024/10/21 12:59:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # include "globals.h"
 
 /* intra_interaction.cpp */
-bool                  ft_fetch_exams(void);
+ERROR_t               ft_fetch_exams(void);
 
 /* battery_management.cpp */
 void                  ft_battery_check(void);
@@ -83,8 +83,10 @@ void                  ft_wifi_connect(void);
 void                  ft_power_down_recovery(void);
 
 /* telegram_bot.cpp */
-String                ft_compose_message(uint8_t subject, int8_t days_left);
 void                  ft_telegram_check(void);
+
+/* telegram_compose_message.cpp */
+String                ft_compose_message(uint16_t subject, int8_t days_left);
 
 /* time_utilities.cpp */
 int8_t                ft_expiration_counter(void);

@@ -5,15 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/09 13:00:36 by raleksan          #+#    #+#             */
-/*   Updated: 2024/08/31 09:00:00 by raleksan         ###   ########.fr       */
+/*   Created: 2024/04/09 13:00:00 by raleksan          #+#    #+#             */
+/*   Updated: 2024/10/21 09:00:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CONSTANTS_H
 # define CONSTANTS_H
 
-# define SOFTWARE_VERSION        4.19
+# define SOFTWARE_VERSION        4.20
 
 /* General constants */
 # define CONNECT_TIMEOUT         5                            // in seconds
@@ -28,6 +28,15 @@
 # define NOT_FOUND               -1
 # define SUBS_CHECK_TIME_LIMIT   3900000ul                    // in milliseconds, 1 hour 5 minutes
 # define FAILED_TO_COUNT         -128
+
+/* Errors constants */
+typedef enum {
+    UNKNOWN = 0,
+    INTRA_OK = 200,
+    INTRA_NO_SERVER = 503,
+    INTRA_NO_TOKEN = 401,
+    INTRA_NO_INFO = 404
+} ERROR_t;
 
 /* Buttons */
 # define DIAGNOSTICS_BUTTON      D0
