@@ -17,7 +17,9 @@
 
 /* General constants */
 # define CONNECT_TIMEOUT         5                            // in seconds
-# define REBOOT                  1000                         // do not change!
+# define REBOOT                  1000                         // do not change
+# define MS_MINUTE               60000                        // do not change
+# define MS_HOUR                 3600000ul                    // do not change
 # define DEAD_BATTERY_SLEEP      86400000ul                   // in milliseconds, 24 hours
 # define BATTERY_CRITICAL        400
 # define BATTERY_GOOD            800
@@ -25,7 +27,7 @@
 # define OTA_WAIT_LIMIT          600                          // in seconds, 10 minutes
 # define RETRIES_LIMIT           3
 # define WAKE_UP_HOURS           6, 9, 12, 15, 18, 21
-# define NOT_FOUND               -1
+# define NOT_FOUND               -1                           // do not change
 # define SUBS_CHECK_TIME_LIMIT   3900000ul                    // in milliseconds, 1 hour 5 minutes
 # define FAILED_TO_COUNT         -128
 
