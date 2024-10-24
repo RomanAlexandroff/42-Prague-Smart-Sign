@@ -149,10 +149,10 @@ static void ft_draw_bitmap_full_update(const unsigned char* image, uint16_t widt
 *   of ALL the additional images/messages. Useful after exams.
 */
 
-void IRAM_ATTR  ft_display_cluster_number(uint8_t mode)
+void IRAM_ATTR  ft_display_cluster_number(IMAGE_t mode)
 {
     RTC_DATA_ATTR static bool    display_cluster;
-    RTC_DATA_ATTR static uint8_t displaying_now;
+    RTC_DATA_ATTR static IMAGE_t displaying_now;
 
     if (!display_cluster)
     {
@@ -162,11 +162,11 @@ void IRAM_ATTR  ft_display_cluster_number(uint8_t mode)
     }
     switch (mode)
     {
-        case DEFAULT:
-            if (displaying_now == DEFAULT)
+        case STOCK:
+            if (displaying_now == STOCK)
                 return;
             ft_draw_bitmap_partial_update(default_cluster_icons, 170, 480);
-            displaying_now = DEFAULT;
+            displaying_now = STOCK;
             break;
         case INTRA_ERROR:
             if (displaying_now == INTRA_ERROR)

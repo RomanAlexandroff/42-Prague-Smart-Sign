@@ -54,7 +54,7 @@ void                  ft_cluster_number_mode(unsigned int* p_sleep_length);
 
 /* display_handling.cpp */
 void                  ft_draw_colour_bitmap(const unsigned char* black_image, const unsigned char* red_image);
-void IRAM_ATTR        ft_display_cluster_number(uint8_t mode);
+void IRAM_ATTR        ft_display_cluster_number(IMAGE_t mode);
 void                  ft_clear_display(void);
 void IRAM_ATTR        ft_display_init(void);
 

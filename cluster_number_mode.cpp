@@ -113,6 +113,6 @@ void  ft_cluster_number_mode(unsigned int* p_sleep_length)
     *p_sleep_length = ft_time_till_wakeup();
     if (ft_handle_secret_expiration())
         return;
-    ft_display_cluster_number(DEFAULT);    // DISPLAY ORDINARY DAY (NO ISSUES, NO FAILS, NO EXAMS) AND TURN OFF TILL NEXT WAKE-UP
+    ft_display_cluster_number(STOCK);    // DISPLAY ORDINARY DAY (NO ISSUES, NO FAILS, NO EXAMS) AND TURN OFF TILL NEXT WAKE-UP
 }
  

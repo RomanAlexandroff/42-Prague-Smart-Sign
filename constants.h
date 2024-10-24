@@ -13,7 +13,7 @@
 #ifndef CONSTANTS_H
 # define CONSTANTS_H
 
-# define SOFTWARE_VERSION        4.21
+# define SOFTWARE_VERSION        4.22
 
 /* General constants */
 # define CONNECT_TIMEOUT         5                            // in seconds
@@ -30,19 +30,6 @@
 # define NOT_FOUND               -1                           // do not change
 # define SUBS_CHECK_TIME_LIMIT   3900000ul                    // in milliseconds, 1 hour 5 minutes
 # define FAILED_TO_COUNT         -128
-
-/* Errors constants */
-typedef enum {
-    UNKNOWN = 0,
-    TIME_OK = 100,
-    TIME_NO_WIFI = 102,
-    TIME_NO_SERVER = 103,
-    TIME_NO_DST = 104,
-    INTRA_OK = 200,
-    INTRA_NO_SERVER = 503,
-    INTRA_NO_TOKEN = 401,
-    INTRA_NO_INFO = 404
-} ERROR_t;
 
 /* Buttons */
 # define DIAGNOSTICS_BUTTON      D0
@@ -67,19 +54,34 @@ typedef enum {
 # define MAX_HEIGHT(EPD)         (EPD::HEIGHT <= (MAX_DISPLAY_BUFFER_SIZE / 2) / (EPD::WIDTH / 8) ? EPD::HEIGHT : (MAX_DISPLAY_BUFFER_SIZE / 2) / (EPD::WIDTH / 8))
 
 /* Images constants */
-# define CLUSTER                 0
-# define DEFAULT                 1
-# define INTRA_ERROR             2
-# define SECRET_EXPIRED          3
-# define EXAM_DAY                4
-# define LOW_BATTERY             5
-# define DEAD_BATTERY            6
-# define OTA_WAITING             7
-# define OTA_UPDATING            8
-# define OTA_SUCCESS             9
-# define OTA_FAIL                10
-# define OTA_CANCELED            11
-# define TELEGRAM_ERROR          12
+typedef enum {
+    CLUSTER = 1000,
+    STOCK,
+    INTRA_ERROR,
+    SECRET_EXPIRED,
+    EXAM_DAY,
+    LOW_BATTERY,
+    DEAD_BATTERY,
+    OTA_WAITING,
+    OTA_UPDATING,
+    OTA_SUCCESS,
+    OTA_FAIL,
+    OTA_CANCELED,
+    TELEGRAM_ERROR
+} IMAGE_t;
+
+/* Errors constants */
+typedef enum {
+    UNKNOWN = 2000,
+    TIME_OK,
+    TIME_NO_WIFI,
+    TIME_NO_SERVER,
+    TIME_NO_DST,
+    INTRA_OK,
+    INTRA_NO_SERVER,
+    INTRA_NO_TOKEN,
+    INTRA_NO_INFO
+} ERROR_t;
 
 #endif
  
