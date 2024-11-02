@@ -30,7 +30,7 @@ void IRAM_ATTR  isr_warning(void)
     if (rtc_g.warning_active)
         ft_draw_colour_bitmap(exam_warning_black, exam_warning_red);
     else
-        ft_display_cluster_number(STOCK);
+        ft_display_cluster_number(DEFAULT_IMG);
 }
 
 void  ft_buttons_deinit(void)

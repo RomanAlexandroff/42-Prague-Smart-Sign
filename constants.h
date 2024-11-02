@@ -56,7 +56,7 @@
 /* Images constants */
 typedef enum {
     CLUSTER = 1000,
-    STOCK,
+    DEFAULT_IMG,
     INTRA_ERROR,
     SECRET_EXPIRED,
     EXAM_DAY,
