@@ -48,7 +48,7 @@ static bool ft_ensure_exams(unsigned int* p_sleep_length)
     retries = 0;
     while (intra_status != INTRA_OK && retries < RETRIES_LIMIT)
     {
-        delay (retries * 300000);attribute
+        delay (retries * 300000);
         DEBUG_PRINTF("\n[INTRA] Fetching exams data — try #%d\n\n", retries + 1);
         intra_status = ft_fetch_exams();
         retries++;

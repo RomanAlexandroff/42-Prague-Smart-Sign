@@ -41,7 +41,7 @@ struct rtc_global_variables {
     bool     ota;
     char     Secret[74];
     char     chat_id[15];
-    String   from_name;
+    char     from_name[33];
 };
 extern struct rtc_global_variables rtc_g;
 

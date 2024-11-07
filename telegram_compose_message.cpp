@@ -136,9 +136,10 @@ String  ft_compose_message(int32_t subject, int8_t days_left)
 {
     String  output;
 
-    if (rtc_g.from_name.isEmpty())
-        rtc_g.from_name = "User";
-    output = "Dear " + rtc_g.from_name;
+    if (!rtc_g.from_name[0])
+        output = "Dear User";
+    else
+        output = "Dear " + String(rtc_g.from_name);
     output += ", ";
     if (subject == SECRET_EXPIRED)
         output = ft_about_expired_secret(output, days_left);

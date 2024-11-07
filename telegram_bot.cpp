@@ -29,11 +29,8 @@ static void ft_reply_machine(String text)
 
     if (text == "/status")
     {
-        if (!rtc_g.from_name.isEmpty())
-        {
-            message = "Dear " + rtc_g.from_name;
-            message += ", I am ";
-        }
+        message = "Dear " + String(rtc_g.from_name);
+        message += ", I am ";
         message += "Connected to " + String(WiFi.SSID());   
         message += ", Signal strength is " + String(WiFi.RSSI()) + " dBm, ";
         message += "Software version " + String(SOFTWARE_VERSION);
@@ -83,6 +80,7 @@ static void  ft_new_messages(short message_count)
     uint8_t i;
     String  text;
     String  id_buffer;
+    String  name_buffer;
 
     i = 0;
     DEBUG_PRINTF("\n[TELEGRAM BOT] Handling new Telegram messages\n", "");
@@ -94,8 +92,9 @@ static void  ft_new_messages(short message_count)
         id_buffer.toCharArray(rtc_g.chat_id, sizeof(rtc_g.chat_id));
         ft_write_spiffs_file("/chat_id.txt", rtc_g.chat_id);
         text = bot.messages[i].text;
-        rtc_g.from_name = bot.messages[i].from_name;
-        DEBUG_PRINTF("[TELEGRAM BOT] %s says: ", rtc_g.from_name.c_str());
+        name_buffer = bot.messages[i].from_name;
+        name_buffer.toCharArray(rtc_g.from_name, sizeof(rtc_g.from_name));
+        DEBUG_PRINTF("[TELEGRAM BOT] %s says: ", rtc_g.from_name);
         DEBUG_PRINTF("%s\n\n", text.c_str());
         ft_reply_machine(text);
         i++;

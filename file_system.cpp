@@ -71,6 +71,8 @@ void  ft_data_integrity_check(void)
     }
     ft_data_restore("/secret.txt");
     ft_data_restore("/chat_id.txt");
+    if (!rtc_g.from_name[0])
+        strcpy(rtc_g.from_name, "User");
 }
 
 ERROR_t  ft_write_spiffs_file(const char* file_name, char* input)
