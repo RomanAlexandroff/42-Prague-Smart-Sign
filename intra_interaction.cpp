@@ -198,10 +198,12 @@ static void  ft_access_server(const char* server)
 {
     String  auth_request;
 
+    DEBUG_PRINTF("\n\nSECRET TOKEN VALUE RIGHT BEFORE ITS USE\n%s\n\n", rtc_g.Secret);
+
     auth_request = "grant_type=client_credentials&client_id=";
     auth_request += UID;
     auth_request += "&client_secret=";
-    auth_request += rtc_g.Secret;
+    auth_request += String(rtc_g.Secret);
     Intra_client.print("POST https://api.intra.42.fr/oauth/token HTTP/1.1\r\n");
     Intra_client.print("Host: ");
     Intra_client.println(server);

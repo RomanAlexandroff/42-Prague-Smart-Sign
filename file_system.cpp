@@ -12,7 +12,7 @@
 
 #include "42-Prague-Smart-Sign.h"
 
-bool ft_secret_verification(String input)
+bool ft_secret_verification(String input)       // ЗДЕСЬ STRING МЕНЯТЬ НЕ НАДО!
 {
     if (input.length() != 73)
         return (false);
@@ -23,25 +23,26 @@ bool ft_secret_verification(String input)
 
 void ft_data_restore(const char* file_name)
 {
-    String  buffer;
-
     if (!file_name)
         return;
-    buffer = ft_read_spiffs_file(file_name);
-    buffer.trim();
-    if (buffer.length() == 0)
+    if (file_name == "/secret.txt")
     {
-        DEBUG_PRINTF("[FILE SYSTEM] Warning: Read empty data from %s\n", file_name);
+        if (ft_read_spiffs_file(file_name, rtc_g.Secret) == FS_OK)
+            DEBUG_PRINTF("\n[FILE SYSTEM] Successfully restored data from %s.\n", file_name);
+        else
+            DEBUG_PRINTF("\n[FILE SYSTEM] Failed to restore data from %s!\n", file_name);
+        DEBUG_PRINTF("[FILE SYSTEM] The rtc_g.Secret variable value is now:\n%s\n", rtc_g.Secret);
         return;
     }
-    if (file_name == "/secret.txt")
-        rtc_g.Secret = buffer;
     else if (file_name == "/chat_id.txt")
-        rtc_g.chat_id = buffer;
-    else
+    {
+        if (ft_read_spiffs_file(file_name, rtc_g.chat_id) == FS_OK)
+            DEBUG_PRINTF("\n[FILE SYSTEM] Successfully restored data from %s.\n", file_name);
+        else
+            DEBUG_PRINTF("\n[FILE SYSTEM] Failed to restore data from %s!\n", file_name);
+        DEBUG_PRINTF("[FILE SYSTEM] The rtc_g.chat_id variable value is now:\n%s\n", rtc_g.chat_id);
         return;
-    DEBUG_PRINTF("\n[FILE SYSTEM] Found uncorrupted data in the file %s. ", file_name);
-    DEBUG_PRINTF("Сorresponding value has been restored.\n", "");
+    }
 }
 
 void  ft_data_integrity_check(void)
@@ -49,33 +50,37 @@ void  ft_data_integrity_check(void)
     if (!LittleFS.exists("/secret.txt"))
     {
         DEBUG_PRINTF("\n[FILE SYSTEM] The secret.txt file does not exist. Creating...\n", "");
-        ft_write_spiffs_file("/secret.txt", SECRET);
-        DEBUG_PRINTF("\n[FILE SYSTEM] secret.txt file created. It contains:\n%s\n", ft_read_spiffs_file("/secret.txt").c_str());
+        char input[] = SECRET;
+        if (ft_write_spiffs_file("/secret.txt", input) == FS_OK)
+            DEBUG_PRINTF("\n[FILE SYSTEM] secret.txt file has been created.\n", "");
+        else
+            DEBUG_PRINTF("\n[FILE SYSTEM] Failed to create the secret.txt file!\n", "");
     }
     if (!LittleFS.exists("/chat_id.txt"))
     {
         DEBUG_PRINTF("\n[FILE SYSTEM] The chat_id.txt file does not exist. Creating...\n", "");
-        ft_write_spiffs_file("/chat_id.txt", "0000000000000");
-        DEBUG_PRINTF("\n[FILE SYSTEM] chat_id.txt file created. The rtc_g.chat_id value is recorded as %d\n", ft_read_spiffs_file("/chat_id.txt"));
-        DEBUG_PRINTF("\n[FILE SYSTEM] To set up the real chat_id value simply write /status ", "");
-        DEBUG_PRINTF("into the Telegram chat %s, ", String(BOT_NAME));
-        DEBUG_PRINTF("then restart the device or wait for its next wake-up.", "");
+        char input[] = "0000000000000";
+        if (ft_write_spiffs_file("/chat_id.txt", input) == FS_OK)
+        {
+            DEBUG_PRINTF("\n[FILE SYSTEM] chat_id.txt file has been created.\n", "");
+            DEBUG_PRINTF("\n[FILE SYSTEM] To set chat_id write \"/status\" into the Telegram chat %s", String(BOT_NAME));
+        }
+        else
+            DEBUG_PRINTF("\n[FILE SYSTEM] Failed to create the chat_id.txt file!\n", "");
         ft_display_cluster_number(TELEGRAM_ERROR);
     }
     ft_data_restore("/secret.txt");
-    DEBUG_PRINTF("\n[FILE SYSTEM] The Secret variable value is now:\n%s\n", rtc_g.Secret.c_str());
     ft_data_restore("/chat_id.txt");
-    DEBUG_PRINTF("\n[FILE SYSTEM] The rtc_g.chat_id variable has been set to \n%s\n", rtc_g.chat_id.c_str());
 }
 
-short  ft_write_spiffs_file(const char* file_name, String input)
+ERROR_t  ft_write_spiffs_file(const char* file_name, char* input)
 {
     File  file;
     short i;
 
+    if (!file_name || !input)
+        return FS_ENTRY_ERROR;
     i = 0;
-    if (!file_name || input.isEmpty())
-        return (0);
     while (i < 5)
     {
         file = LittleFS.open(file_name, "w");
@@ -88,25 +93,22 @@ short  ft_write_spiffs_file(const char* file_name, String input)
     if (!file)
     {
         DEBUG_PRINTF("[FILE SYSTEM] Failed to open %s file for writing in LittleFS. Its dependant function will be unavailable during this programm cycle.\n", file_name);
-        return (0);
+        return FS_OPEN_FAIL;
     }
-    else
-    {
-        file.println(input);
-        file.close();
-    }
-    return (1);
+    file.println(input);
+    file.close();
+    return FS_OK;
 }
 
-String  ft_read_spiffs_file(const char* file_name)
+ERROR_t  ft_read_spiffs_file(const char* file_name, char* output)
 {
     File    file;
     short   i;
-    String  output;
+    String  buffer;
 
-    i = 0;
     if (!file_name)
-        return ("0");
+        return FS_ENTRY_ERROR;
+    i = 0;
     while (i < 5)
     {
         file = LittleFS.open(file_name, "r");
@@ -119,17 +121,18 @@ String  ft_read_spiffs_file(const char* file_name)
     if (!file)
     {
         DEBUG_PRINTF("[FILE SYSTEM] Failed to open %s file for reading in LittleFS. Its dependant function will be unavailable during this programm cycle.\n", file_name);
-        return ("0");
+        return FS_OPEN_FAIL;
     }  
-    else
-    {
-        output = file.readStringUntil('\n');
-        file.close(); 
-    }
-    return (output);
+    buffer = file.readStringUntil('\n');
+    file.close();
+    buffer.trim();
+    if (buffer.length() == 0)
+        return FS_EMPTY_FILE;
+    strcpy(output, buffer.c_str());
+    return FS_OK;
 }
 
-void  ft_spiffs_init(void)
+ERROR_t  ft_spiffs_init(void)
 {
     short i;
 
@@ -143,8 +146,9 @@ void  ft_spiffs_init(void)
     else
     {
         DEBUG_PRINTF("\n[FILE SYSTEM] SPIFFS is successfully initialised.\n", "");
-        return;
+        return FS_OK;
     }
     DEBUG_PRINTF("\n[FILE SYSTEM] SPIFFS was not initialised. Reading and Writing data is unavailable this session.\n", "");
+    return FS_INIT_FAIL;
 }
  

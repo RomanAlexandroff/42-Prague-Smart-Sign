@@ -34,14 +34,14 @@ void  ft_battery_check(void)
     {
         ft_display_cluster_number(LOW_BATTERY);
         DEBUG_PRINTF("\nBattery is too low. Going into extensive sleep\n", "");
-        bot.sendMessage(rtc_g.chat_id, ft_compose_message(DEAD_BATTERY, 0), "");
+        bot.sendMessage(String(rtc_g.chat_id), ft_compose_message(DEAD_BATTERY, 0), "");
         ft_go_to_sleep(DEAD_BATTERY_SLEEP);
     }
     else if (battery < BATTERY_GOOD)
     {
         ft_display_cluster_number(LOW_BATTERY);
         DEBUG_PRINTF("\nLow battery! Need charging!\n", "");
-        bot.sendMessage(rtc_g.chat_id, ft_compose_message(LOW_BATTERY, 0), "");
+        bot.sendMessage(String(rtc_g.chat_id), ft_compose_message(LOW_BATTERY, 0), "");
     }
 }
 

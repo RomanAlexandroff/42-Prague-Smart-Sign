@@ -65,9 +65,9 @@ void                  ft_exam_mode(void);
 bool                  ft_secret_verification(String text);
 void                  ft_data_restore(const char* file_name);
 void                  ft_data_integrity_check(void);
-short                 ft_write_spiffs_file(const char* file_name, String input);
-String                ft_read_spiffs_file(const char* file_name);
-void                  ft_spiffs_init(void);
+ERROR_t               ft_write_spiffs_file(const char* file_name, char* input);
+ERROR_t               ft_read_spiffs_file(const char* file_name, char* output);
+ERROR_t               ft_spiffs_init(void);
 
 /* ota.h */
 inline void           ft_ota_init(void) __attribute__((always_inline));

@@ -49,7 +49,7 @@ static void ft_reply_machine(String text)
             message += "no exams are planned for today";
         if (ft_unix_timestamp_decoder(&day, &month, &year))
             message += ", Secret token expires on " + String(day) + "." + String(month) + "." + String(year);
-        bot.sendMessage(rtc_g.chat_id, message, "");
+        bot.sendMessage(String(rtc_g.chat_id), message, "");
         message.clear();
     }
     else if (text == "/ota")
@@ -62,18 +62,18 @@ static void ft_reply_machine(String text)
         text.remove(0, 1);
         if (ft_secret_verification(text))
         {
-            rtc_g.Secret = text;
-            ft_write_spiffs_file("/secret.txt", text);
+            text.toCharArray(rtc_g.Secret, sizeof(rtc_g.Secret));
+            ft_write_spiffs_file("/secret.txt", rtc_g.Secret);
             message = "Accepted!\nThe SECRET token has been renewed.\n\n";
-            message += "Current token now is:\n" + rtc_g.Secret;
-            bot.sendMessage(rtc_g.chat_id, message, "");
+            message += "Current token now is:\n" + String(rtc_g.Secret);
+            bot.sendMessage(String(rtc_g.chat_id), message, "");
         }
         else
         {
             message = "I am sorry, but I do not understand \"";
             message += text + "\".\n";
             message += "You may try to use \"/status\" command";
-            bot.sendMessage(rtc_g.chat_id, message, "");
+            bot.sendMessage(String(rtc_g.chat_id), message, "");
         }
     }
 }
@@ -82,6 +82,7 @@ static void  ft_new_messages(short message_count)
 {
     uint8_t i;
     String  text;
+    String  id_buffer;
 
     i = 0;
     DEBUG_PRINTF("\n[TELEGRAM BOT] Handling new Telegram messages\n", "");
@@ -89,7 +90,8 @@ static void  ft_new_messages(short message_count)
     while (i < message_count) 
     {
         DEBUG_PRINTF("[TELEGRAM BOT] Handling loop iterations: i = %d\n", i);
-        rtc_g.chat_id = String(bot.messages[i].chat_id);
+        id_buffer = bot.messages[i].chat_id;
+        id_buffer.toCharArray(rtc_g.chat_id, sizeof(rtc_g.chat_id));
         ft_write_spiffs_file("/chat_id.txt", rtc_g.chat_id);
         text = bot.messages[i].text;
         rtc_g.from_name = bot.messages[i].from_name;

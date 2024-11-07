@@ -39,8 +39,8 @@ struct rtc_global_variables {
     bool     warning_active;
     bool     exam_status;
     bool     ota;
-    String   Secret;
-    String   chat_id;
+    char     Secret[74];
+    char     chat_id[15];
     String   from_name;
 };
 extern struct rtc_global_variables rtc_g;

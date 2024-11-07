@@ -80,7 +80,12 @@ typedef enum {
     INTRA_OK,
     INTRA_NO_SERVER,
     INTRA_NO_TOKEN,
-    INTRA_NO_INFO
+    INTRA_NO_INFO,
+    FS_OK,
+    FS_INIT_FAIL,
+    FS_OPEN_FAIL,
+    FS_EMPTY_FILE,
+    FS_ENTRY_ERROR
 } ERROR_t;
 
 #endif

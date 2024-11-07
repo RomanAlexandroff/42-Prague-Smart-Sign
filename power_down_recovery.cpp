@@ -38,7 +38,7 @@ void  ft_power_down_recovery(void)
             DEBUG_PRINTF("\n[BOOTING INFO] Processor reset reason: Panic/exception reset\n", "");
             break;
     }
-    ft_data_integrity_check();
+//    ft_data_integrity_check();
     DEBUG_PRINTF("\n[BOOTING INFO] Power-down Recovery was performed.\n\n", "");
 }
  

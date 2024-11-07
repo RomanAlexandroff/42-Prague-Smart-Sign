@@ -18,10 +18,9 @@ static void ft_report_exception(ERROR_t status)
         ft_wifi_connect();
     if (WiFi.status() != WL_CONNECTED)
         return;
-    bot.sendMessage(rtc_g.chat_id, ft_compose_message(status, 0), "");
+    bot.sendMessage(String(rtc_g.chat_id), ft_compose_message(status, 0), "");
 }
 
-/* CALCULATE THE SECRET EXPIRATION AND DISPLAY + NOTIFY */
 static bool ft_handle_secret_expiration(void)
 {
     int8_t  days_left;
@@ -31,13 +30,16 @@ static bool ft_handle_secret_expiration(void)
     {
         ft_display_cluster_number(SECRET_EXPIRED);
         DEBUG_PRINTF("\n[INTRA] IT IS TIME TO UPDATE THE SECRET!\n", "");
-        bot.sendMessage(rtc_g.chat_id, ft_compose_message(SECRET_EXPIRED, days_left), "");
+        bot.sendMessage(String(rtc_g.chat_id), ft_compose_message(SECRET_EXPIRED, days_left), "");
         return (true);
     }
     return (false);
 }
 
-/* MAKE SURE TO GET EXAMS INFO OR DISPLAY ERROR */
+/*
+*   Makes sure to get exams info or
+*   display error and notify user
+*/
 static bool ft_ensure_exams(unsigned int* p_sleep_length)
 {
     uint8_t retries;
@@ -46,11 +48,11 @@ static bool ft_ensure_exams(unsigned int* p_sleep_length)
     retries = 0;
     while (intra_status != INTRA_OK && retries < RETRIES_LIMIT)
     {
-        delay (retries * 300000);
+        delay (retries * 300000);attribute
         DEBUG_PRINTF("\n[INTRA] Fetching exams data — try #%d\n\n", retries + 1);
         intra_status = ft_fetch_exams();
         retries++;
-        if (!intra_status && retries != RETRIES_LIMIT)
+        if (intra_status != INTRA_OK && retries != RETRIES_LIMIT)
             DEBUG_PRINTF("\n[INTRA] Retrying in %d minute(s)\n", retries * 5);
     }
     if (intra_status != INTRA_OK)
@@ -65,7 +67,12 @@ static bool ft_ensure_exams(unsigned int* p_sleep_length)
     return (true);
 }
 
-/* MAKE SURE TO HAVE ACTUAL TIME OR TURN OFF FOR 6 HOURS */
+/*
+*   Makes sure to get actual time or
+*   display error and notify user.
+*   Since default time is 00:00, sleep
+*   length always calculates to 6 hours.
+*/
 static bool ft_ensure_time(unsigned int* p_sleep_length)
 {
     uint8_t retries;
@@ -74,10 +81,12 @@ static bool ft_ensure_time(unsigned int* p_sleep_length)
     retries = 0;
     while (time_status != TIME_OK && retries < RETRIES_LIMIT)
     {
+        delay (retries * 300000);
         time_status = ft_get_time();
         retries++;
-        DEBUG_PRINTF("\n[SYSTEM TIME] Retrying in %d minute(s)\n", retries * 5);
-        delay (retries * 300000);
+        if (time_status != TIME_OK && retries != RETRIES_LIMIT)
+            DEBUG_PRINTF("\n[SYSTEM TIME] Retrying in %d minute(s)\n", retries * 5);
+        
     }
     if (time_status != TIME_OK)
     {
@@ -113,6 +122,6 @@ void  ft_cluster_number_mode(unsigned int* p_sleep_length)
     *p_sleep_length = ft_time_till_wakeup();
     if (ft_handle_secret_expiration())
         return;
-    ft_display_cluster_number(DEFAULT_IMG);    // DISPLAY ORDINARY DAY (NO ISSUES, NO FAILS, NO EXAMS) AND TURN OFF TILL NEXT WAKE-UP
+    ft_display_cluster_number(DEFAULT_IMG);        // Display ordinary day (no issues, fails or exams)
 }
  

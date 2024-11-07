@@ -41,13 +41,13 @@ void ft_ota_init(void)
                     type = "filesystem";
                 ft_display_cluster_number(OTA_UPDATING);
                 DEBUG_PRINTF("[OTA] Start updating %s", type.c_str());
-                bot.sendMessage(rtc_g.chat_id, "Updating...", "");
+                bot.sendMessage(String(rtc_g.chat_id), "Updating...", "");
             })
             .onEnd([]() {
                 ft_display_cluster_number(OTA_SUCCESS);
                 DEBUG_PRINTF("\n[OTA] End", "");
                 rtc_g.ota = false;
-                bot.sendMessage(rtc_g.chat_id, "Successfully updated!", "");
+                bot.sendMessage(String(rtc_g.chat_id), "Successfully updated!", "");
                 ft_delay(5000);
                 ft_clear_display();
                 display.powerOff();
@@ -63,14 +63,14 @@ void ft_ota_init(void)
                 else if (error == OTA_CONNECT_ERROR) DEBUG_PRINTF("Connect Failed\n", "");
                 else if (error == OTA_RECEIVE_ERROR) DEBUG_PRINTF("Receive Failed\n", "");
                 else if (error == OTA_END_ERROR) DEBUG_PRINTF("End Failed\n", "");
-                bot.sendMessage(rtc_g.chat_id, "Something went wrong. Updating was not completed. Try again later", "");
+                bot.sendMessage(String(rtc_g.chat_id), "Something went wrong. Updating was not completed. Try again later", "");
                 ft_delay(3000);
                 ft_clear_display();
                 ESP.restart();
             });
         ft_display_cluster_number(OTA_WAITING);
         DEBUG_PRINTF("\n[OTA] Ready to update\n\n", "");
-        bot.sendMessage(rtc_g.chat_id, "OTA Update is active", "");
+        bot.sendMessage(String(rtc_g.chat_id), "OTA Update is active", "");
         ArduinoOTA.begin();
     }
 }
@@ -91,7 +91,7 @@ void ft_ota_waiting_loop(void)
         }
         rtc_g.ota = false;
         ft_display_cluster_number(OTA_CANCELED);
-        bot.sendMessage(rtc_g.chat_id, "OTA Update port closed", "");
+        bot.sendMessage(String(rtc_g.chat_id), "OTA Update port closed", "");
         DEBUG_PRINTF("\n[OTA] OTA Update port closed\n", "");
     }
 }
