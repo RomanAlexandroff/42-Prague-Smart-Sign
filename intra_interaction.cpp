@@ -34,7 +34,7 @@ static void  ft_check_exam_subscribers(String &server_response)
         rtc_g.exam_status = false;
     }
     else
-        DEBUG_PRINTF("\n[INTRA] Subscribers detected. Continuing with the Exam mode.\n\n", "");
+        DEBUG_PRINTF("\n[INTRA] %d subscribers detected. Continuing with the Exam mode.\n\n", subscribers);
 }
 
 static void  ft_get_exam_time(String &server_response)
@@ -197,8 +197,6 @@ static bool  ft_handle_server_response(const char* server, String* token)
 static void  ft_access_server(const char* server)
 {
     String  auth_request;
-
-    DEBUG_PRINTF("\n\nSECRET TOKEN VALUE RIGHT BEFORE ITS USE\n%s\n\n", rtc_g.Secret);
 
     auth_request = "grant_type=client_credentials&client_id=";
     auth_request += UID;
