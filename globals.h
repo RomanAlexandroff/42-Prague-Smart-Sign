@@ -36,7 +36,6 @@ struct rtc_global_variables {
     time_t   secret_expiration;
     uint16_t exam_start_hour;
     uint16_t exam_start_minutes;
-    bool     warning_active;
     bool     exam_status;
     bool     ota;
     char     Secret[74];

@@ -17,7 +17,7 @@ void  ft_go_to_sleep(uint64_t time_in_millis)
     if (time_in_millis < REBOOT)
         time_in_millis = REBOOT;
     display.powerOff();
-    ft_buttons_deinit();
+//    ft_buttons_deinit();
     DEBUG_PRINTF("The device was running for %d second(s) this time\n", (millis() / 1000));
     DEBUG_PRINTF("Going to sleep for %u seconds.\n", time_in_millis / 1000);
     DEBUG_PRINTF("\nDEVICE STOP\n\n\n", "");
@@ -62,7 +62,7 @@ void  ft_serial_init(void)
     
     i = 15;
     Serial.begin(115200);
-    while (i)
+    while (i > 0)
     {
         DEBUG_PRINTF("-", "");
         delay(100);
