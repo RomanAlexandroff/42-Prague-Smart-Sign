@@ -132,6 +132,30 @@ static String ft_about_expired_secret(String output, int8_t days_left)
     return (output);
 }
 
+static String ft_about_device_status(String output)
+{
+    uint8_t     day;
+    uint8_t     month;
+    uint16_t    year;
+
+    output += "I am connected to " + String(WiFi.SSID());   
+    output += ", Signal strength is " + String(WiFi.RSSI()) + " dBm, ";
+    output += "Software version " + String(SOFTWARE_VERSION);
+    output += ", Exams status: ";
+    if (rtc_g.exam_status)
+    {
+        output += "next exam is today at " + String(rtc_g.exam_start_hour) + ":";
+        if (rtc_g.exam_start_minutes < 10)
+            output += "0";
+        output += String(rtc_g.exam_start_minutes);
+    }
+    else
+        output += "no exams are planned for today";
+    if (ft_unix_timestamp_decoder(&day, &month, &year))
+        output += ", Secret token expires on " + String(day) + "." + String(month) + "." + String(year);
+    return (output);
+}
+
 String  ft_compose_message(int32_t subject, int8_t days_left)
 {
     String  output;
@@ -141,7 +165,9 @@ String  ft_compose_message(int32_t subject, int8_t days_left)
     else
         output = "Dear " + String(rtc_g.from_name);
     output += ", ";
-    if (subject == SECRET_EXPIRED)
+    if (subject == TELEGRAM_STATUS)
+        output = ft_about_device_status(output);
+    else if (subject == SECRET_EXPIRED)
         output = ft_about_expired_secret(output, days_left);
     else if (subject == LOW_BATTERY)
         output = ft_about_low_battery(output);

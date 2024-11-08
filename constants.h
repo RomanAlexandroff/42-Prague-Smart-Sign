@@ -67,7 +67,8 @@ typedef enum {
     OTA_SUCCESS,
     OTA_FAIL,
     OTA_CANCELED,
-    TELEGRAM_ERROR
+    TELEGRAM_ERROR,
+    TELEGRAM_STATUS
 } IMAGE_t;
 
 /* Errors constants */

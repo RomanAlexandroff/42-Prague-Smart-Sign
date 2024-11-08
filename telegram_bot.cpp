@@ -23,35 +23,11 @@
 static void ft_reply_machine(String text)
 {
     String      message;
-    uint8_t     day;
-    uint8_t     month;
-    uint16_t    year;
 
     if (text == "/status")
     {
-        DEBUG_PRINTF("\n\n[TELEGRAM MESSAGING] EXAM STATUS\n", "");
-        DEBUG_PRINTF("-- Active or not: %d;\n", rtc_g.exam_status);
-        DEBUG_PRINTF("-- Begins at %d:", rtc_g.exam_start_hour);
-        DEBUG_PRINTF("%d0\n\n", rtc_g.exam_start_minutes);
-        message = "Dear " + String(rtc_g.from_name);
-        message += ", I am ";
-        message += "Connected to " + String(WiFi.SSID());   
-        message += ", Signal strength is " + String(WiFi.RSSI()) + " dBm, ";
-        message += "Software version " + String(SOFTWARE_VERSION);
-        message += ", Exams status: ";
-        if (rtc_g.exam_status)
-        {
-            message += "next exam is today at " + String(rtc_g.exam_start_hour) + ":";
-            if (rtc_g.exam_start_minutes < 10)
-                message += "0";
-            message += String(rtc_g.exam_start_minutes);
-        }
-        else
-            message += "no exams are planned for today";
-        if (ft_unix_timestamp_decoder(&day, &month, &year))
-            message += ", Secret token expires on " + String(day) + "." + String(month) + "." + String(year);
-        bot.sendMessage(String(rtc_g.chat_id), message, "");
-        message.clear();
+        bot.sendMessage(String(rtc_g.chat_id), ft_compose_message(TELEGRAM_STATUS, 0), "");
+        return;
     }
     else if (text == "/ota")
     {
