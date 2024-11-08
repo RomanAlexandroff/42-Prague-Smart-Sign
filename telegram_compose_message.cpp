@@ -138,7 +138,8 @@ static String ft_about_device_status(String output)
     uint8_t     month;
     uint16_t    year;
 
-    output += "I am connected to " + String(WiFi.SSID());   
+    output += "I am connected to " + String(WiFi.SSID());
+    output += ", Access point MAC is " + WiFi.BSSIDstr();
     output += ", Signal strength is " + String(WiFi.RSSI()) + " dBm, ";
     output += "Software version " + String(SOFTWARE_VERSION);
     output += ", Exams status: ";
