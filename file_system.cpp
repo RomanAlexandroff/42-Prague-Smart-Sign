@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/09 13:02:40 by raleksan          #+#    #+#             */
+/*   Created: 2024/04/09 13:02:00 by raleksan          #+#    #+#             */
 /*   Updated: 2024/08/31 16:00:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "42-Prague-Smart-Sign.h"
 
-bool ft_secret_verification(String input)       // ЗДЕСЬ STRING МЕНЯТЬ НЕ НАДО!
+bool ft_secret_verification(String input)
 {
     if (input.length() != 73)
         return (false);
@@ -72,7 +72,10 @@ void  ft_data_integrity_check(void)
     ft_data_restore("/secret.txt");
     ft_data_restore("/chat_id.txt");
     if (!rtc_g.from_name[0])
+    {
         strcpy(rtc_g.from_name, "User");
+        DEBUG_PRINTF("\n[FILE SYSTEM] User name has been set to: %s\n", rtc_g.from_name);
+    }
 }
 
 ERROR_t  ft_write_spiffs_file(const char* file_name, char* input)

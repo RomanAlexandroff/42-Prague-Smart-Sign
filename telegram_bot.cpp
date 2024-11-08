@@ -29,6 +29,10 @@ static void ft_reply_machine(String text)
 
     if (text == "/status")
     {
+        DEBUG_PRINTF("\n\n[TELEGRAM MESSAGING] EXAM STATUS\n", "");
+        DEBUG_PRINTF("-- Active or not: %d;\n", rtc_g.exam_status);
+        DEBUG_PRINTF("-- Begins at %d:", rtc_g.exam_start_hour);
+        DEBUG_PRINTF("%d0\n\n", rtc_g.exam_start_minutes);
         message = "Dear " + String(rtc_g.from_name);
         message += ", I am ";
         message += "Connected to " + String(WiFi.SSID());   
