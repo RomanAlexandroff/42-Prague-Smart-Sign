@@ -39,7 +39,6 @@ void ft_ota_init(void)
                     type = "sketch";
                 else // U_SPIFFS
                     type = "filesystem";
-                ft_display_cluster_number(OTA_UPDATING);
                 DEBUG_PRINTF("[OTA] Start updating %s", type.c_str());
                 bot.sendMessage(String(rtc_g.chat_id), "Updating...", "");
             })
