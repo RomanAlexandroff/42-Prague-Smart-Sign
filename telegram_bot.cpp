@@ -22,7 +22,8 @@
 
 static void ft_reply_machine(String text)
 {
-    String      message;
+    String  message;
+    ERROR_t check_result;
 
     if (text == "/status")
     {
@@ -37,13 +38,22 @@ static void ft_reply_machine(String text)
     else
     {
         text.remove(0, 1);
-        if (ft_secret_verification(text))
+        check_result = ft_secret_verification(text);
+        if (check_result = FS_VALID_SECRET)
         {
             text.toCharArray(rtc_g.Secret, sizeof(rtc_g.Secret));
             ft_write_spiffs_file("/secret.txt", rtc_g.Secret);
             message = "Accepted!\nThe SECRET token has been renewed.\n\n";
             message += "Current token now is:\n" + String(rtc_g.Secret);
             bot.sendMessage(String(rtc_g.chat_id), message, "");
+            return;
+        }
+        else if (check_result = FS_INVALID_SECRET)
+        {
+            message = "It looks like a SECRET token, but Intra rejects it. ";
+            message += "It is probably an old token. I cannot use it.";
+            bot.sendMessage(String(rtc_g.chat_id), message, "");
+            return;
         }
         else
         {

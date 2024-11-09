@@ -85,7 +85,10 @@ typedef enum {
     FS_INIT_FAIL,
     FS_OPEN_FAIL,
     FS_EMPTY_FILE,
-    FS_ENTRY_ERROR
+    FS_ENTRY_ERROR,
+    FS_VALID_SECRET,
+    FS_INVALID_SECRET,
+    FS_NOT_A_SECRET
 } ERROR_t;
 
 #endif

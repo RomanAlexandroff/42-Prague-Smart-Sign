@@ -12,13 +12,27 @@
 
 #include "42-Prague-Smart-Sign.h"
 
-bool ft_secret_verification(String input)
+ERROR_t ft_secret_verification(String input)
 {
+    char secret_buffer[74];
+    bool exam_status_buffer;
+    
     if (input.length() != 73)
-        return (false);
+        return (FS_NOT_A_SECRET);
     if (input.substring(0, 1) != "s")
-        return (false);
-    return (true);
+        return (FS_NOT_A_SECRET);
+    strcpy(secret_buffer, rtc_g.Secret);
+    exam_status_buffer = rtc_g.exam_status;
+    input.toCharArray(rtc_g.Secret, sizeof(rtc_g.Secret));
+    if (ft_fetch_exams() == INTRA_NO_TOKEN)
+    {
+        strcpy(rtc_g.Secret, secret_buffer);
+        rtc_g.exam_status = exam_status_buffer;
+        return (FS_INVALID_SECRET);
+    }
+    strcpy(rtc_g.Secret, secret_buffer);
+    rtc_g.exam_status = exam_status_buffer;
+    return (FS_VALID_SECRET);
 }
 
 void ft_data_restore(const char* file_name)

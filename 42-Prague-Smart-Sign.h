@@ -62,7 +62,7 @@ void IRAM_ATTR        ft_display_init(void);
 void                  ft_exam_mode(void);
 
 /* file_system.cpp */
-bool                  ft_secret_verification(String text);
+ERROR_t               ft_secret_verification(String text);
 void                  ft_data_restore(const char* file_name);
 void                  ft_data_integrity_check(void);
 ERROR_t               ft_write_spiffs_file(const char* file_name, char* input);
