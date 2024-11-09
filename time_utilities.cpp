@@ -5,7 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/09 13:03:05 by raleksan          #+#    #+#             */
+/*   Created: 2024/04/09 13:00:00 by raleksan          #+#    #+#             */
 /*   Updated: 2024/10/22 16:00:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -21,7 +21,7 @@ bool  ft_unix_timestamp_decoder(uint8_t* p_day, uint8_t* p_month, uint16_t* p_ye
     *p_month = time_info->tm_mon + 1;
     *p_year = time_info->tm_year + 1900;
     return (true);
-}    
+}
 
 int8_t  ft_expiration_counter(void)
 {

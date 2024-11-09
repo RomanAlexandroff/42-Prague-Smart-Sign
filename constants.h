@@ -13,7 +13,7 @@
 #ifndef CONSTANTS_H
 # define CONSTANTS_H
 
-# define SOFTWARE_VERSION        4.24
+# define SOFTWARE_VERSION        4.26
 
 /* General constants */
 # define CONNECT_TIMEOUT         5                            // in seconds
@@ -63,7 +63,6 @@ typedef enum {
     LOW_BATTERY,
     DEAD_BATTERY,
     OTA_WAITING,
-    OTA_UPDATING,
     OTA_SUCCESS,
     OTA_FAIL,
     OTA_CANCELED,
