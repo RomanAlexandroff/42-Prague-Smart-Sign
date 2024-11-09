@@ -51,7 +51,7 @@ void  ft_power_down_recovery(void)
         ft_go_to_sleep(DEAD_BATTERY_SLEEP);
     }
     ft_report_reboot_reason(reset_reason);
-    if (reset_reason != ESP_RST_SW && reset_reason != ESP_RST_DEEPSLEEP)
+    if (reset_reason != ESP_RST_DEEPSLEEP)
     {
         DEBUG_PRINTF("\n[BOOTING INFO] Hard reset detected. Restoring RTC memory data...\n", "");
         ft_data_integrity_check();
