@@ -14,22 +14,22 @@
 
 void  setup(void)
 {
+    ft_display_init();
     #ifdef DEBUG
         ft_serial_init();
     #endif
     ft_spiffs_init();
 //    ft_buttons_init();
     ft_battery_init();
-    ft_display_init();
     ft_power_down_recovery();
     ft_battery_check();
     ft_telegram_check();
-//    ft_ota_init();                                // firewall blocks OTA over Wi-Fi
+    ft_ota_init();
 }
 
 void  loop(void)
 {
-//    ft_ota_waiting_loop();                        // firewall blocks OTA over Wi-Fi
+    ft_ota_waiting_loop();
     ft_pathfinder();
 }
 
