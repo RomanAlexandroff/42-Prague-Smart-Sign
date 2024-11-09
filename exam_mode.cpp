@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/09 13:01:07 by raleksan          #+#    #+#             */
-/*   Updated: 2024/08/31 16:00:00 by raleksan         ###   ########.fr       */
+/*   Created: 2024/04/09 13:00:00 by raleksan          #+#    #+#             */
+/*   Updated: 2024/11/09 17:30:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ static unsigned int ft_exam(void)
     unsigned int  exam_remaining_time;
 
     exam_remaining_time = ft_time_till_event(com_g.exam_end_hour, com_g.exam_end_minutes);
+    DEBUG_PRINTF("\n[THE DISPLAY] Drawing the Exam sign...\n", "");
     ft_draw_colour_bitmap(exam_warning_black, exam_warning_red);                          // execution takes 25 sec
+    DEBUG_PRINTF("[THE DISPLAY] The drawing process is complete\n", "");
     rtc_g.exam_status = false;
     return (exam_remaining_time);
 }
@@ -29,7 +31,9 @@ static void ft_preexam_warning(unsigned int* p_preexam_time)
     minutes = ft_time_sync(*p_preexam_time);
     if (minutes == 60 || minutes == 50)
     {
+        DEBUG_PRINTF("\n[THE DISPLAY] Drawing the Reservation sign...\n", "");
         ft_draw_colour_bitmap(preexam_50mins, preexam_warning_red);                       // execution takes 25 sec
+        DEBUG_PRINTF("[THE DISPLAY] The drawing process is complete\n", "");
         ft_delay((minutes - 40) * 60000);
         minutes = 40;
     }
@@ -57,7 +61,6 @@ static void ft_preexam_warning(unsigned int* p_preexam_time)
 *   
 *   Two calls to get time are not redundant.
 */
-
 void  ft_exam_mode(void)
 {
     unsigned int  preexam_time;
