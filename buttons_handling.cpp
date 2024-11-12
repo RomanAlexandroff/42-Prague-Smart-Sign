@@ -5,56 +5,56 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/09 13:00:13 by raleksan          #+#    #+#             */
-/*   Updated: 2024/04/09 13:00:15 by raleksan         ###   ########.fr       */
+/*   Created: 2024/04/09 13:00:00 by raleksan          #+#    #+#             */
+/*   Updated: 2024/11/12 17:00:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*#include "42-Prague-Smart-Sign.h"
+#include "42-Prague-Smart-Sign.h"
 
 void IRAM_ATTR  isr_diagnostics(void)
 {
-    DEBUG_PRINTF("  ---- Diagnostics Button was pressed\n", "");
+    unsigned long interrupt_time;
+
+    interrupt_time = millis();
+    if (interrupt_time - com_g.last_diagnostics > DEBOUNCE_DELAY)
+    {
+        com_g.last_diagnostics = interrupt_time;
+        /* PUT SOME USEFUL CODE HERE */
+    }
 }
 
 void IRAM_ATTR  isr_ota(void)
 {
-    DEBUG_PRINTF("  ---- OTA Button was pressed\n", "");
-    rtc_g.ota = !rtc_g.ota;
+    unsigned long interrupt_time;
+
+    interrupt_time = millis();
+    if (interrupt_time - com_g.last_ota > DEBOUNCE_DELAY)
+    {
+        com_g.last_ota = interrupt_time;
+        rtc_g.ota = !rtc_g.ota;
+    }
 }
 
 void IRAM_ATTR  isr_warning(void)
 {
-    DEBUG_PRINTF("  ---- Warning Button was pressed\n", "");
-    rtc_g.warning_active = !rtc_g.warning_active;
-    if (rtc_g.warning_active)
-        ft_draw_colour_bitmap(exam_warning_black, exam_warning_red);
-    else
-        ft_display_cluster_number(DEFAULT_IMG);
-}
+    unsigned long interrupt_time;
 
-void  ft_buttons_deinit(void)
-{
-    detachInterrupt(DIAGNOSTICS_BUTTON);
-    pinMode(DIAGNOSTICS_BUTTON, INPUT);
-    detachInterrupt(OTA_BUTTON);
-    pinMode(OTA_BUTTON, INPUT);
-    detachInterrupt(WARNING_BUTTON);
-    pinMode(WARNING_BUTTON, INPUT);
-    esp_deep_sleep_enable_gpio_wakeup(DIAGNOSTICS_BUTTON, ESP_GPIO_WAKEUP_GPIO_LOW); // If button PULLED DOWN, wake up on HIGH
-    esp_deep_sleep_enable_gpio_wakeup(OTA_BUTTON, ESP_GPIO_WAKEUP_GPIO_LOW);         // If button PULLED UP, wake up on LOW
-    esp_deep_sleep_enable_gpio_wakeup(WARNING_BUTTON, ESP_GPIO_WAKEUP_GPIO_LOW);
+    interrupt_time = millis();
+    if (interrupt_time - com_g.last_warning > DEBOUNCE_DELAY)
+    {
+        com_g.last_warning = interrupt_time;
+        rtc_g.warning_active = !rtc_g.warning_active;
+    }
 }
 
 void  ft_buttons_init(void)
 {   
-    gpio_new_pin_glitch_filter(const gpio_pin_glitch_filter_config_t *config, gpio_glitch_filter_handle_t *ret_filter);
-    gpio_glitch_filter_enable(gpio_glitch_filter_handle_t filter);
-    pinMode(DIAGNOSTICS_BUTTON, INPUT_PULLUP);                                       // If button PULLED UP, connect the other button pin to GND
+    pinMode(DIAGNOSTICS_BUTTON, INPUT_PULLUP);
     attachInterrupt(DIAGNOSTICS_BUTTON, isr_diagnostics, FALLING);
-    pinMode(OTA_BUTTON, INPUT_PULLUP);                                               // If button PULLED DOWN, connect the other button pin to VCC
+    pinMode(OTA_BUTTON, INPUT_PULLUP);
     attachInterrupt(OTA_BUTTON, isr_ota, FALLING);
     pinMode(WARNING_BUTTON, INPUT_PULLUP);
     attachInterrupt(WARNING_BUTTON, isr_warning, FALLING);
 }
- */
+ 

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/09 12:59:10 by raleksan          #+#    #+#             */
-/*   Updated: 2024/05/29 12:59:16 by raleksan         ###   ########.fr       */
+/*   Created: 2024/04/09 12:50:00 by raleksan          #+#    #+#             */
+/*   Updated: 2024/11/12 18:20:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void  setup(void)
         ft_serial_init();
     #endif
     ft_spiffs_init();
-//    ft_buttons_init();
+    ft_buttons_init();
     ft_battery_init();
     ft_power_down_recovery();
     ft_battery_check();

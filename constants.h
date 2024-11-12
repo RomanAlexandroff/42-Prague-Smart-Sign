@@ -13,7 +13,7 @@
 #ifndef CONSTANTS_H
 # define CONSTANTS_H
 
-# define SOFTWARE_VERSION        4.26
+# define SOFTWARE_VERSION        4.27
 
 /* General constants */
 # define CONNECT_TIMEOUT         5                            // in seconds
@@ -35,6 +35,7 @@
 # define DIAGNOSTICS_BUTTON      D0
 # define OTA_BUTTON              D1
 # define WARNING_BUTTON          D2
+# define DEBOUNCE_DELAY          1000UL                       // for buttons debounce
 
 /* Display SPI port config */
 # define BUSY_PIN                D4

@@ -37,6 +37,7 @@ struct rtc_global_variables {
     uint16_t exam_start_hour;
     uint16_t exam_start_minutes;
     bool     exam_status;
+    bool     warning_active;
     bool     ota;
     char     Secret[74];
     char     chat_id[15];
@@ -45,6 +46,9 @@ struct rtc_global_variables {
 extern struct rtc_global_variables rtc_g;
 
 struct common_global_variables {
+    volatile unsigned long last_diagnostics;              // for a button debounce
+    volatile unsigned long last_ota;                      // for a button debounce
+    volatile unsigned long last_warning;                  // for a button debounce
     uint8_t  exam_end_hour;
     uint8_t  exam_end_minutes;
     bool     daylight_flag;

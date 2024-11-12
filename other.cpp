@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/09 13:02:17 by raleksan          #+#    #+#             */
-/*   Updated: 2024/04/09 13:02:18 by raleksan         ###   ########.fr       */
+/*   Created: 2024/04/09 13:10:00 by raleksan          #+#    #+#             */
+/*   Updated: 2024/11/12 17:20:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,16 @@
 
 void  ft_go_to_sleep(uint64_t time_in_millis)
 {
+    esp_err_t result;
+    uint64_t  gpio_mask;
+
     if (time_in_millis < REBOOT)
         time_in_millis = REBOOT;
     display.powerOff();
-//    ft_buttons_deinit();
+    gpio_mask = (1ULL << 2) | (1ULL << 3) | (1ULL << 4);
+    result = esp_deep_sleep_enable_gpio_wakeup(gpio_mask, ESP_GPIO_WAKEUP_GPIO_LOW);
+    if (result != ESP_OK)
+        DEBUG_PRINTF("\nFailed to set up wake-up with a button.\n\n", "");
     DEBUG_PRINTF("The device was running for %d second(s) this time\n", (millis() / 1000));
     DEBUG_PRINTF("Going to sleep for %u seconds.\n", time_in_millis / 1000);
     DEBUG_PRINTF("\nDEVICE STOP\n\n\n", "");

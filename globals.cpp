@@ -20,6 +20,9 @@ UniversalTelegramBot bot(BOT_TOKEN, Telegram_client);
 RTC_DATA_ATTR struct rtc_global_variables rtc_g;
 
 struct common_global_variables com_g = {
+    .last_diagnostics = 0,
+    .last_ota = 0,
+    .last_warning = 0,
     .exam_end_hour = 0,
     .exam_end_minutes = 0,
     .daylight_flag = false,

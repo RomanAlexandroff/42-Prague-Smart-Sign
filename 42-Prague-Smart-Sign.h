@@ -17,7 +17,10 @@
 # ifdef DEBUG
     #define DEBUG_PRINTF(x, y) Serial.printf(x, y)
 # else
-    #define DEBUG_PRINTF(x, y)
+    #define DEBUG_PRINTF(x, y) { \
+        char buffer[4692]; \
+        sprintf(buffer, x, y); \
+        ft_write_spiffs_file("debug_log.txt", buffer); }
 # endif
 
 # include <Arduino.h>
@@ -42,12 +45,11 @@ ERROR_t               ft_fetch_exams(void);
 void                  ft_battery_check(void);
 void                  ft_battery_init(void);
 
-/* buttons_handling.cpp 
+/* buttons_handling.cpp */
 void                  ft_buttons_init(void);
-void                  ft_buttons_deinit(void);
 void IRAM_ATTR        isr_diagnostics(void);
 void IRAM_ATTR        isr_ota(void);
-void IRAM_ATTR        isr_warning(void); */
+void IRAM_ATTR        isr_warning(void);
 
 /* cluster_number_mode.cpp */
 void                  ft_cluster_number_mode(unsigned int* p_sleep_length);
