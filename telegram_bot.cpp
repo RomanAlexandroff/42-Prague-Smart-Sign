@@ -39,7 +39,7 @@ static void ft_reply_machine(String text)
     {
         text.remove(0, 1);
         check_result = ft_secret_verification(text);
-        if (check_result = FS_VALID_SECRET)
+        if (check_result == FS_VALID_SECRET)
         {
             text.toCharArray(rtc_g.Secret, sizeof(rtc_g.Secret));
             ft_write_spiffs_file("/secret.txt", rtc_g.Secret);
@@ -48,7 +48,7 @@ static void ft_reply_machine(String text)
             bot.sendMessage(String(rtc_g.chat_id), message, "");
             return;
         }
-        else if (check_result = FS_INVALID_SECRET)
+        else if (check_result == FS_INVALID_SECRET)
         {
             message = "It looks like a SECRET token, but Intra rejects it. ";
             message += "It is probably an old token. I cannot use it.";
