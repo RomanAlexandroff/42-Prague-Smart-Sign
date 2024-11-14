@@ -1,4 +1,4 @@
-![Repository Banner](Graphical%20Materials/github_repo_img.png)
+![Repository Banner](docs/graphic_materials/github_repo_img.png)
 # 42 Prague Smart Sign
 ## Table of Contents
 
