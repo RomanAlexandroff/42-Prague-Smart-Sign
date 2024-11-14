@@ -1,0 +1,13 @@
+CFLAGS=-c -Wall -O0 -D_CRT_SECURE_NO_WARNINGS 
+LIBS = 
+
+all: epd_image 
+
+epd_image: main.obj 
+	$(CC) main.obj $(LIBS) -o epd_image.exe 
+
+main.o: main.c
+	$(CC) $(CFLAGS) main.c
+
+clean:
+	rm -rf *.obj epd_image.exe

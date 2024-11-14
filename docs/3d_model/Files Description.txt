@@ -1,0 +1,11 @@
+
+
+The Sign Frame model
+
+This folder contains .STL files for the Sign's
+inner frame. The frame is divided into two files
+to ease printing. The two printed parts must be
+glued together.
+
+The sockets fit only the parts stated in the Bill
+of Materials file. 
