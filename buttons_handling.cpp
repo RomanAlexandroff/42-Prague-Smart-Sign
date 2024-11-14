@@ -8,6 +8,14 @@
 /*   Created: 2024/04/09 13:00:00 by raleksan          #+#    #+#             */
 /*   Updated: 2024/11/12 17:00:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
+/*                   +3.3V                                                    */
+/*                     |              GPIO — any ESP32 pin from RTC domain    */
+/*                    [R] 45kΩ           R — ESP32 inner pull-up resistor     */
+/*             +---+   |                                                      */
+/*      GND ---| O |---+--- GPIO                                              */
+/*             +---+                                                          */
+/*          Push Button                                                       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "42-Prague-Smart-Sign.h"
