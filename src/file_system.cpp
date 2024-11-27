@@ -39,7 +39,7 @@ void ft_data_restore(const char* file_name)
     if (!file_name)
         return;
     ft_watchdog_reset();
-    if (file_name == "/secret.txt")
+    if (strcmp(file_name, "/secret.txt") == 0)
     {
         if (ft_read_spiffs_file(file_name, rtc_g.Secret) == FS_OK)
             DEBUG_PRINTF("\n[FILE SYSTEM] Successfully restored data from %s.\n", file_name);
@@ -48,7 +48,7 @@ void ft_data_restore(const char* file_name)
         DEBUG_PRINTF("[FILE SYSTEM] The rtc_g.Secret variable value is now:\n%s\n", rtc_g.Secret);
         return;
     }
-    else if (file_name == "/chat_id.txt")
+    else if (strcmp(file_name, "/chat_id.txt") == 0)
     {
         if (ft_read_spiffs_file(file_name, rtc_g.chat_id) == FS_OK)
             DEBUG_PRINTF("\n[FILE SYSTEM] Successfully restored data from %s.\n", file_name);
