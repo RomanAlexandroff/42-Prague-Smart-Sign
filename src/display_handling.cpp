@@ -6,7 +6,8 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:00:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/11/09 12:30:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/11/27 18:30:00 by raleksan         ###   ########.fr       */
+/*                                                                            */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +26,7 @@ static void  ft_draw_text(String output, uint16_t x, uint16_t y)
     const uint16_t  text_width PROGMEM = 140;
     const uint16_t  text_height PROGMEM = 40;
 
+    ft_watchdog_stop();
     display.setRotation(3);
     display.setFont(&FreeSansBold24pt7b);
     display.setTextColor(GxEPD_BLACK);
@@ -37,6 +39,7 @@ static void  ft_draw_text(String output, uint16_t x, uint16_t y)
         display.print(output);
     }
     while (display.nextPage());
+    ft_watchdog_start();
 }
 
 
@@ -56,6 +59,7 @@ static void  ft_draw_exam_start_time(void)
     const int16_t  window_width PROGMEM = 480;
     const int16_t  window_height PROGMEM = 40;
 
+    ft_watchdog_stop();
     text = "TODAY AT ";
     text += String(rtc_g.exam_start_hour);
     if (rtc_g.exam_start_minutes < 10)
@@ -74,7 +78,7 @@ static void  ft_draw_exam_start_time(void)
         display.print(text);
     }
     while (display.nextPage());
-    display.powerOff();
+    ft_watchdog_start();
 }
 
 
@@ -84,6 +88,7 @@ static void  ft_draw_exam_start_time(void)
 */
 static void ft_draw_bitmap_partial_update(const unsigned char* image, uint16_t width, uint16_t height)
 {
+    ft_watchdog_stop();
     display.setRotation(0);
     display.setPartialWindow(630, 0, width, height);
     display.firstPage();
@@ -93,7 +98,7 @@ static void ft_draw_bitmap_partial_update(const unsigned char* image, uint16_t w
         display.drawBitmap(630, 0, image, width, height, GxEPD_BLACK);
     }
     while (display.nextPage());
-    display.powerOff();
+    ft_watchdog_start();
 }
 
 
@@ -103,6 +108,7 @@ static void ft_draw_bitmap_partial_update(const unsigned char* image, uint16_t w
 */
 void  ft_draw_colour_bitmap(const unsigned char* black_image, const unsigned char* red_image)
 {
+    ft_watchdog_stop();
     display.setRotation(0);
     display.setFullWindow();
     display.firstPage();
@@ -113,6 +119,7 @@ void  ft_draw_colour_bitmap(const unsigned char* black_image, const unsigned cha
         display.drawBitmap(0, 0, red_image, 800, 480, GxEPD_RED);
     }
     while (display.nextPage());
+    ft_watchdog_start();
 }
 
 
@@ -122,6 +129,7 @@ void  ft_draw_colour_bitmap(const unsigned char* black_image, const unsigned cha
 */
 static void ft_draw_bitmap_full_update(const unsigned char* image, uint16_t width, uint16_t height)
 {
+    ft_watchdog_stop();
     display.setRotation(0);
     display.setFullWindow();
     display.firstPage();
@@ -131,6 +139,7 @@ static void ft_draw_bitmap_full_update(const unsigned char* image, uint16_t widt
         display.drawBitmap(0, 0, image, width, height, GxEPD_BLACK);
     }
     while (display.nextPage());
+    ft_watchdog_start();
 }
 
 
@@ -148,6 +157,7 @@ void IRAM_ATTR  ft_display_cluster_number(IMAGE_t mode)
     RTC_DATA_ATTR static bool    display_cluster;
     RTC_DATA_ATTR static IMAGE_t displaying_now;
 
+    ft_watchdog_reset();
     if (display_cluster && mode == displaying_now)
     {
         DEBUG_PRINTF("\n[THE DISPLAY] Nothing new to draw. Drawing aborted\n\n", "");
@@ -228,12 +238,14 @@ void IRAM_ATTR  ft_display_cluster_number(IMAGE_t mode)
 
 void  ft_clear_display(void)
 {
+    ft_watchdog_reset();
     display.clearScreen();
     display.writeScreenBuffer();
 }
 
 void IRAM_ATTR  ft_display_init(void)
 {
+    ft_watchdog_reset();
     SPI.end();
     SPI.begin(SPI_SCK_PIN, SPI_MISO_PIN, SPI_MOSI_PIN, SPI_SS_PIN);
     display.init(115200);

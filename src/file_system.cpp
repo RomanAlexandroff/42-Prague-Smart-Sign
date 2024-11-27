@@ -6,7 +6,7 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:02:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/08/31 16:00:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:40:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 ERROR_t ft_secret_verification(String input)
 {
-    char secret_buffer[74];
-    bool exam_status_buffer;
+    char    secret_buffer[74];
+    bool    exam_status_buffer;
+    ERROR_t intra_result;
     
+    ft_watchdog_reset();
     if (input.length() != 73)
         return (FS_NOT_A_SECRET);
     if (input.substring(0, 1) != "s")
@@ -24,14 +26,11 @@ ERROR_t ft_secret_verification(String input)
     strcpy(secret_buffer, rtc_g.Secret);
     exam_status_buffer = rtc_g.exam_status;
     input.toCharArray(rtc_g.Secret, sizeof(rtc_g.Secret));
-    if (ft_fetch_exams() == INTRA_NO_TOKEN)
-    {
-        strcpy(rtc_g.Secret, secret_buffer);
-        rtc_g.exam_status = exam_status_buffer;
-        return (FS_INVALID_SECRET);
-    }
+    intra_result = ft_fetch_exams();
     strcpy(rtc_g.Secret, secret_buffer);
     rtc_g.exam_status = exam_status_buffer;
+    if (intra_result == INTRA_NO_TOKEN)
+        return (FS_INVALID_SECRET);
     return (FS_VALID_SECRET);
 }
 
@@ -39,6 +38,7 @@ void ft_data_restore(const char* file_name)
 {
     if (!file_name)
         return;
+    ft_watchdog_reset();
     if (file_name == "/secret.txt")
     {
         if (ft_read_spiffs_file(file_name, rtc_g.Secret) == FS_OK)
@@ -61,6 +61,7 @@ void ft_data_restore(const char* file_name)
 
 void  ft_data_integrity_check(void)
 {
+    ft_watchdog_reset();
     if (!LittleFS.exists("/secret.txt"))
     {
         DEBUG_PRINTF("\n[FILE SYSTEM] The secret.txt file does not exist. Creating...\n", "");
@@ -100,6 +101,7 @@ ERROR_t  ft_write_spiffs_file(const char* file_name, char* input)
     if (!file_name || !input)
         return FS_ENTRY_ERROR;
     i = 0;
+    ft_watchdog_reset();
     while (i < 5)
     {
         file = LittleFS.open(file_name, "w");
@@ -128,6 +130,7 @@ ERROR_t  ft_read_spiffs_file(const char* file_name, char* output)
     if (!file_name)
         return FS_ENTRY_ERROR;
     i = 0;
+    ft_watchdog_reset();
     while (i < 5)
     {
         file = LittleFS.open(file_name, "r");
@@ -156,10 +159,11 @@ ERROR_t  ft_spiffs_init(void)
     short i;
 
     i = 0;
+    ft_watchdog_reset();
     if (!LittleFS.begin(true) && i < 5)
     {
         DEBUG_PRINTF("\n[FILE SYSTEM] Failed to initialise SPIFFS. Retrying...\n", "");
-        ft_delay(1000);
+        ft_delay(500);
         i++;
     }
     else

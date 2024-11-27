@@ -6,7 +6,7 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:00:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/10/22 16:00:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/11/27 14:00:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ bool  ft_unix_timestamp_decoder(uint8_t* p_day, uint8_t* p_month, uint16_t* p_ye
 {
     if (rtc_g.secret_expiration < 1000000000)
         return (false);
+    ft_watchdog_reset();
     struct tm* time_info = localtime(&rtc_g.secret_expiration);
     *p_day = time_info->tm_mday;
     *p_month = time_info->tm_mon + 1;
@@ -30,6 +31,7 @@ int8_t  ft_expiration_counter(void)
     uint8_t   expire_month;
     uint16_t  expire_year;
 
+    ft_watchdog_reset();
     if (!ft_unix_timestamp_decoder(&expire_day, &expire_month, &expire_year))
         return (FAILED_TO_COUNT);
     if (expire_month == com_g.month)
@@ -52,6 +54,7 @@ ERROR_t  ft_get_time(void)
         DEBUG_PRINTF("\n[SYSTEM TIME] Failed to obtain time due to Wi-Fi connection issues\n", "");
         return (TIME_NO_WIFI);
     }
+    ft_watchdog_reset();
     configTime(gmt_offset_sec, daylight_offset_sec, ntp_server);
     if(!getLocalTime(&time_info))
     {
@@ -87,6 +90,7 @@ unsigned int  ft_time_till_wakeup(void)
     const uint8_t wakeup_hour[] = {WAKE_UP_HOURS};
     uint8_t       i;
 
+    ft_watchdog_reset();
     i = sizeof(wakeup_hour) / sizeof(wakeup_hour[0]) - 1;
     if (com_g.hour >= wakeup_hour[i])
         return ((wakeup_hour[0] + 24 - com_g.hour) * MS_HOUR - (com_g.minute * MS_MINUTE) - millis());
@@ -106,6 +110,7 @@ unsigned int  ft_time_till_event(int8_t hours, uint8_t minutes)
 {
     unsigned int result;
 
+    ft_watchdog_reset();
     result = (hours - com_g.hour) * MS_HOUR;
     result += (minutes * MS_MINUTE) - (com_g.minute * MS_MINUTE);
     if (result > 86400000)
@@ -119,6 +124,7 @@ int  ft_time_sync(unsigned int preexam_time)
 {
     int minutes;
 
+    ft_watchdog_stop();
     minutes = ceil(preexam_time / 1000);
     while (minutes % 10 != 0)
     {
@@ -132,6 +138,7 @@ int  ft_time_sync(unsigned int preexam_time)
         ft_delay(59990);
         minutes--;
     }
+    ft_watchdog_start();
     return (minutes);
 }
  

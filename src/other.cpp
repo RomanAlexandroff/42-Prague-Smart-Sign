@@ -6,7 +6,7 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:10:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/11/12 17:20:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/11/27 14:00:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void  ft_go_to_sleep(uint64_t time_in_millis)
     esp_err_t result;
     uint64_t  gpio_mask;
 
+    ft_watchdog_stop();
     if (time_in_millis < REBOOT)
         time_in_millis = REBOOT;
     display.powerOff();
@@ -32,16 +33,18 @@ void  ft_go_to_sleep(uint64_t time_in_millis)
 }
 
 /*
-*   Also puts to sleep Wi-Fi and
+*   Delays and puts to sleep Wi-Fi and
 *   Bluetooth modems to preserve
 *   the battery charge
 */
 void IRAM_ATTR  ft_delay(uint64_t time_in_millis)
 {
+    ft_watchdog_stop();
     if (time_in_millis < 10)
         time_in_millis = 10;
     esp_sleep_enable_timer_wakeup(time_in_millis * 1000);
     esp_light_sleep_start();
+    ft_watchdog_start();
 }
 
 void  ft_wifi_connect(void)
@@ -55,6 +58,7 @@ void  ft_wifi_connect(void)
     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
     while ((WiFi.status() != WL_CONNECTED) && i < CONNECT_TIMEOUT)
     {
+        ft_watchdog_reset();
         delay(1000);
         i++;
     }
@@ -67,6 +71,7 @@ void  ft_serial_init(void)
     uint8_t i;
     
     i = 15;
+    ft_watchdog_reset();
     Serial.begin(115200);
     while (i > 0)
     {

@@ -6,7 +6,7 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:00:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/11/12 17:00:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:20:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /*                   +3.3V                                                    */
 /*                     |              GPIO — any ESP32 pin from RTC domain    */
@@ -58,6 +58,7 @@ void IRAM_ATTR  isr_warning(void)
 
 void  ft_buttons_init(void)
 {   
+    ft_watchdog_reset();
     pinMode(DIAGNOSTICS_BUTTON, INPUT_PULLUP);
     attachInterrupt(DIAGNOSTICS_BUTTON, isr_diagnostics, FALLING);
     pinMode(OTA_BUTTON, INPUT_PULLUP);

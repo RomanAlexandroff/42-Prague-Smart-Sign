@@ -6,7 +6,7 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 12:50:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/11/14 18:20:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:20:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void  setup(void)
 {
+    ft_watchdog_init();
     ft_display_init();
     #ifdef DEBUG
         ft_serial_init();
@@ -37,6 +38,7 @@ static void  ft_pathfinder(void)
 {
     unsigned int  sleep_length;
 
+    ft_watchdog_reset();
     if (rtc_g.exam_status)
         ft_exam_mode();
     if (!rtc_g.exam_status)                         // do not change

@@ -6,7 +6,7 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:00:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/10/21 13:00:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:20:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void ft_report_exception(ERROR_t status)
 {
+    ft_watchdog_reset();
     if (WiFi.status() != WL_CONNECTED)
         ft_wifi_connect();
     if (WiFi.status() != WL_CONNECTED)
@@ -25,6 +26,7 @@ static bool ft_handle_secret_expiration(void)
 {
     int8_t  days_left;
     
+    ft_watchdog_reset();
     days_left = ft_expiration_counter();
     if (days_left <= 3 && days_left != FAILED_TO_COUNT)
     {
@@ -48,7 +50,9 @@ static bool ft_ensure_exams(unsigned int* p_sleep_length)
     retries = 0;
     while (intra_status != INTRA_OK && retries < RETRIES_LIMIT)
     {
+        ft_watchdog_stop();
         delay (retries * 300000);
+        ft_watchdog_start();
         DEBUG_PRINTF("\n[INTRA] Fetching exams data — try #%d\n\n", retries + 1);
         intra_status = ft_fetch_exams();
         retries++;
@@ -78,10 +82,12 @@ static bool ft_ensure_time(unsigned int* p_sleep_length)
     uint8_t retries;
     ERROR_t time_status = UNKNOWN;
     
-    retries = 0;
+    retries = 0;    
     while (time_status != TIME_OK && retries < RETRIES_LIMIT)
     {
+        ft_watchdog_stop();
         delay (retries * 300000);
+        ft_watchdog_start();
         time_status = ft_get_time();
         retries++;
         if (time_status != TIME_OK && retries != RETRIES_LIMIT)
@@ -102,6 +108,7 @@ static bool ft_ensure_time(unsigned int* p_sleep_length)
 
 void  ft_cluster_number_mode(unsigned int* p_sleep_length)
 {
+    ft_watchdog_reset();
     if (WiFi.status() != WL_CONNECTED)
         ft_wifi_connect();
     if (!ft_ensure_time(p_sleep_length))

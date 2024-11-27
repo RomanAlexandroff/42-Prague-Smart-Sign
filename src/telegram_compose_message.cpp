@@ -6,7 +6,7 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 17:20:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/10/22 16:00:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/11/27 14:00:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /*                                                                            */
 /*   Creating Telegram messages from the Sign to the User.                    */
@@ -161,6 +161,7 @@ String  ft_compose_message(int32_t subject, int8_t days_left)
 {
     String  output;
 
+    ft_watchdog_reset();
     if (!rtc_g.from_name[0])
         output = "Dear User";
     else

@@ -6,7 +6,7 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:02:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/11/08 14:20:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/11/27 14:00:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void ft_report_reboot_reason(esp_reset_reason_t reset_reason)
 {
+    ft_watchdog_reset();
     if (reset_reason == ESP_RST_UNKNOWN)
         DEBUG_PRINTF("[BOOTING INFO] Unknown reset reason\n", "");
     else if (reset_reason == ESP_RST_POWERON)
@@ -44,6 +45,7 @@ void  ft_power_down_recovery(void)
 {
     esp_reset_reason_t  reset_reason;
 
+    ft_watchdog_reset();
     reset_reason = esp_reset_reason();
     if (reset_reason == ESP_RST_BROWNOUT)
     {

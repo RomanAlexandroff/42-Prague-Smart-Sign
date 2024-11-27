@@ -6,7 +6,7 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:02:56 by raleksan          #+#    #+#             */
-/*   Updated: 2024/07/03 13:20:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/11/27 14:00:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /*                                                                            */
 /*   These functions are for checking new Telegram messages, reading them     */
@@ -77,6 +77,7 @@ static void  ft_new_messages(short message_count)
     DEBUG_PRINTF("[TELEGRAM BOT] Number of messages to handle: %d\n", message_count);
     while (i < message_count) 
     {
+        ft_watchdog_reset();
         DEBUG_PRINTF("[TELEGRAM BOT] Handling loop iterations: i = %d\n", i);
         id_buffer = bot.messages[i].chat_id;
         id_buffer.toCharArray(rtc_g.chat_id, sizeof(rtc_g.chat_id));
@@ -100,6 +101,7 @@ void  ft_telegram_check(void)
     message_count = bot.getUpdates(bot.last_message_received + 1);
     while (message_count)
     {
+        ft_watchdog_reset();
         ft_new_messages(message_count);
         message_count = bot.getUpdates(bot.last_message_received + 1);
     }

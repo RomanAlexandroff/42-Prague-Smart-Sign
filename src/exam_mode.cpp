@@ -6,7 +6,7 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:00:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/11/09 17:30:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:40:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static unsigned int ft_exam(void)
 {
     unsigned int  exam_remaining_time;
 
+    ft_watchdog_reset();
     exam_remaining_time = ft_time_till_event(com_g.exam_end_hour, com_g.exam_end_minutes);
     DEBUG_PRINTF("\n[THE DISPLAY] Drawing the Exam sign...\n", "");
     ft_draw_colour_bitmap(exam_warning_black, exam_warning_red);                          // execution takes 25 sec
@@ -24,6 +25,11 @@ static unsigned int ft_exam(void)
     return (exam_remaining_time);
 }
 
+/*
+*   Waits out until exam using light sleep.
+*   Drawing functions, ft_time_sync and
+*   ft_delay have their own watchdog resets.
+*/
 static void ft_preexam_warning(unsigned int* p_preexam_time)
 {
     int minutes;
@@ -66,6 +72,7 @@ void  ft_exam_mode(void)
     unsigned int  preexam_time;
 
     preexam_time = 0;
+    ft_watchdog_reset();
     if (WiFi.status() != WL_CONNECTED)
         ft_wifi_connect();
     ft_get_time();

@@ -6,20 +6,21 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:00:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/10/21 09:00:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:20:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CONSTANTS_H
 # define CONSTANTS_H
 
-# define SOFTWARE_VERSION        4.27
+# define SOFTWARE_VERSION        4.28
 
 /* General constants */
 # define CONNECT_TIMEOUT         5                            // in seconds
 # define REBOOT                  1000                         // do not change
 # define MS_MINUTE               60000                        // do not change
 # define MS_HOUR                 3600000ul                    // do not change
+# define WD_TIMEOUT              8                            // watchdog, in seconds
 # define DEAD_BATTERY_SLEEP      86400000ul                   // in milliseconds, 24 hours
 # define BATTERY_CRITICAL        400
 # define BATTERY_GOOD            800

@@ -6,7 +6,7 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 12:50:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/05/29 18:45:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/11/27 14:00:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /*                                                                            */
 /*   This file contains inline functions declared in the main header. This    */
@@ -31,10 +31,12 @@ void ft_ota_init(void)
             rtc_g.ota = false;
             return;
         }
+        ft_watchdog_reset();
         ArduinoOTA.setHostname(fullhostname);
         ArduinoOTA
             .onStart([]() {
                 String type;
+                ft_watchdog_stop();
                 if (ArduinoOTA.getCommand() == U_FLASH)
                     type = "sketch";
                 else // U_SPIFFS
@@ -43,6 +45,7 @@ void ft_ota_init(void)
                 bot.sendMessage(String(rtc_g.chat_id), "Updating...", "");
             })
             .onEnd([]() {
+                ft_watchdog_start();
                 ft_display_cluster_number(OTA_SUCCESS);
                 DEBUG_PRINTF("\n[OTA] End", "");
                 rtc_g.ota = false;
@@ -55,6 +58,7 @@ void ft_ota_init(void)
                 DEBUG_PRINTF("\n[OTA] Progress: %u%%\r", (progress / (total / 100)));
             })
             .onError([](ota_error_t error) {
+                ft_watchdog_start();
                 ft_display_cluster_number(OTA_FAIL);
                 DEBUG_PRINTF("\n[OTA] Error[%u]: ", error);
                 if (error == OTA_AUTH_ERROR) DEBUG_PRINTF("Auth Failed\n", "");
@@ -84,6 +88,7 @@ void ft_ota_waiting_loop(void)
         while (rtc_g.ota && ota_limit < OTA_WAIT_LIMIT)
         {
             ArduinoOTA.handle();
+            ft_watchdog_reset();
             DEBUG_PRINTF("\n[OTA] Active", "");
             ota_limit++;
             delay(1000);

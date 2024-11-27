@@ -6,7 +6,7 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:01:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/10/21 13:01:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:40:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void  ft_check_exam_subscribers(String &server_response)
     subscribers = 0;
     if (ft_time_till_event(rtc_g.exam_start_hour, rtc_g.exam_start_minutes) > SUBS_CHECK_TIME_LIMIT)
         return;
+    ft_watchdog_reset();
     i = server_response.indexOf("\"nbr_subscribers\":\"");
     if (i == NOT_FOUND)
         return;
@@ -42,6 +43,7 @@ static void  ft_get_exam_time(String &server_response)
     int i;
 
     i = 0;
+    ft_watchdog_reset();
     while (i != NOT_FOUND)
     {
         i = server_response.indexOf("\"begin_at\":\"");
@@ -79,10 +81,11 @@ static bool  ft_handle_exams_info(void)
 {
     String  server_response;
 
+    ft_watchdog_reset();
     server_response = Intra_client.readString();
-    DEBUG_PRINTF("\n============================== SERVER RESPONSE BEGIN ==============================\n\n", "");
+    DEBUG_PRINTF("\n============================== SERVER RESPONSE START ==============================\n\n", "");
     DEBUG_PRINTF("%s", server_response.c_str());
-    DEBUG_PRINTF("\n=============================== SERVER RESPONSE END ===============================\n\n", "");
+    DEBUG_PRINTF("=============================== SERVER RESPONSE END ===============================\n\n", "");
     if (server_response.length() <= 0)
     {
         DEBUG_PRINTF("\n[INTRA] Error! Server response to the Exam Time request was not received\n\n", "");
@@ -108,6 +111,7 @@ static void  ft_request_exams_info(const char* server, String* token)
     String  month;
     String  api_call;
 
+    ft_watchdog_reset();
     if (com_g.month < 10)
         month = "0" + String(com_g.month);
     else
@@ -141,6 +145,7 @@ static void ft_get_secret_expiration(String server_response)
     uint8_t  expire_month;
     uint16_t expire_year;
 
+    ft_watchdog_reset();
     i = server_response.indexOf("\"secret_valid_until\":");
     if (i == NOT_FOUND)
         DEBUG_PRINTF("[INTRA] Secret expiration date was not found in the server response\n\n", "");
@@ -163,6 +168,7 @@ static String ft_get_token(String server_response)
     int     i;
     String  token;
 
+    ft_watchdog_reset();
     i = server_response.indexOf("{\"access_token\":\"");
     if (i == NOT_FOUND)
     {
@@ -170,7 +176,7 @@ static String ft_get_token(String server_response)
         return ("NOT_FOUND");
     }
     token = server_response.substring(i + 17, i + 81);
-    DEBUG_PRINTF("[INTRA] Access Token has been extracted:\n%s\n", token.c_str());
+    DEBUG_PRINTF("\n[INTRA] Access Token has been extracted:\n%s\n", token.c_str());
     return (token);
 }
 
@@ -178,15 +184,16 @@ static bool  ft_handle_server_response(const char* server, String* token)
 {
     String  server_response;
 
+    ft_watchdog_reset();
     server_response = Intra_client.readString();
     if (server_response.length() <= 0)
     {
         DEBUG_PRINTF("\n[INTRA] Error! Server response to the Access Token request was not received\n\n", "");
         return (false);
     }
-    DEBUG_PRINTF("\n============================== SERVER RESPONSE BEGIN ==============================\n\n", "");
+    DEBUG_PRINTF("\n============================== SERVER RESPONSE START ==============================\n\n", "");
     DEBUG_PRINTF("%s", server_response.c_str());
-    DEBUG_PRINTF("\n=============================== SERVER RESPONSE END ===============================\n\n", "");
+    DEBUG_PRINTF("=============================== SERVER RESPONSE END ===============================\n\n", "");
     *token = ft_get_token(server_response);
     if (*token == "NOT_FOUND")
         return (false);
@@ -198,6 +205,7 @@ static void  ft_access_server(const char* server)
 {
     String  auth_request;
 
+    ft_watchdog_reset();
     auth_request = "grant_type=client_credentials&client_id=";
     auth_request += UID;
     auth_request += "&client_secret=";
@@ -222,6 +230,7 @@ static bool  ft_intra_connect(const char* server)
         DEBUG_PRINTF("\n[INTRA] Unable to connect to Wi-Fi\n\n", "");
         return (false);
     }
+    ft_watchdog_reset();
     Intra_client.setInsecure();
     Intra_client.setTimeout(10);
     if (!Intra_client.connect(server, 443))
@@ -237,6 +246,7 @@ ERROR_t ft_fetch_exams(void)
     const char* server PROGMEM = "api.intra.42.fr";
     String      token;
 
+    ft_watchdog_reset();
     if (!ft_intra_connect(server))
         return INTRA_NO_SERVER;
     ft_access_server(server);

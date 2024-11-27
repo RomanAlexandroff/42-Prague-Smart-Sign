@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/09 12:59:29 by raleksan          #+#    #+#             */
-/*   Updated: 2024/08/31 09:00:00 by raleksan         ###   ########.fr       */
+/*   Created: 2024/04/09 13:00:00 by raleksan          #+#    #+#             */
+/*   Updated: 2024/11/27 13:20:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void  ft_battery_check(void)
 
     samples_count = 0;
     battery = 0;
+    ft_watchdog_reset();
     while (samples_count < BATTERY_SAMPLES_LIMIT)
     {
         battery += adc1_get_raw(ADC1_CHANNEL_0);
@@ -47,6 +48,7 @@ void  ft_battery_check(void)
 
 void  ft_battery_init(void)
 {
+    ft_watchdog_reset();
     adc1_config_width(ADC_WIDTH_BIT_12);
     adc1_config_channel_atten(ADC1_CHANNEL_0, ADC_ATTEN_11db);
 }
