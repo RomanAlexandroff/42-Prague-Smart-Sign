@@ -6,7 +6,7 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 12:50:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/11/27 14:00:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/11/28 08:00:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /*                                                                            */
 /*   This file contains inline functions declared in the main header. This    */
@@ -21,8 +21,6 @@ void ft_ota_init(void)
 {
     if (rtc_g.ota)
     {
-        char    fullhostname[21] = "42_Prague_Smart_Sign";
-
         if (WiFi.status() != WL_CONNECTED)
             ft_wifi_connect();
         if (WiFi.status() != WL_CONNECTED)
@@ -32,7 +30,7 @@ void ft_ota_init(void)
             return;
         }
         ft_watchdog_reset();
-        ArduinoOTA.setHostname(fullhostname);
+        ArduinoOTA.setHostname(DEVICE_NAME);
         ArduinoOTA
             .onStart([]() {
                 String type;
