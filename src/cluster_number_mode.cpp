@@ -24,7 +24,7 @@ static void ft_report_exception(ERROR_t status)
 
 static bool ft_handle_secret_expiration(void)
 {
-    int8_t  days_left;
+    int16_t  days_left;
     
     ft_watchdog_reset();
     days_left = ft_expiration_counter();

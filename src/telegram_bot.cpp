@@ -98,6 +98,7 @@ void  ft_telegram_check(void)
 
     if (WiFi.status() != WL_CONNECTED)
         ft_wifi_connect();  
+    ft_watchdog_reset();
     message_count = bot.getUpdates(bot.last_message_received + 1);
     while (message_count)
     {

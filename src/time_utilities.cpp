@@ -6,7 +6,7 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:00:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/11/27 14:00:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/11/29 17:00:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,24 @@ bool  ft_unix_timestamp_decoder(uint8_t* p_day, uint8_t* p_month, uint16_t* p_ye
     return (true);
 }
 
-int8_t  ft_expiration_counter(void)
+int16_t  ft_expiration_counter(void)
 {
-    const int months_days[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    const int months_days[] = {MONTHS_DAYS};
     uint8_t   expire_day;
     uint8_t   expire_month;
     uint16_t  expire_year;
+    uint16_t  year_correction;
 
     ft_watchdog_reset();
     if (!ft_unix_timestamp_decoder(&expire_day, &expire_month, &expire_year))
         return (FAILED_TO_COUNT);
+    if (expire_year < com_g.year)
+        return (FAILED_TO_COUNT);
+    year_correction = (expire_year - com_g.year) * YEAR_DAYS;
     if (expire_month == com_g.month)
-        return (expire_day - com_g.day);
+        return (expire_day + year_correction - com_g.day);
     else
-        return (expire_day + months_days[com_g.month - 1] - com_g.day);
+        return (expire_day + year_correction + months_days[com_g.month - 1] - com_g.day);
 }
 
 ERROR_t  ft_get_time(void)

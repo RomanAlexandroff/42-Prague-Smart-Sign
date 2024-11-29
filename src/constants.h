@@ -6,14 +6,14 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:00:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/11/27 13:20:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/11/29 17:20:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CONSTANTS_H
 # define CONSTANTS_H
 
-# define SOFTWARE_VERSION        4.28
+# define SOFTWARE_VERSION        4.29
 
 /* General constants */
 # define CONNECT_TIMEOUT         5                            // in seconds
@@ -27,6 +27,8 @@
 # define BATTERY_SAMPLES_LIMIT   5
 # define OTA_WAIT_LIMIT          600                          // in seconds, 10 minutes
 # define RETRIES_LIMIT           3
+# define MONTHS_DAYS             31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+# define YEAR_DAYS               365
 # define WAKE_UP_HOURS           6, 9, 12, 15, 18, 21
 # define NOT_FOUND               -1                           // do not change
 # define SUBS_CHECK_TIME_LIMIT   3900000ul                    // in milliseconds, 1 hour 5 minutes

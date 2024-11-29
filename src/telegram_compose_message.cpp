@@ -6,7 +6,7 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 17:20:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/11/27 14:00:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/11/29 17:00:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /*                                                                            */
 /*   Creating Telegram messages from the Sign to the User.                    */
@@ -111,7 +111,7 @@ static String ft_about_low_battery(String output)
     return (output);
 }
 
-static String ft_about_expired_secret(String output, int8_t days_left)
+static String ft_about_expired_secret(String output, int16_t days_left)
 {
     output += "I need your assistance! ";
     output += "My SECRET token ";
@@ -157,7 +157,7 @@ static String ft_about_device_status(String output)
     return (output);
 }
 
-String  ft_compose_message(int32_t subject, int8_t days_left)
+String  ft_compose_message(int32_t subject, int16_t days_left)
 {
     String  output;
 

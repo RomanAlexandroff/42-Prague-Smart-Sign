@@ -6,7 +6,7 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 12:59:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/11/27 16:00:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/11/29 17:00:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,10 @@ void            ft_power_down_recovery(void);
 void            ft_telegram_check(void);
 
 /* telegram_compose_message.cpp */
-String          ft_compose_message(int32_t subject, int8_t days_left);
+String          ft_compose_message(int32_t subject, int16_t days_left);
 
 /* time_utilities.cpp */
-int8_t          ft_expiration_counter(void);
+int16_t         ft_expiration_counter(void);
 bool            ft_unix_timestamp_decoder(uint8_t* p_day, uint8_t* p_month, uint16_t* p_year);
 ERROR_t         ft_get_time(void);
 unsigned int    ft_time_till_wakeup(void);

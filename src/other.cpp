@@ -52,6 +52,7 @@ void  ft_wifi_connect(void)
     short i;
 
     i = 0;
+    ft_watchdog_reset();
     WiFi.mode(WIFI_STA);
     WiFi.persistent(true);
     Telegram_client.setCACert(TELEGRAM_CERTIFICATE_ROOT);
