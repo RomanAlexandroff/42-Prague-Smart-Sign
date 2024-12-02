@@ -65,12 +65,31 @@ static void ft_reply_machine(String text)
     }
 }
 
+static void  ft_sender_handling(uint8_t i)
+{
+    String  id_buffer;
+    String  name_buffer;
+    String  message;
+
+    id_buffer = bot.messages[i].chat_id;
+    if (id_buffer != String(rtc_g.chat_id))
+    {
+        message = "I have been messaged by another User:";
+        message += "\n  - name: " + bot.messages[i].from_name;
+        message += "\n  - chat ID: " + bot.messages[i].chat_id;
+        message += "\n  - text: " + bot.messages[i].text;
+        bot.sendMessage(String(rtc_g.chat_id), message, "");
+    }
+    id_buffer.toCharArray(rtc_g.chat_id, sizeof(rtc_g.chat_id));
+    ft_write_spiffs_file("/chat_id.txt", rtc_g.chat_id);
+    name_buffer = bot.messages[i].from_name;
+    name_buffer.toCharArray(rtc_g.from_name, sizeof(rtc_g.from_name));
+}
+
 static void  ft_new_messages(short message_count)
 {
     uint8_t i;
     String  text;
-    String  id_buffer;
-    String  name_buffer;
 
     i = 0;
     DEBUG_PRINTF("\n[TELEGRAM BOT] Handling new Telegram messages\n", "");
@@ -79,12 +98,8 @@ static void  ft_new_messages(short message_count)
     {
         ft_watchdog_reset();
         DEBUG_PRINTF("[TELEGRAM BOT] Handling loop iterations: i = %d\n", i);
-        id_buffer = bot.messages[i].chat_id;
-        id_buffer.toCharArray(rtc_g.chat_id, sizeof(rtc_g.chat_id));
-        ft_write_spiffs_file("/chat_id.txt", rtc_g.chat_id);
+        ft_sender_handling(i);
         text = bot.messages[i].text;
-        name_buffer = bot.messages[i].from_name;
-        name_buffer.toCharArray(rtc_g.from_name, sizeof(rtc_g.from_name));
         DEBUG_PRINTF("[TELEGRAM BOT] %s says: ", rtc_g.from_name);
         DEBUG_PRINTF("%s\n\n", text.c_str());
         ft_reply_machine(text);
