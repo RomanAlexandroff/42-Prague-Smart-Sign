@@ -31,7 +31,7 @@ static void  ft_check_exam_subscribers(String &server_response)
     subscribers = server_response.substring(i + 18, i + 19).toInt();
     if (subscribers == 0)
     {
-        DEBUG_PRINTF("\n[INTRA] Noone has subscribed to this exam. Exam mode canceled.\n\n", "");
+        DEBUG_PRINTF("\n[INTRA] Noone has subscribed to this exam. Exam mode canceled.\n\n");
         rtc_g.exam_status = false;
     }
     else
@@ -57,7 +57,7 @@ static void  ft_get_exam_time(String &server_response)
             rtc_g.exam_start_hour += 1;
             com_g.exam_end_hour += 1;
         }
-        DEBUG_PRINTF("\n[INTRA] EXAM STATUS: Exam information detected\n", "");
+        DEBUG_PRINTF("\n[INTRA] EXAM STATUS: Exam information detected\n");
         DEBUG_PRINTF("-- Begins at %d:", rtc_g.exam_start_hour);
         DEBUG_PRINTF("%d0\n", rtc_g.exam_start_minutes);
         DEBUG_PRINTF("-- Ends at %d:", com_g.exam_end_hour);
@@ -66,14 +66,14 @@ static void  ft_get_exam_time(String &server_response)
             server_response = server_response.substring(i + 87);              // remove data of a past exam
         else
         {
-            DEBUG_PRINTF("\n[INTRA] EXAM STATUS: Active Exam found!\n\n", "");
+            DEBUG_PRINTF("\n[INTRA] EXAM STATUS: Active Exam found!\n\n");
             rtc_g.exam_status = true;
             return;
         }
         if (server_response.indexOf("\"begin_at\":\"") == NOT_FOUND)
             break;
     }
-    DEBUG_PRINTF("\n[INTRA] EXAM STATUS: All the detected exams have already passed.\n\n", "");
+    DEBUG_PRINTF("\n[INTRA] EXAM STATUS: All the detected exams have already passed.\n\n");
     rtc_g.exam_status = false;
 }
 
@@ -83,17 +83,17 @@ static bool  ft_handle_exams_info(void)
 
     ft_watchdog_reset();
     server_response = Intra_client.readString();
-    DEBUG_PRINTF("\n============================== SERVER RESPONSE START ==============================\n\n", "");
+    DEBUG_PRINTF("\n============================== SERVER RESPONSE START ==============================\n\n");
     DEBUG_PRINTF("%s", server_response.c_str());
-    DEBUG_PRINTF("=============================== SERVER RESPONSE END ===============================\n\n", "");
+    DEBUG_PRINTF("=============================== SERVER RESPONSE END ===============================\n\n");
     if (server_response.length() <= 0)
     {
-        DEBUG_PRINTF("\n[INTRA] Error! Server response to the Exam Time request was not received\n\n", "");
+        DEBUG_PRINTF("\n[INTRA] Error! Server response to the Exam Time request was not received\n\n");
         return (false);
     }
     if (server_response.indexOf("\"begin_at\":\"") == NOT_FOUND)
     {
-        DEBUG_PRINTF("\n[INTRA] EXAM STATUS: As of now, there are no upcoming exams today\n\n", "");
+        DEBUG_PRINTF("\n[INTRA] EXAM STATUS: As of now, there are no upcoming exams today\n\n");
         rtc_g.exam_status = false;
         return (true);
     }
@@ -148,11 +148,11 @@ static void ft_get_secret_expiration(String server_response)
     ft_watchdog_reset();
     i = server_response.indexOf("\"secret_valid_until\":");
     if (i == NOT_FOUND)
-        DEBUG_PRINTF("[INTRA] Secret expiration date was not found in the server response\n\n", "");
+        DEBUG_PRINTF("[INTRA] Secret expiration date was not found in the server response\n\n");
     else
     {
         rtc_g.secret_expiration = server_response.substring(i + 21, i + 31).toInt();
-        DEBUG_PRINTF("[INTRA] The secret expires on %d (UNIX timestamp format)\n", rtc_g.secret_expiration);
+        DEBUG_PRINTF("[INTRA] The secret expires on %lld (UNIX timestamp format)\n", rtc_g.secret_expiration);
         if (ft_unix_timestamp_decoder(&expire_day, &expire_month, &expire_year))
         {
             DEBUG_PRINTF("[INTRA] The secret expires on %d.", expire_day);
@@ -172,7 +172,7 @@ static String ft_get_token(String server_response)
     i = server_response.indexOf("{\"access_token\":\"");
     if (i == NOT_FOUND)
     {
-        DEBUG_PRINTF("\n[INTRA] Error! Server response came without the Access Token\n\n", "");
+        DEBUG_PRINTF("\n[INTRA] Error! Server response came without the Access Token\n\n");
         return ("NOT_FOUND");
     }
     token = server_response.substring(i + 17, i + 81);
@@ -188,12 +188,12 @@ static bool  ft_handle_server_response(const char* server, String* token)
     server_response = Intra_client.readString();
     if (server_response.length() <= 0)
     {
-        DEBUG_PRINTF("\n[INTRA] Error! Server response to the Access Token request was not received\n\n", "");
+        DEBUG_PRINTF("\n[INTRA] Error! Server response to the Access Token request was not received\n\n");
         return (false);
     }
-    DEBUG_PRINTF("\n============================== SERVER RESPONSE START ==============================\n\n", "");
+    DEBUG_PRINTF("\n============================== SERVER RESPONSE START ==============================\n\n");
     DEBUG_PRINTF("%s", server_response.c_str());
-    DEBUG_PRINTF("=============================== SERVER RESPONSE END ===============================\n\n", "");
+    DEBUG_PRINTF("=============================== SERVER RESPONSE END ===============================\n\n");
     *token = ft_get_token(server_response);
     if (*token == "NOT_FOUND")
         return (false);
@@ -227,7 +227,7 @@ static bool  ft_intra_connect(const char* server)
         ft_wifi_connect();
     if (WiFi.status() != WL_CONNECTED)
     {
-        DEBUG_PRINTF("\n[INTRA] Unable to connect to Wi-Fi\n\n", "");
+        DEBUG_PRINTF("\n[INTRA] Unable to connect to Wi-Fi\n\n");
         return (false);
     }
     ft_watchdog_reset();
@@ -235,7 +235,7 @@ static bool  ft_intra_connect(const char* server)
     Intra_client.setTimeout(10);
     if (!Intra_client.connect(server, 443))
     {
-        DEBUG_PRINTF("\n[INTRA] Connection to the server failed\n\n", "");
+        DEBUG_PRINTF("\n[INTRA] Connection to the server failed\n\n");
         return (false);
     }
     return (true);

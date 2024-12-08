@@ -31,7 +31,7 @@ static bool ft_handle_secret_expiration(void)
     if (days_left <= 3 && days_left != FAILED_TO_COUNT)
     {
         ft_display_cluster_number(SECRET_EXPIRED);
-        DEBUG_PRINTF("\n[INTRA] IT IS TIME TO UPDATE THE SECRET!\n", "");
+        DEBUG_PRINTF("\n[INTRA] IT IS TIME TO UPDATE THE SECRET!\n");
         bot.sendMessage(String(rtc_g.chat_id), ft_compose_message(SECRET_EXPIRED, days_left), "");
         return (true);
     }
@@ -62,7 +62,7 @@ static bool ft_ensure_exams(unsigned int* p_sleep_length)
     if (intra_status != INTRA_OK)
     {
         ft_display_cluster_number(INTRA_ERROR);
-        DEBUG_PRINTF("\n[INTRA] ERROR OBTAINING EXAMS. Turning off\n", "");
+        DEBUG_PRINTF("\n[INTRA] ERROR OBTAINING EXAMS. Turning off\n");
         ft_report_exception(intra_status);
         rtc_g.exam_status = false;
         *p_sleep_length = ft_time_till_wakeup();
@@ -97,7 +97,7 @@ static bool ft_ensure_time(unsigned int* p_sleep_length)
     if (time_status != TIME_OK)
     {
         ft_display_cluster_number(INTRA_ERROR);
-        DEBUG_PRINTF("\n[SYSTEM TIME] ERROR OBTAINING TIME. Cannot proceed. Turning off\n", "");
+        DEBUG_PRINTF("\n[SYSTEM TIME] ERROR OBTAINING TIME. Cannot proceed. Turning off\n");
         ft_report_exception(time_status);
         rtc_g.exam_status = false;
         *p_sleep_length = ft_time_till_wakeup();

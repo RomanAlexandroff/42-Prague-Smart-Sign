@@ -55,19 +55,19 @@ ERROR_t  ft_get_time(void)
         ft_wifi_connect();
     if (WiFi.status() != WL_CONNECTED)
     {
-        DEBUG_PRINTF("\n[SYSTEM TIME] Failed to obtain time due to Wi-Fi connection issues\n", "");
+        DEBUG_PRINTF("\n[SYSTEM TIME] Failed to obtain time due to Wi-Fi connection issues\n");
         return (TIME_NO_WIFI);
     }
     ft_watchdog_reset();
     configTime(gmt_offset_sec, daylight_offset_sec, ntp_server);
     if(!getLocalTime(&time_info))
     {
-        DEBUG_PRINTF("\n[SYSTEM TIME] Failed to obtain time from the NTP server\n", "");
+        DEBUG_PRINTF("\n[SYSTEM TIME] Failed to obtain time from the NTP server\n");
         return (TIME_NO_SERVER);
     }
     if (time_info.tm_isdst < 0)
     {
-        DEBUG_PRINTF("\n[SYSTEM TIME] Daylight Saving Time is not available\n", "");
+        DEBUG_PRINTF("\n[SYSTEM TIME] Daylight Saving Time is not available\n");
         return (TIME_NO_DST);
     }
     com_g.hour = time_info.tm_hour;
@@ -76,11 +76,11 @@ ERROR_t  ft_get_time(void)
     com_g.month = 1 + time_info.tm_mon;
     com_g.year = 1900 + time_info.tm_year;
     com_g.daylight_flag = time_info.tm_isdst;
-    DEBUG_PRINTF("\n[SYSTEM TIME] Obtained time from the NTP server as follows:\n", "");
+    DEBUG_PRINTF("\n[SYSTEM TIME] Obtained time from the NTP server as follows:\n");
     if (com_g.daylight_flag)
-        DEBUG_PRINTF("  --daylight saving time is ACTIVE (summer time)\n", "");
+        DEBUG_PRINTF("  --daylight saving time is ACTIVE (summer time)\n");
     else
-        DEBUG_PRINTF("  --daylight saving time is INACTIVE (winter time)\n", "");
+        DEBUG_PRINTF("  --daylight saving time is INACTIVE (winter time)\n");
     DEBUG_PRINTF("  --hour:   %d\n", com_g.hour);
     DEBUG_PRINTF("  --minute: %d\n", com_g.minute);
     DEBUG_PRINTF("  --day:    %d\n", com_g.day);

@@ -20,7 +20,7 @@
 
 #include "42-Prague-Smart-Sign.h"
 
-void IRAM_ATTR  isr_diagnostics(void)
+void  isr_diagnostics(void)
 {
     unsigned long interrupt_time;
 
@@ -32,7 +32,7 @@ void IRAM_ATTR  isr_diagnostics(void)
     }
 }
 
-void IRAM_ATTR  isr_ota(void)
+void  isr_ota(void)
 {
     unsigned long interrupt_time;
 
@@ -44,7 +44,7 @@ void IRAM_ATTR  isr_ota(void)
     }
 }
 
-void IRAM_ATTR  isr_warning(void)
+void  isr_warning(void)
 {
     unsigned long interrupt_time;
 

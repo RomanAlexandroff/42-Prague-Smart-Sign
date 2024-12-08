@@ -24,10 +24,10 @@ void  ft_go_to_sleep(uint64_t time_in_millis)
     gpio_mask = (1ULL << 2) | (1ULL << 3) | (1ULL << 4);
     result = esp_deep_sleep_enable_gpio_wakeup(gpio_mask, ESP_GPIO_WAKEUP_GPIO_LOW);
     if (result != ESP_OK)
-        DEBUG_PRINTF("\nFailed to set up wake-up with a button.\n\n", "");
-    DEBUG_PRINTF("The device was running for %d second(s) this time\n", (millis() / 1000));
-    DEBUG_PRINTF("Going to sleep for %u seconds.\n", time_in_millis / 1000);
-    DEBUG_PRINTF("\nDEVICE STOP\n\n\n", "");
+        DEBUG_PRINTF("\nFailed to set up wake-up with a button.\n\n");
+    DEBUG_PRINTF("The device was running for %lu second(s) this time\n", (millis() / 1000));
+    DEBUG_PRINTF("Going to sleep for %llu seconds.\n", time_in_millis / 1000);
+    DEBUG_PRINTF("\nDEVICE STOP\n\n\n");
     esp_sleep_enable_timer_wakeup(time_in_millis * 1000);
     esp_deep_sleep_start();
 }
@@ -37,7 +37,7 @@ void  ft_go_to_sleep(uint64_t time_in_millis)
 *   Bluetooth modems to preserve
 *   the battery charge
 */
-void IRAM_ATTR  ft_delay(uint64_t time_in_millis)
+void  ft_delay(uint64_t time_in_millis)
 {
     ft_watchdog_stop();
     if (time_in_millis < 10)
@@ -76,10 +76,10 @@ void  ft_serial_init(void)
     Serial.begin(115200);
     while (i > 0)
     {
-        DEBUG_PRINTF("-", "");
+        DEBUG_PRINTF("-");
         delay(100);
         i--;
     }
-    DEBUG_PRINTF("\n\nDEVICE START\nversion %s\n", String(SOFTWARE_VERSION));
+    DEBUG_PRINTF("\n\nDEVICE START\nversion %.2f\n", SOFTWARE_VERSION);
 }
  

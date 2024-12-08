@@ -6,7 +6,7 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 12:59:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/11/29 17:00:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/12/07 17:00:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 # define DEBUG                                                       // comment out this line to turn off Serial output
 # ifdef DEBUG
-    #define DEBUG_PRINTF(x, y) Serial.printf(x, y)
+    #define DEBUG_PRINTF(...) Serial.printf(__VA_ARGS__)
     #define WD_RESET_INFO      true
 # else
-    #define DEBUG_PRINTF(x, y) 
+    #define DEBUG_PRINTF(...)
     #define WD_RESET_INFO      false
 # endif
 

@@ -44,6 +44,6 @@ static void  ft_pathfinder(void)
     if (!rtc_g.exam_status)                         // do not change
         ft_cluster_number_mode(&sleep_length);
     ft_go_to_sleep(sleep_length);
-    DEBUG_PRINTF("  ---- This message will never be printed out", "");
+    DEBUG_PRINTF("  ---- This message will never be printed out");
 }
  

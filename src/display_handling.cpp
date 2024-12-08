@@ -152,7 +152,7 @@ static void ft_draw_bitmap_full_update(const unsigned char* image, uint16_t widt
 *   "displaying_now = CLUSTER" is there to unblock drawing
 *   of ALL the additional images/messages. Useful after exams.
 */
-void IRAM_ATTR  ft_display_cluster_number(IMAGE_t mode)
+void  ft_display_cluster_number(IMAGE_t mode)
 {
     RTC_DATA_ATTR static bool    display_cluster;
     RTC_DATA_ATTR static IMAGE_t displaying_now;
@@ -160,37 +160,37 @@ void IRAM_ATTR  ft_display_cluster_number(IMAGE_t mode)
     ft_watchdog_reset();
     if (display_cluster && mode == displaying_now)
     {
-        DEBUG_PRINTF("\n[THE DISPLAY] Nothing new to draw. Drawing aborted\n\n", "");
+        DEBUG_PRINTF("\n[THE DISPLAY] Nothing new to draw. Drawing aborted\n\n");
         return;
     }
     if (!display_cluster)
     {
-        DEBUG_PRINTF("\n[THE DISPLAY] Drawing the cluster number with...\n", "");
+        DEBUG_PRINTF("\n[THE DISPLAY] Drawing the cluster number with...\n");
         ft_draw_bitmap_full_update(cluster_number_img, 630, 480);
         display_cluster = true;
         displaying_now = CLUSTER;
     }
     if (mode == DEFAULT_IMG && (displaying_now != DEFAULT_IMG && displaying_now != LOW_BATTERY))
     {
-        DEBUG_PRINTF("[THE DISPLAY] ...the default cluster icons\n", "");
+        DEBUG_PRINTF("[THE DISPLAY] ...the default cluster icons\n");
         ft_draw_bitmap_partial_update(default_cluster_icons, 170, 480);
         displaying_now = DEFAULT_IMG;
     }
     else if (mode == INTRA_ERROR && displaying_now != INTRA_ERROR)
     {
-        DEBUG_PRINTF("[THE DISPLAY] ...the Intra error warning\n", "");
+        DEBUG_PRINTF("[THE DISPLAY] ...the Intra error warning\n");
         ft_draw_bitmap_partial_update(intra_error_img, 170, 480);
         displaying_now = INTRA_ERROR;
     }
     else if (mode == SECRET_EXPIRED && displaying_now != SECRET_EXPIRED)
     {
-        DEBUG_PRINTF("[THE DISPLAY] ...the Secret expiration warning\n", "");
+        DEBUG_PRINTF("[THE DISPLAY] ...the Secret expiration warning\n");
         ft_draw_bitmap_partial_update(secret_expire_img, 170, 480);
         displaying_now = SECRET_EXPIRED;
     }
     else if (mode == EXAM_DAY && displaying_now != EXAM_DAY)
     {
-        DEBUG_PRINTF("[THE DISPLAY] ...the exam time note\n", "");
+        DEBUG_PRINTF("[THE DISPLAY] ...the exam time note\n");
         ft_draw_bitmap_partial_update(reserve_note_img, 170, 480);
         delay (500);
         ft_draw_exam_start_time();
@@ -199,41 +199,41 @@ void IRAM_ATTR  ft_display_cluster_number(IMAGE_t mode)
     }
     else if (mode == LOW_BATTERY && displaying_now != LOW_BATTERY)
     {
-        DEBUG_PRINTF("[THE DISPLAY] ...the low battery warning\n", "");
+        DEBUG_PRINTF("[THE DISPLAY] ...the low battery warning\n");
         ft_draw_bitmap_partial_update(low_battery_img, 170, 480);
         displaying_now = LOW_BATTERY;
     }
     else if (mode == OTA_WAITING && displaying_now != OTA_WAITING)
     {
-        DEBUG_PRINTF("[THE DISPLAY] ...the OTA notification\n", "");
+        DEBUG_PRINTF("[THE DISPLAY] ...the OTA notification\n");
         ft_draw_text("WAITING FOR OTA UPDATE", 50, 710);
         displaying_now = OTA_WAITING;
     }
     else if (mode == OTA_SUCCESS && displaying_now != OTA_SUCCESS)
     {
-        DEBUG_PRINTF("[THE DISPLAY] ...the OTA notification\n", "");
+        DEBUG_PRINTF("[THE DISPLAY] ...the OTA notification\n");
         ft_draw_text("OTA UPDATE SUCCESS", 50, 710);
         displaying_now = OTA_SUCCESS;
     }
     else if (mode == OTA_FAIL && displaying_now != OTA_FAIL)
     {
-        DEBUG_PRINTF("[THE DISPLAY] ...the OTA notification\n", "");
+        DEBUG_PRINTF("[THE DISPLAY] ...the OTA notification\n");
         ft_draw_text("OTA UPDATE FAIL", 50, 710);
         displaying_now = OTA_FAIL;
     }
     else if (mode == OTA_CANCELED && displaying_now != OTA_CANCELED)
     {
-        DEBUG_PRINTF("[THE DISPLAY] ...the OTA notification\n", "");
+        DEBUG_PRINTF("[THE DISPLAY] ...the OTA notification\n");
         ft_draw_text("OTA UPDATE CANCELED", 50, 710);
         displaying_now = OTA_CANCELED;
     }
     else if (mode == TELEGRAM_ERROR && displaying_now != TELEGRAM_ERROR)
     {
-        DEBUG_PRINTF("[THE DISPLAY] ...the Telegram error warning\n", "");
+        DEBUG_PRINTF("[THE DISPLAY] ...the Telegram error warning\n");
         ft_draw_text("TELEGRAM BOT ERROR", 50, 710);
         displaying_now = TELEGRAM_ERROR;
     } 
-    DEBUG_PRINTF("[THE DISPLAY] The drawing process is complete\n", "");
+    DEBUG_PRINTF("[THE DISPLAY] The drawing process is complete\n");
 }
 
 void  ft_clear_display(void)
@@ -243,7 +243,7 @@ void  ft_clear_display(void)
     display.writeScreenBuffer();
 }
 
-void IRAM_ATTR  ft_display_init(void)
+void  ft_display_init(void)
 {
     ft_watchdog_reset();
     SPI.end();

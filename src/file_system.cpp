@@ -64,24 +64,24 @@ void  ft_data_integrity_check(void)
     ft_watchdog_reset();
     if (!LittleFS.exists("/secret.txt"))
     {
-        DEBUG_PRINTF("\n[FILE SYSTEM] The secret.txt file does not exist. Creating...\n", "");
+        DEBUG_PRINTF("\n[FILE SYSTEM] The secret.txt file does not exist. Creating...\n");
         char input[] = SECRET;
         if (ft_write_spiffs_file("/secret.txt", input) == FS_OK)
-            DEBUG_PRINTF("\n[FILE SYSTEM] secret.txt file has been created.\n", "");
+            DEBUG_PRINTF("\n[FILE SYSTEM] secret.txt file has been created.\n");
         else
-            DEBUG_PRINTF("\n[FILE SYSTEM] Failed to create the secret.txt file!\n", "");
+            DEBUG_PRINTF("\n[FILE SYSTEM] Failed to create the secret.txt file!\n");
     }
     if (!LittleFS.exists("/chat_id.txt"))
     {
-        DEBUG_PRINTF("\n[FILE SYSTEM] The chat_id.txt file does not exist. Creating...\n", "");
+        DEBUG_PRINTF("\n[FILE SYSTEM] The chat_id.txt file does not exist. Creating...\n");
         char input[] = "0000000000000";
         if (ft_write_spiffs_file("/chat_id.txt", input) == FS_OK)
         {
-            DEBUG_PRINTF("\n[FILE SYSTEM] chat_id.txt file has been created.\n", "");
-            DEBUG_PRINTF("\n[FILE SYSTEM] To set chat_id write \"/status\" into the Telegram chat %s", String(BOT_NAME));
+            DEBUG_PRINTF("\n[FILE SYSTEM] chat_id.txt file has been created.\n");
+            DEBUG_PRINTF("\n[FILE SYSTEM] To set chat_id write \"/status\" into the Telegram chat %s", BOT_NAME);
         }
         else
-            DEBUG_PRINTF("\n[FILE SYSTEM] Failed to create the chat_id.txt file!\n", "");
+            DEBUG_PRINTF("\n[FILE SYSTEM] Failed to create the chat_id.txt file!\n");
         ft_display_cluster_number(TELEGRAM_ERROR);
     }
     ft_data_restore("/secret.txt");
@@ -162,16 +162,16 @@ ERROR_t  ft_spiffs_init(void)
     ft_watchdog_reset();
     if (!LittleFS.begin(true) && i < 5)
     {
-        DEBUG_PRINTF("\n[FILE SYSTEM] Failed to initialise SPIFFS. Retrying...\n", "");
+        DEBUG_PRINTF("\n[FILE SYSTEM] Failed to initialise SPIFFS. Retrying...\n");
         ft_delay(500);
         i++;
     }
     else
     {
-        DEBUG_PRINTF("\n[FILE SYSTEM] SPIFFS is successfully initialised.\n", "");
+        DEBUG_PRINTF("\n[FILE SYSTEM] SPIFFS is successfully initialised.\n");
         return FS_OK;
     }
-    DEBUG_PRINTF("\n[FILE SYSTEM] SPIFFS was not initialised. Reading and Writing data is unavailable this session.\n", "");
+    DEBUG_PRINTF("\n[FILE SYSTEM] SPIFFS was not initialised. Reading and Writing data is unavailable this session.\n");
     return FS_INIT_FAIL;
 }
  

@@ -16,29 +16,29 @@ static void ft_report_reboot_reason(esp_reset_reason_t reset_reason)
 {
     ft_watchdog_reset();
     if (reset_reason == ESP_RST_UNKNOWN)
-        DEBUG_PRINTF("[BOOTING INFO] Unknown reset reason\n", "");
+        DEBUG_PRINTF("[BOOTING INFO] Unknown reset reason\n");
     else if (reset_reason == ESP_RST_POWERON)
-        DEBUG_PRINTF("[BOOTING INFO] Power on reset\n", "");
+        DEBUG_PRINTF("[BOOTING INFO] Power on reset\n");
     else if (reset_reason == ESP_RST_EXT)
-        DEBUG_PRINTF("[BOOTING INFO] External reset\n", "");
+        DEBUG_PRINTF("[BOOTING INFO] External reset\n");
     else if (reset_reason == ESP_RST_SW)
-        DEBUG_PRINTF("[BOOTING INFO] Software reset\n", "");
+        DEBUG_PRINTF("[BOOTING INFO] Software reset\n");
     else if (reset_reason == ESP_RST_PANIC)
-        DEBUG_PRINTF("[BOOTING INFO] CPU Panic reset\n", "");
+        DEBUG_PRINTF("[BOOTING INFO] CPU Panic reset\n");
     else if (reset_reason == ESP_RST_INT_WDT)
-        DEBUG_PRINTF("[BOOTING INFO] Interrupt watchdog reset\n", "");
+        DEBUG_PRINTF("[BOOTING INFO] Interrupt watchdog reset\n");
     else if (reset_reason == ESP_RST_TASK_WDT)
-        DEBUG_PRINTF("[BOOTING INFO] Task watchdog reset\n", "");
+        DEBUG_PRINTF("[BOOTING INFO] Task watchdog reset\n");
     else if (reset_reason == ESP_RST_WDT)
-        DEBUG_PRINTF("[BOOTING INFO] General watchdog reset\n", "");
+        DEBUG_PRINTF("[BOOTING INFO] General watchdog reset\n");
     else if (reset_reason == ESP_RST_DEEPSLEEP)
-        DEBUG_PRINTF("[BOOTING INFO] Deep sleep reset\n", "");
+        DEBUG_PRINTF("[BOOTING INFO] Deep sleep reset\n");
     else if (reset_reason == ESP_RST_BROWNOUT)
-        DEBUG_PRINTF("[BOOTING INFO] Brownout reset\n", "");
+        DEBUG_PRINTF("[BOOTING INFO] Brownout reset\n");
     else if (reset_reason == ESP_RST_SDIO)
-        DEBUG_PRINTF("[BOOTING INFO] SDIO reset\n", "");
+        DEBUG_PRINTF("[BOOTING INFO] SDIO reset\n");
     else
-        DEBUG_PRINTF("[BOOTING INFO] Reset info is missing\n", "");
+        DEBUG_PRINTF("[BOOTING INFO] Reset info is missing\n");
 }
 
 void  ft_power_down_recovery(void)
@@ -49,15 +49,15 @@ void  ft_power_down_recovery(void)
     reset_reason = esp_reset_reason();
     if (reset_reason == ESP_RST_BROWNOUT)
     {
-        DEBUG_PRINTF("\n[BOOTING INFO] Brown-out reset! Going into extensive sleep\n", "");
+        DEBUG_PRINTF("\n[BOOTING INFO] Brown-out reset! Going into extensive sleep\n");
         ft_go_to_sleep(DEAD_BATTERY_SLEEP);
     }
     ft_report_reboot_reason(reset_reason);
     if (reset_reason != ESP_RST_DEEPSLEEP)
     {
-        DEBUG_PRINTF("\n[BOOTING INFO] Hard reset detected. Restoring RTC memory data...\n", "");
+        DEBUG_PRINTF("\n[BOOTING INFO] Hard reset detected. Restoring RTC memory data...\n");
         ft_data_integrity_check();
     }
-    DEBUG_PRINTF("\n[BOOTING INFO] Power-down Recovery was performed.\n\n", "");
+    DEBUG_PRINTF("\n[BOOTING INFO] Power-down Recovery was performed.\n\n");
 }
  

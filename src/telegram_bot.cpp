@@ -92,7 +92,7 @@ static void  ft_new_messages(short message_count)
     String  text;
 
     i = 0;
-    DEBUG_PRINTF("\n[TELEGRAM BOT] Handling new Telegram messages\n", "");
+    DEBUG_PRINTF("\n[TELEGRAM BOT] Handling new Telegram messages\n");
     DEBUG_PRINTF("[TELEGRAM BOT] Number of messages to handle: %d\n", message_count);
     while (i < message_count) 
     {
