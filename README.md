@@ -9,6 +9,7 @@
 - [Maintenance](#maintenance)
 - [Regards](#regards)
 - [Contributing](#contributing)
+- [Suggestions for Contributions](#suggestions-for-contributions)
 - [License](#license)
 - [Conclusion](#conclusion)
 
@@ -29,17 +30,17 @@ Once the 42 Prague Smart Sign is installed and powered on, it will automatically
 4. **Exam in progress**: During the exam, the device displays a big bright-red warning sign indicating the ongoing exam. The drastically changed colour palette attracts attention, enhancing the sign's effectiveness.
 5. **Post-exam state**: After the exam ends, the Sign returns to its normal state, displaying the number of the cluster.
 
-The device operates fully automatically and does not require any input from the school personnel.
-
 
 ## Features
 
+- Highly autonomous operation: the Sign operates fully autonomously and does not require any input from the school personnel;
 - Automatic exam time check: the Sign keeps track of the exams published on Intra on its own;
-- Exam subscribers check: if there is noone undertaking the exam, there is no need in blocking the room;
+- Exam subscribers check: if there is noone undertaking the exam, the Sigh will know it and will not block the room;
 - Automatic battery charge monitoring: you will surely know when to charge the device;
-- Deep Sleep mode: the microcontroller wakes up only when it has a task to do, drastically saving the battery charge;
+- Deep Sleep mode: the microcontroller sleeps most of the time and wakes up only when it has a task to do, drastically saving the battery charge;
 - Telegram enabled: control the Sign, update its security token, and receive operational information — all remotely, via your Telegram chat;
-- Over The Air firmware update: develop and upload new features from anywhere on the campus.
+- Over The Air firmware update: develop and upload new features without the need of looking for a cable.
+- Watchdog: no program failure can stop the Sign as its inner watchdog makes sure the program execution does not get stuck.
 
 
 ## Components
@@ -78,6 +79,20 @@ The Sign's Telegram Bot functionality is provided by Brian Lough's [UniversalTel
 Contributions to the 42 Prague Smart Sign project are welcome! If you have any ideas, bug fixes, or improvements, feel free to open an issue, fork or submit a pull request on the GitHub repository.
 
 When contributing, please adhere to the existing code style and follow the established guidelines. Clearly describe your changes and provide any necessary documentation or tests.
+
+
+## Suggestions for Contributions
+
+**good first contributions**
+- Connecting to the modem with the highest signal strength;
+- Core temperature monitoring as a safety mechanism: the temperature being too high may signal some serious hardware failure and a safety threat, e.g. the battery has the lowest maximum allowed operational temperature of 60°C — notify the Telegram chat if the temperature of the core gets at least to 50°C;
+- Refactor the project to lower the number of the Common global (com_g) variables. But DO NOT alter the RTC global (rtc_g) variables unless you are absolutely certain of what you are doing.
+**advanced contributions**
+- Adding a "DO NOT ENTER!" sign that can be displayed or errased from the screen by pressing the WARNING_BUTTON button;
+- Core temperature monitoring as a mechanism for detecting the battery charging process being finished: when the battery is being charged, the core temperature of the microcontroller rises approximatelly 10°C above its common operational temperature and then drops back down when finished charging — notify the Telegram chat when charging is finished. This functionality may not block the Sign from fulfilling its main goal of notifying students about exams;
+- Logging error messages into a log file in the microcontroller's memory and the log file extraction mechanism;
+- The direct OTA implementation - the Sign itself creates a Wi-Fi access point that you can connect to and to update the firmware without the need of a Wi-Fi modem in the middle;
+- Replacing Telegram with Slack: refactoring all the Sign's Telegram functionality to work via Slack would allow integrating the Sign better into the 42 ecosystem as well as developing new functionality, e.g. notifying all the students about an upcomming exam.
 
 
 ## License
