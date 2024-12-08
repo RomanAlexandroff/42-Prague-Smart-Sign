@@ -6,25 +6,22 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:00:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/11/29 17:20:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/12/06 16:00:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CONSTANTS_H
 # define CONSTANTS_H
 
-# define SOFTWARE_VERSION        4.30
+# define SOFTWARE_VERSION        4.31
 
 /* General constants */
 # define CONNECT_TIMEOUT         5                            // in seconds
 # define REBOOT                  1000                         // do not change
 # define MS_MINUTE               60000                        // do not change
 # define MS_HOUR                 3600000ul                    // do not change
-# define WD_TIMEOUT              8                            // watchdog, in seconds
-# define DEAD_BATTERY_SLEEP      86400000ul                   // in milliseconds, 24 hours
-# define BATTERY_CRITICAL        400
-# define BATTERY_GOOD            800
-# define BATTERY_SAMPLES_LIMIT   5
+# define WD_TIMEOUT              8000                         // watchdog, in milliseconds
+# define WD_NUMBER_OF_CORES      1                            // do not change
 # define OTA_WAIT_LIMIT          600                          // in seconds, 10 minutes
 # define RETRIES_LIMIT           3
 # define MONTHS_DAYS             31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
@@ -38,7 +35,13 @@
 # define DIAGNOSTICS_BUTTON      D0
 # define OTA_BUTTON              D1
 # define WARNING_BUTTON          D2
-# define DEBOUNCE_DELAY          1000UL                       // for buttons debounce
+# define DEBOUNCE_DELAY          1000ul                       // for buttons debounce
+
+/* Battery config */
+# define DEAD_BATTERY_SLEEP      86400000ul                   // in milliseconds, 24 hours
+# define BATTERY_CRITICAL        400
+# define BATTERY_GOOD            800
+# define BATTERY_SAMPLES_LIMIT   5
 
 /* Display SPI port config */
 # define BUSY_PIN                D4
