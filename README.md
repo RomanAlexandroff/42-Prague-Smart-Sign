@@ -7,9 +7,9 @@
 - [Features](#features)
 - [Components](#components)
 - [Maintenance](#maintenance)
-- [Regards](#regards)
 - [Contributing](#contributing)
 - [Suggestions for Contributions](#suggestions-for-contributions)
+- [Regards](#regards)
 - [License](#license)
 - [Conclusion](#conclusion)
 
@@ -59,21 +59,6 @@ The following components are used in the 42 Prague Smart Sign:
 The 42 Prague Smart Sign is designed with low-maintenance in mind. The battery capacity of 4000mAh ensures long periods of operation before requiring a recharge, typically once every few months. To recharge the device, it needs to be connected to a power source using any USB-C 5V power adapter. During the recharge, the Sign remains completely operational.
 
 
-## Regards
-
-This project is a group effort of various 42 students with support from the 42 Prague Bocal team. Here they are:
-- **raleksan**, 42 Prague — firmware and electronic hardware developer. Made the idea reality,
-- **gsura**, 42 Prague — idea starter and motivation supporter. Pitched the idea to Bocal so well they ended up asking for two devices,
-- **cgray**, 42 Prague — hardware development. Modeled beautiful and functional inner frame for the electronics,
-- **phelebra**, 42 Prague — 3D printing. Turned 3D model into high-quality pieces of hardware.
-- **arosado-**, 42 Lisboa — 42 API expert. Tought how to get the data from the 42 servers,
-- **jrathelo**, 42 Nice — memory wizard. Helped resolve the microcontroller's RAM overflow.
-
-The project is based on Jean-Marc Zingg's [GxEPD2](https://github.com/ZinggJM/GxEPD2) library for e-paper displays.
-The project uses the [ArduinoOTA](https://github.com/jandrassy/ArduinoOTA) library by Juraj Andrassy for the Over-The-Air software update functionality.
-The Sign's Telegram Bot functionality is provided by Brian Lough's [UniversalTelegramBot](https://github.com/witnessmenow/Universal-Arduino-Telegram-Bot) library.
-
-
 ## Contributing
 
 Contributions to the 42 Prague Smart Sign project are welcome! If you have any ideas, bug fixes, or improvements, feel free to open an issue, fork or submit a pull request on the GitHub repository.
@@ -87,12 +72,28 @@ When contributing, please adhere to the existing code style and follow the estab
 - Connecting to the modem with the highest signal strength;
 - Core temperature monitoring as a safety mechanism: the temperature being too high may signal some serious hardware failure and a safety threat, e.g. the battery has the lowest maximum allowed operational temperature of 60°C — notify the Telegram chat if the temperature of the core gets at least to 50°C;
 - Refactor the project to lower the number of the Common global (com_g) variables. But DO NOT alter the RTC global (rtc_g) variables unless you are absolutely certain of what you are doing.
+
 **advanced contributions**
 - Adding a "DO NOT ENTER!" sign that can be displayed or errased from the screen by pressing the WARNING_BUTTON button;
 - Core temperature monitoring as a mechanism for detecting the battery charging process being finished: when the battery is being charged, the core temperature of the microcontroller rises approximatelly 10°C above its common operational temperature and then drops back down when finished charging — notify the Telegram chat when charging is finished. This functionality may not block the Sign from fulfilling its main goal of notifying students about exams;
 - Logging error messages into a log file in the microcontroller's memory and the log file extraction mechanism;
 - The direct OTA implementation - the Sign itself creates a Wi-Fi access point that you can connect to and to update the firmware without the need of a Wi-Fi modem in the middle;
 - Replacing Telegram with Slack: refactoring all the Sign's Telegram functionality to work via Slack would allow integrating the Sign better into the 42 ecosystem as well as developing new functionality, e.g. notifying all the students about an upcomming exam.
+
+
+## Regards
+
+This project is a group effort of various 42 students with support from the 42 Prague Bocal team. Here they are:
+- **raleksan**, 42 Prague — firmware and electronic hardware developer. Made the idea reality,
+- **gsura**, 42 Prague — idea starter and motivation supporter. Pitched the idea to Bocal so well they ended up asking for two devices,
+- **cgray**, 42 Prague — hardware development. Modeled beautiful and functional inner frame for the electronics,
+- **phelebra**, 42 Prague — 3D printing. Turned 3D model into high-quality pieces of hardware.
+- **arosado-**, 42 Lisboa — 42 API expert. Tought how to get the data from the 42 servers,
+- **jrathelo**, 42 Nice — memory wizard. Helped resolve the microcontroller's RAM overflow.
+
+The project is based on Jean-Marc Zingg's [GxEPD2](https://github.com/ZinggJM/GxEPD2) library for e-paper displays.
+The project uses the [ArduinoOTA](https://github.com/jandrassy/ArduinoOTA) library by Juraj Andrassy for the Over-The-Air software update functionality.
+The Sign's Telegram Bot functionality is provided by Brian Lough's [UniversalTelegramBot](https://github.com/witnessmenow/Universal-Arduino-Telegram-Bot) library.
 
 
 ## License
