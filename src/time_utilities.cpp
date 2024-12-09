@@ -6,7 +6,7 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:00:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/11/29 17:00:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/12/09 17:20:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,30 +97,24 @@ unsigned int  ft_time_till_wakeup(void)
     ft_watchdog_reset();
     i = sizeof(wakeup_hour) / sizeof(wakeup_hour[0]) - 1;
     if (com_g.hour >= wakeup_hour[i])
-        return ((wakeup_hour[0] + 24 - com_g.hour) * MS_HOUR - (com_g.minute * MS_MINUTE) - millis());
+        return ((wakeup_hour[0] + 24 - com_g.hour) * HOUR_MS - (com_g.minute * MINUTE_MS) - millis());
     i = 0;
     while ((wakeup_hour[i] - com_g.hour) <= 0)
         i++;
-    return ((wakeup_hour[i] - com_g.hour) * MS_HOUR - (com_g.minute * MS_MINUTE) - millis());
+    return ((wakeup_hour[i] - com_g.hour) * HOUR_MS - (com_g.minute * MINUTE_MS) - millis());
 }
 
 
 /*
-*   Returns value in milliseconds. Max limit
-*   is 24 hours. Min limit is 0,01 seconds.
-*   Limits prevent indefinite sleep.
+*   Returns value in milliseconds.
 */
 unsigned int  ft_time_till_event(int8_t hours, uint8_t minutes)
 {
     unsigned int result;
 
     ft_watchdog_reset();
-    result = (hours - com_g.hour) * MS_HOUR;
-    result += (minutes * MS_MINUTE) - (com_g.minute * MS_MINUTE);
-    if (result > 86400000)
-        result = 86400000;
-    if (result < 10)
-        result = 10;
+    result = (hours - com_g.hour) * HOUR_MS;
+    result += (minutes * MINUTE_MS) - (com_g.minute * MINUTE_MS);
     return (result);
 }
 
@@ -136,7 +130,7 @@ int  ft_time_sync(unsigned int preexam_time)
         minutes = ceil(preexam_time / 1000);
         ft_delay(1000);
     }
-    minutes = ceil(preexam_time / MS_MINUTE);
+    minutes = ceil(preexam_time / MINUTE_MS);
     while (minutes % 10 != 0 || minutes > 60)
     {
         ft_delay(59990);
