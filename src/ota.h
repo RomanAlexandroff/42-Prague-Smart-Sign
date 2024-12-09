@@ -6,7 +6,7 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 12:50:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/11/28 08:00:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/12/09 17:20:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /*                                                                            */
 /*   This file contains inline functions declared in the main header. This    */
@@ -83,7 +83,7 @@ void ft_ota_waiting_loop(void)
         uint16_t ota_limit;
 
         ota_limit = 0;
-        while (rtc_g.ota && ota_limit < OTA_WAIT_LIMIT)
+        while (rtc_g.ota && ota_limit < OTA_WAIT_LIMIT_S)
         {
             ArduinoOTA.handle();
             ft_watchdog_reset();

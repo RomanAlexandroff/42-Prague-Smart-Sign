@@ -31,8 +31,6 @@
 #ifndef CREDENTIALS_H
 # define CREDENTIALS_H
 
-# define DEVICE_NAME     "42 Smart Sign"     // for OTA updates
-
 # define BOT_NAME        "@YourTelegramBotUsername_bot"
 # define BOT_TOKEN       "xxxxxxxxxx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"       // Telegram Bot
 # define SECRET          "x-xxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
@@ -40,7 +38,6 @@
 
 # define CAMPUS_ID       "xx"                // your campus number on Intra
 # define CLUSTER_ID      "xx"
-# define TIME_ZONE       1                   // your campus time zone according to the GMT standart
 
 # define WIFI_SSID       "your_campus_wifi_name"
 # define WIFI_PASSWORD   "your_campus_wifi_password"

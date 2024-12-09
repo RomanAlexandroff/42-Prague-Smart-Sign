@@ -6,44 +6,37 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:00:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/12/06 16:00:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/12/09 16:30:00 by raleksan         ###   ########.fr       */
+/*                                                                            */
+/*                                                                            */
+/*   The following constants are not expected to be changed at any point.     */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CONSTANTS_H
 # define CONSTANTS_H
 
-# define SOFTWARE_VERSION        4.31
-
 /* General constants */
-# define CONNECT_TIMEOUT         5                            // in seconds
-# define REBOOT                  1000                         // do not change
-# define MS_MINUTE               60000                        // do not change
-# define MS_HOUR                 3600000ul                    // do not change
-# define WD_TIMEOUT              8000                         // watchdog, in milliseconds
-# define WD_NUMBER_OF_CORES      1                            // do not change
-# define OTA_WAIT_LIMIT          600                          // in seconds, 10 minutes
-# define RETRIES_LIMIT           3
+# define WD_NUMBER_OF_CORES      1                            // watchdog
+# define REBOOT                  1000
+# define mS_TO_uS_FACTOR         1000ull                      // milliseconds to microseconds
+# define mS_TO_S_FACTOR          1000ul                       // milliseconds to seconds
+# define MINUTE_MS               60000
+# define HOUR_MS                 3600000
 # define MONTHS_DAYS             31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
 # define YEAR_DAYS               365
-# define WAKE_UP_HOURS           6, 9, 12, 15, 18, 21
-# define NOT_FOUND               -1                           // do not change
-# define SUBS_CHECK_TIME_LIMIT   3900000ul                    // in milliseconds, 1 hour 5 minutes
+# define NOT_FOUND               -1
 # define FAILED_TO_COUNT         -128
+# define MIN_SLEEP_LIMIT_MS      100ull                       // deep sleep, 0.1 seconds
+# define MAX_SLEEP_LIMIT_MS      172800000ull                 // deep sleep, 48 hours
 
 /* Buttons */
 # define DIAGNOSTICS_BUTTON      D0
 # define OTA_BUTTON              D1
 # define WARNING_BUTTON          D2
-# define DEBOUNCE_DELAY          1000ul                       // for buttons debounce
+# define GPIO_MASK               (1ULL << DIAGNOSTICS_BUTTON) | (1ULL << OTA_BUTTON) | (1ULL << WARNING_BUTTON)
 
-/* Battery config */
-# define DEAD_BATTERY_SLEEP      86400000ul                   // in milliseconds, 24 hours
-# define BATTERY_CRITICAL        400
-# define BATTERY_GOOD            800
-# define BATTERY_SAMPLES_LIMIT   5
-
-/* Display SPI port config */
+/* Display SPI port */
 # define BUSY_PIN                D4
 # define RST_PIN                 D5
 # define DC_PIN                  D6
@@ -52,7 +45,7 @@
 # define SPI_MISO_PIN            -1
 # define SPI_MOSI_PIN            D10
 
-/* Display driver config */
+/* Display driver */
 # define GxEPD2_DISPLAY_CLASS    GxEPD2_3C
 # define GxEPD2_DRIVER_CLASS     GxEPD2_750c_Z08
 # define GxEPD2_3C_IS_GxEPD2_3C  true

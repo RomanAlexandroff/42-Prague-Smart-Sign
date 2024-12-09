@@ -6,7 +6,7 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 15:50:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/12/06 16:00:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/12/09 17:20:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void  ft_watchdog_stop(void)
 void  ft_watchdog_init(void)
 {
     esp_task_wdt_config_t twdt_config = {
-        .timeout_ms = WD_TIMEOUT,
-        .idle_core_mask = (1 << WD_NUMBER_OF_CORES) - 1,    // Bitmask of all cores
+        .timeout_ms = WD_TIMEOUT_MS,
+        .idle_core_mask = (1 << WD_NUMBER_OF_CORES) - 1,
         .trigger_panic = WD_RESET_INFO,
     };
     esp_task_wdt_deinit();

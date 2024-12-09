@@ -6,7 +6,7 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:00:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/12/07 13:20:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/12/09 17:20:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void  ft_battery_check(void)
         samples_count++;
     }
     battery = battery / samples_count;
-    DEBUG_PRINTF("\n[BATTERY] Current battery state: %d\n", battery);
+    DEBUG_PRINTF("[BATTERY] Current battery state: %d\n\n", battery);
     if (battery >= BATTERY_GOOD)
         return;
     if (WiFi.status() != WL_CONNECTED)
@@ -35,14 +35,14 @@ void  ft_battery_check(void)
     if (battery < BATTERY_CRITICAL)
     {
         ft_display_cluster_number(LOW_BATTERY);
-        DEBUG_PRINTF("\n[BATTERY] Battery is too low. Going into extensive sleep\n");
+        DEBUG_PRINTF("[BATTERY] Battery is too low. Going into extensive sleep\n\n");
         bot.sendMessage(String(rtc_g.chat_id), ft_compose_message(DEAD_BATTERY, 0), "");
-        ft_go_to_sleep(DEAD_BATTERY_SLEEP);
+        ft_go_to_sleep(DEAD_BATTERY_SLEEP_MS);
     }
     else if (battery < BATTERY_GOOD)
     {
         ft_display_cluster_number(LOW_BATTERY);
-        DEBUG_PRINTF("\n[BATTERY] Low battery! Need charging!\n");
+        DEBUG_PRINTF("[BATTERY] Low battery! Need charging!\n\n");
         bot.sendMessage(String(rtc_g.chat_id), ft_compose_message(LOW_BATTERY, 0), "");
     }
 }

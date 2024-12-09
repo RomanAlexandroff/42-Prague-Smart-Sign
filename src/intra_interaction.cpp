@@ -6,14 +6,15 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:01:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/11/27 13:40:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/12/09 17:20:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "42-Prague-Smart-Sign.h"
 
 /*
-*   Checks only within SUBS_CHECK_TIME_LIMIT before the exam.
+*   Does not check the exam subscribers unless it is
+*   less than SUBS_CHECK_LIMIT_MS before the exam.
 */
 static void  ft_check_exam_subscribers(String &server_response)
 {
@@ -22,7 +23,7 @@ static void  ft_check_exam_subscribers(String &server_response)
 
     i = 0;
     subscribers = 0;
-    if (ft_time_till_event(rtc_g.exam_start_hour, rtc_g.exam_start_minutes) > SUBS_CHECK_TIME_LIMIT)
+    if (ft_time_till_event(rtc_g.exam_start_hour, rtc_g.exam_start_minutes) > SUBS_CHECK_LIMIT_MS)
         return;
     ft_watchdog_reset();
     i = server_response.indexOf("\"nbr_subscribers\":\"");

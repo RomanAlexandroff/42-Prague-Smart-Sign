@@ -6,7 +6,7 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:02:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/11/27 14:00:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/12/09 17:20:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void  ft_power_down_recovery(void)
     if (reset_reason == ESP_RST_BROWNOUT)
     {
         DEBUG_PRINTF("\n[BOOTING INFO] Brown-out reset! Going into extensive sleep\n");
-        ft_go_to_sleep(DEAD_BATTERY_SLEEP);
+        ft_go_to_sleep(DEAD_BATTERY_SLEEP_MS);
     }
     ft_report_reboot_reason(reset_reason);
     if (reset_reason != ESP_RST_DEEPSLEEP)

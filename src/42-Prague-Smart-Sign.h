@@ -6,21 +6,12 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 12:59:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/12/07 17:00:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/12/09 16:30:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _42_PRAGUE_SMART_SIGN_H
 # define _42_PRAGUE_SMART_SIGN_H
-
-# define DEBUG                                                       // comment out this line to turn off Serial output
-# ifdef DEBUG
-    #define DEBUG_PRINTF(...) Serial.printf(__VA_ARGS__)
-    #define WD_RESET_INFO      true
-# else
-    #define DEBUG_PRINTF(...)
-    #define WD_RESET_INFO      false
-# endif
 
 # include <Arduino.h>
 # include <LittleFS.h>
@@ -36,6 +27,7 @@
 # include <driver/gpio.h>
 # include <esp_task_wdt.h>
 # include "bitmap_library.h"
+# include "config.h"
 # include "globals.h"
 
 /* intra_interaction.cpp */
