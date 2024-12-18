@@ -6,7 +6,7 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 13:10:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/12/09 17:20:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/12/18 13:00:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void  ft_serial_init(void)
     
     i = 15;
     ft_watchdog_reset();
-    Serial.begin(115200);
+    Serial.begin(BAUD_RATE);
     while (i > 0)
     {
         DEBUG_PRINTF("-");

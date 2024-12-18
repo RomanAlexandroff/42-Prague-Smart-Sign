@@ -6,7 +6,7 @@
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:20:00 by raleksan          #+#    #+#             */
-/*   Updated: 2024/12/09 16:20:00 by raleksan         ###   ########.fr       */
+/*   Updated: 2024/12/18 13:00:00 by raleksan         ###   ########.fr       */
 /*                                                                            */
 /*                                                                            */
 /*   The following values are adjustable for tuning the software behavior.    */
@@ -20,7 +20,7 @@
 # define SOFTWARE_VERSION       4.32
 # define DEVICE_NAME            "42 Prague Smart Sign"
 
-# define DEBUG                                                // comment out this line to turn off Serial output
+# define DEBUG                                               // comment out this line to turn off Serial output
 # ifdef DEBUG
     #define DEBUG_PRINTF(...)   Serial.printf(__VA_ARGS__)
     #define WD_RESET_INFO       true
@@ -29,7 +29,9 @@
     #define WD_RESET_INFO       false
 # endif
 
-# define WAKE_UP_HOURS          6, 9, 12, 15, 18, 21
+# pragma GCC optimize           ("O3")                       // optimize for faster program performance
+# define BAUD_RATE              115200                       // speed of the Serial communication
+# define WAKE_UP_HOURS          6, 9, 12, 15, 18, 21         // e.g. 15 means 15:00
 # define RETRIES_LIMIT          3                            // for getting time and exam info
 # define TIME_ZONE              1                            // campus time zone according to the GMT standart
 
