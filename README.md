@@ -69,8 +69,8 @@ When contributing, please adhere to the existing code style and follow the estab
 ## Suggestions for Contributions
 
 **good first contributions**
-- Connecting to the modem with the highest signal strength;
 - Core temperature monitoring as a safety mechanism: the temperature being too high may signal some serious hardware failure and a safety threat, e.g. the battery has the lowest maximum allowed operational temperature of 60°C — notify the Telegram chat if the temperature of the core gets at least to 50°C;
+- Forced display refresh: the Sign is programed not to refresh the content on the display unless it is absolutely necessary, but this approach causes some graphical artifacts to appear with time. Add a scheduled full display cleaning. Once a week is enough. Preferably in the night when noone can see it. After the cleaning process is done, the Sign may not stay blank and shall display relevant information.
 - Refactor the project to lower the number of the Common global (com_g) variables. But DO NOT alter the RTC global (rtc_g) variables unless you are absolutely certain of what you are doing.
 
 **advanced contributions**
