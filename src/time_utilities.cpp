@@ -41,7 +41,7 @@ int16_t  ft_expiration_counter(void)
     if (expire_month == com_g.month)
         return (expire_day + year_correction - com_g.day);
     else
-        return (expire_day + year_correction + months_days[com_g.month - 1] - com_g.day);
+        return (expire_day + year_correction + months_days[com_g.month - 1] - com_g.day);     //TO-DO: account for multiple months difference
 }
 
 ERROR_t  ft_get_time(void)

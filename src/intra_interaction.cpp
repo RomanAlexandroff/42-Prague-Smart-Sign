@@ -80,10 +80,18 @@ static void  ft_get_exam_time(String &server_response)
 
 static bool  ft_handle_exams_info(void)
 {
+    int     i;
     String  server_response;
 
     ft_watchdog_reset();
-    server_response = Intra_client.readString();
+    i = WD_TIMEOUT_MS - SERVER_WAIT_MS;
+    if (i < 1000)
+        i = 1000;
+    while (Intra_client.available() && i)
+    {
+        server_response += Intra_client.readString();
+        i--;
+    }
     DEBUG_PRINTF("\n============================== SERVER RESPONSE START ==============================\n\n");
     DEBUG_PRINTF("%s", server_response.c_str());
     DEBUG_PRINTF("=============================== SERVER RESPONSE END ===============================\n\n");
@@ -137,6 +145,7 @@ static void  ft_request_exams_info(const char* server, String* token)
     Intra_client.println(*token);
     Intra_client.println("Connection: close");
     Intra_client.println();
+    delay(SERVER_WAIT_MS);
 }
 
 static void ft_get_secret_expiration(String server_response)
@@ -183,18 +192,26 @@ static String ft_get_token(String server_response)
 
 static bool  ft_handle_server_response(const char* server, String* token)
 {
+    int     i;
     String  server_response;
 
     ft_watchdog_reset();
-    server_response = Intra_client.readString();
+    i = WD_TIMEOUT_MS - SERVER_WAIT_MS;
+    if (i < 1000)
+        i = 1000;
+    while (Intra_client.available() && i)
+    {
+        server_response += Intra_client.readString();
+        i--;
+    }
+    DEBUG_PRINTF("\n============================== SERVER RESPONSE START ==============================\n\n");
+    DEBUG_PRINTF("%s", server_response.c_str());
+    DEBUG_PRINTF("=============================== SERVER RESPONSE END ===============================\n\n");
     if (server_response.length() <= 0)
     {
         DEBUG_PRINTF("\n[INTRA] Error! Server response to the Access Token request was not received\n\n");
         return (false);
     }
-    DEBUG_PRINTF("\n============================== SERVER RESPONSE START ==============================\n\n");
-    DEBUG_PRINTF("%s", server_response.c_str());
-    DEBUG_PRINTF("=============================== SERVER RESPONSE END ===============================\n\n");
     *token = ft_get_token(server_response);
     if (*token == "NOT_FOUND")
         return (false);
@@ -219,6 +236,7 @@ static void  ft_access_server(const char* server)
     Intra_client.println(auth_request.length());
     Intra_client.println();
     Intra_client.println(auth_request);
+    delay(SERVER_WAIT_MS);
     auth_request.clear();
 }
 
@@ -233,7 +251,7 @@ static bool  ft_intra_connect(const char* server)
     }
     ft_watchdog_reset();
     Intra_client.setInsecure();
-    Intra_client.setTimeout(10);
+    Intra_client.setTimeout(20);
     if (!Intra_client.connect(server, 443))
     {
         DEBUG_PRINTF("\n[INTRA] Connection to the server failed\n\n");

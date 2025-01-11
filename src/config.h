@@ -40,6 +40,7 @@
 # define DEBOUNCE_DELAY_MS      1000ul                       // buttons
 # define WD_TIMEOUT_MS          8000                         // watchdog
 # define OTA_WAIT_LIMIT_S       600                          // 10 minutes
+# define SERVER_WAIT_MS         1000                         // Intra
 # define SUBS_CHECK_LIMIT_MS    3900000ul                    // 1 hour 5 minutes
 # define DEAD_BATTERY_SLEEP_MS  86400000ull                  // 24 hours
 
