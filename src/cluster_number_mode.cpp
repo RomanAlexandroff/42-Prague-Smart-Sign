@@ -19,6 +19,7 @@ static void ft_report_exception(ERROR_t status)
         ft_wifi_connect();
     if (WiFi.status() != WL_CONNECTED)
         return;
+    ft_watchdog_reset();
     bot.sendMessage(String(rtc_g.chat_id), ft_compose_message(status, 0), "");
 }
 
@@ -64,6 +65,7 @@ static bool ft_ensure_exams(unsigned int* p_sleep_length)
         ft_display_cluster_number(INTRA_ERROR);
         DEBUG_PRINTF("\n[INTRA] ERROR OBTAINING EXAMS. Turning off\n");
         ft_report_exception(intra_status);
+        ft_watchdog_reset();
         rtc_g.exam_status = false;
         *p_sleep_length = ft_time_till_wakeup();
         return (false);
