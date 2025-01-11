@@ -65,8 +65,6 @@ void  ft_wifi_connect(void)
         delay(1000);
         i++;
     }
-    if (WiFi.status() != WL_CONNECTED)
-        WiFi.reconnect();
 }
 
 void  ft_serial_init(void)
