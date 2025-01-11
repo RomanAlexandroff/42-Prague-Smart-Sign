@@ -66,6 +66,7 @@ static void  ft_draw_exam_start_time(void)
         text += ":0" + String(rtc_g.exam_start_minutes);
     else
         text += ":" + String(rtc_g.exam_start_minutes);
+    DEBUG_PRINTF("[THE DISPLAY] Printing the exam time: %s\n", text.c_str());
     display.setFont(&FreeSansBold24pt7b);
     display.setTextColor(GxEPD_BLACK);
     display.setRotation(3);
