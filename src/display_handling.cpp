@@ -193,7 +193,7 @@ void  ft_display_cluster_number(IMAGE_t mode)
     {
         DEBUG_PRINTF("[THE DISPLAY] ...the exam time note\n");
         ft_draw_bitmap_partial_update(reserve_note_img, 170, 480);
-        delay (500);
+        delay (6000);                                                 // experimentally derived
         ft_draw_exam_start_time();
         display_cluster = false;
         displaying_now = EXAM_DAY;
