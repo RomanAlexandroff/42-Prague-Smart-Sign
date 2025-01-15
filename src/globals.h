@@ -33,15 +33,15 @@ extern UniversalTelegramBot bot;
 *   over deep sleep. Others do not.
 */
 struct rtc_global_variables {
-    time_t   secret_expiration;
-    uint16_t exam_start_hour;
-    uint16_t exam_start_minutes;
-    bool     exam_status;
-    bool     warning_active;
-    bool     ota;
-    char     Secret[74];
-    char     chat_id[15];
-    char     from_name[33];
+    time_t        secret_expiration;
+    uint16_t      exam_start_hour;
+    uint16_t      exam_start_minutes;
+    bool          exam_status;
+    volatile bool warning_active;
+    volatile bool ota;
+    char          Secret[74];
+    char          chat_id[15];
+    char          from_name[33];
 };
 extern struct rtc_global_variables rtc_g;
 
