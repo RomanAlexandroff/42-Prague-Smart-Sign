@@ -84,7 +84,7 @@ When contributing, please adhere to the existing code style and follow the estab
 ## Regards
 
 This project is a group effort of various 42 students with support from the 42 Prague Bocal team. Here they are:
-- **raleksan**, 42 Prague — firmware and electronic hardware developer. Made the idea reality,
+- **raleksan**, 42 Prague — software and electronic hardware developer. Made the idea reality,
 - **gsura**, 42 Prague — idea starter and motivation supporter. Pitched the idea to Bocal so well they ended up asking for two devices,
 - **cgray**, 42 Prague — hardware development. Modeled beautiful and functional inner frame for the electronics,
 - **phelebra**, 42 Prague — 3D printing. Turned 3D model into high-quality pieces of hardware.
