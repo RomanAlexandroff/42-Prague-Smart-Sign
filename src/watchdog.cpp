@@ -14,7 +14,10 @@
 
 void  ft_watchdog_start(void)
 {
-    esp_task_wdt_add(NULL);
+    if (esp_task_wdt_status(NULL) != ESP_OK)
+        esp_task_wdt_add(NULL);
+    else
+        DEBUG_PRINTF("[WATCHDOG] Watchdog was not started because it has been already running\n\n");
     esp_task_wdt_reset();
 }
 
@@ -25,7 +28,10 @@ void  ft_watchdog_reset(void)
 
 void  ft_watchdog_stop(void)
 {
-    esp_task_wdt_delete(NULL);
+    if (esp_task_wdt_status(NULL) == ESP_OK)
+        esp_task_wdt_delete(NULL);
+    else
+        DEBUG_PRINTF("[WATCHDOG] Watchdog was not stopped because it has not been running\n\n");
 }
 
 void  ft_watchdog_init(void)
