@@ -29,6 +29,8 @@
     #define WD_RESET_INFO       false
 # endif
 
+//# define EXAM_SIMULATION                                   // uncomment to simulate an exam today starting at the stated time
+
 # pragma GCC optimize           ("O3")                       // optimize for faster program performance
 # define BAUD_RATE              115200                       // speed of the Serial communication
 # define WAKE_UP_HOURS          6, 9, 12, 15, 18, 21         // e.g. 15 means 15:00

@@ -72,6 +72,9 @@ void            ft_go_to_sleep(uint64_t time_in_millis);
 void IRAM_ATTR  ft_delay(uint64_t time_in_millis);
 void            ft_serial_init(void);
 void            ft_wifi_connect(void);
+# ifdef EXAM_SIMULATION
+    String      ft_exam_simulation(void);
+# endif
 
 /* power_down_recovery.cpp */
 void            ft_power_down_recovery(void);

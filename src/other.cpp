@@ -82,4 +82,32 @@ void  ft_serial_init(void)
     }
     DEBUG_PRINTF("\n\nDEVICE START\nversion %.2f\n", SOFTWARE_VERSION);
 }
+
+#ifdef EXAM_SIMULATION
+    String  ft_exam_simulation(void)
+    {
+        String  day;
+        String  month;
+        String  virtual_exam;
+
+        ft_watchdog_reset();
+        if (com_g.month < 10)
+            month = "0" + String(com_g.month);
+        else
+            month = String(com_g.month);
+        if (com_g.day < 10)
+            day = "0" + String(com_g.day);
+        else
+            day = String(com_g.day);
+        virtual_exam = "[{\"begin_at\":\"";
+        virtual_exam += String(com_g.year) + "-" + month + "-" + day + "T17:00:00.000Z\",";
+        virtual_exam += "\"end_at\":\"";
+        virtual_exam += String(com_g.year) + "-" + month + "-" + day + "T20:00:00.000Z\",";
+        virtual_exam += "\"nbr_subscribers\":4,}]";
+        DEBUG_PRINTF("\n\n[EXAM SIMULATION] ATTENTION! EXAM SIMULATION IS ACTIVE!\n");
+        DEBUG_PRINTF("[EXAM SIMULATION] The following exam is just a simulation!\n");
+        DEBUG_PRINTF("[EXAM SIMULATION] Virtual exam data as follows:\n%s\n\n", virtual_exam.c_str());
+        return (virtual_exam);
+    }
+#endif
  

@@ -92,8 +92,9 @@ static bool  ft_handle_exams_info(void)
         server_response += Intra_client.readString();
         i--;
     }
-// TO-DO: exam simulation for debugging purposes
-//    server_response += "\n\n\"id\":21213,\"ip_range\":\"10.11.0.0/16,10.12.0.0/16,10.13.0.0/16\",\"begin_at\":\"2025-01-15T17:00:00.000Z\",\"end_at\":\"2025-01-15T20:00:00.000Z\",\"nbr_subscribers\":4";
+    #ifdef EXAM_SIMULATION
+        server_response += ft_exam_simulation();
+    #endif
     DEBUG_PRINTF("\n============================== SERVER RESPONSE START ==============================\n\n");
     DEBUG_PRINTF("%s", server_response.c_str());
     DEBUG_PRINTF("=============================== SERVER RESPONSE END ===============================\n\n");
