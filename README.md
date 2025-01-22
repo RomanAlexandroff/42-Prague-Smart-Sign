@@ -35,6 +35,7 @@ Once the 42 Prague Smart Sign is installed and powered on, it will automatically
 
 - Highly autonomous operation: the Sign operates fully autonomously and does not require any input from the school personnel;
 - Automatic exam time check: the Sign keeps track of the exams published on Intra on its own;
+- Adaptation to changes: The Sign can adapt its behaviour to some unusual exam scheduling, such as last-minute cancellations or sequences of several immediate exams;
 - Exam subscribers check: if there is noone undertaking the exam, the Sigh will know it and will not block the room;
 - Automatic battery charge monitoring: you will surely know when to charge the device;
 - Deep Sleep mode: the microcontroller sleeps most of the time and wakes up only when it has a task to do, drastically saving the battery charge;
