@@ -6,7 +6,6 @@
 - [Usage](#usage)
 - [Features](#features)
 - [Components](#components)
-- [Maintenance](#maintenance)
 - [Contributing](#contributing)
 - [Suggestions for Contributions](#suggestions-for-contributions)
 - [Regards](#regards)
@@ -35,13 +34,14 @@ Once the 42 Prague Smart Sign is installed and powered on, it will automatically
 
 - Highly autonomous operation: the Sign operates fully autonomously and does not require any input from the school personnel;
 - Automatic exam time check: the Sign keeps track of the exams published on Intra on its own;
-- Adaptation to changes: The Sign can adapt its behaviour to some unusual exam scheduling, such as last-minute cancellations or sequences of several immediate exams;
+- Adaptation to changes: the Sign can adapt its behaviour to some unusual exam scheduling, such as last-minute cancellations, varying exam lengths, or sequences of several immediate exams;
 - Exam subscribers check: if there is noone undertaking the exam, the Sigh will know it and will not block the room;
 - Automatic battery charge monitoring: you will surely know when to charge the device;
 - Deep Sleep mode: the microcontroller sleeps most of the time and wakes up only when it has a task to do, drastically saving the battery charge;
 - Telegram enabled: control the Sign, update its security token, and receive operational information — all remotely, via your Telegram chat;
-- Over The Air firmware update: develop and upload new features without the need of looking for a cable.
-- Watchdog: no program failure can stop the Sign as its inner watchdog makes sure the program execution does not get stuck.
+- Over The Air firmware update: develop and upload new features without the need of looking for a cable;
+- Watchdog: no program failure can stop the Sign as its inner watchdog makes sure the program execution does not get stuck;
+- Low-maintenance design: the 4000mAh battery ensures long periods of operation—up to a few months—between recharges, which require a standard USB-C cable and any 5V power adapter. During recharging, the Sign remains fully operational.
 
 
 ## Components
@@ -53,11 +53,6 @@ The following components are used in the 42 Prague Smart Sign:
 4. **4000mAh Li-ion battery with overcharge and undercharge protection**: powers the device and ensures continuous operation.
 5. **IKEA RÖDALM photo frame, black, 13x18 cm**: made a good enclosure.
 6. **Custom 3D-printed board**: to hold all the electronics in place.
-
-
-## Maintenance
-
-The 42 Prague Smart Sign is designed with low-maintenance in mind. The battery capacity of 4000mAh ensures long periods of operation before requiring a recharge, typically once every few months. To recharge the device, it needs to be connected to a power source using any USB-C 5V power adapter. During the recharge, the Sign remains completely operational.
 
 
 ## Contributing
@@ -72,7 +67,8 @@ When contributing, please adhere to the existing code style and follow the estab
 **good first contributions**
 - Core temperature monitoring as a safety mechanism: the temperature being too high may signal some serious hardware failure and a safety threat, e.g. the battery has the lowest maximum allowed operational temperature of 60°C — notify the Telegram chat if the temperature of the core gets at least to 50°C;
 - Forced display refresh: the Sign is programed not to refresh the content on the display unless it is absolutely necessary, but this approach causes some graphical artifacts to appear with time. Add a scheduled full display cleaning. Once a week is enough. Preferably in the night when noone can see it. After the cleaning process is done, the Sign may not stay blank and shall display relevant information.
-- Refactor the project to lower the number of the Common global (com_g) variables. But DO NOT alter the RTC global (rtc_g) variables unless you are absolutely certain of what you are doing.
+- Refactor the project to lower the number of the Common global (com_g) variables. But DO NOT alter the RTC global (rtc_g) variables unless you are absolutely certain of what you are doing;
+- Add a countdown till the end of an ongoing exam like the already existing one till the start of an upcoming exam. 
 
 **advanced contributions**
 - Adding a "DO NOT ENTER!" sign that can be displayed or errased from the screen by pressing the WARNING_BUTTON button;
