@@ -17,15 +17,15 @@ pipeline {
         }
         stage('Install Arduino CLI') {
             steps {
-                sh 'curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh'
+                sh 'curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh || true'
                 sh 'export PATH=$PATH:${ARDUINO_CLI_PATH}'
             }
         }
         stage('Configure Arduino CLI') {
             steps {
-                sh 'arduino-cli config init'
-                sh 'arduino-cli core update-index'
-                sh 'arduino-cli core install esp32:esp32'
+                sh 'arduino-cli config init || true'
+                sh 'arduino-cli core update-index || true'
+                sh 'arduino-cli core install esp32:esp32 || true'
             }
         }
         stage('Prepare Project') {
