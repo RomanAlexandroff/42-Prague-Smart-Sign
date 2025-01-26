@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/RomanAlexandroff/42-Prague-Smart-Sign.git'
+                git branch: 'main', url: 'https://github.com/RomanAlexandroff/42-Prague-Smart-Sign.git'
             }
         }
         stage('Install Arduino CLI') {
@@ -29,7 +29,7 @@ pipeline {
         }
         stage('Prepare Project') {
             steps {
-                sh "cp ${CREDENTIALS_PATH} ."
+                sh "cp ${CREDENTIALS_PATH} src/"
             }
         }
         stage('Compile Sketch') {
