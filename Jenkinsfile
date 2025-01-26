@@ -6,6 +6,7 @@ pipeline {
         SKETCH = 'src/src.ino'
         SERIAL_PORT = '/dev/ttyUSB0'
         CREDENTIALS_PATH = '/home/roman/42-Prague-Smart-Sign/src/credentials.h'
+        ARDUINO_CLI_PATH = '/var/lib/jenkins/workspace/Arduino ESP32-C3 CI-CD/bin'
     }
 
     stages {
@@ -17,7 +18,7 @@ pipeline {
         stage('Install Arduino CLI') {
             steps {
                 sh 'curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh'
-                sh 'sudo mv bin/arduino-cli /usr/local/bin/'
+                sh 'export PATH=$PATH:${ARDUINO_CLI_PATH}'
             }
         }
         stage('Configure Arduino CLI') {
