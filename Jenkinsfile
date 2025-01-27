@@ -7,6 +7,7 @@ pipeline {
         SERIAL_PORT = '/dev/ttyUSB0'
         CREDENTIALS_PATH = '/var/lib/jenkins/credentials/credentials.h'
         ARDUINO_CLI_PATH = '/var/lib/jenkins/workspace/Arduino ESP32-C3 CI-CD/bin'
+        LIBRARIES_PATH = '/home/roman/Arduino/libraries'
     }
 
     stages {
@@ -47,7 +48,7 @@ pipeline {
         }
         stage('Compile Sketch') {
             steps {
-                sh "arduino-cli compile --fqbn ${ARDUINO_BOARD} ${SKETCH}"
+                sh "arduino-cli compile --fqbn ${ARDUINO_BOARD} --libraries ${LIBRARIES_PATH} ${SKETCH}"
             }
         }
         stage('Upload to Updates Server') {
