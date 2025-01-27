@@ -48,7 +48,7 @@ pipeline {
         }
         stage('Compile Sketch') {
             steps {
-                sh "arduino-cli compile --fqbn ${ARDUINO_BOARD} --libraries ${LIBRARIES_PATH} ${SKETCH}"
+                sh "arduino-cli compile --fqbn ${ARDUINO_BOARD} --libraries ${LIBRARIES_PATH}/GxEPD2-master/src ${SKETCH}"
             }
         }
         stage('Upload to Updates Server') {
