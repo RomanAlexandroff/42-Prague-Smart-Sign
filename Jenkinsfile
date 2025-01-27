@@ -5,7 +5,7 @@ pipeline {
         ARDUINO_BOARD = 'esp32:esp32:esp32c3'
         SKETCH = 'src/src.ino'
         SERIAL_PORT = '/dev/ttyUSB0'
-        CREDENTIALS_PATH = '/home/roman/42-Prague-Smart-Sign/src/credentials.h'
+        CREDENTIALS_PATH = '/var/lib/jenkins/credentials/credentials.h'
         ARDUINO_CLI_PATH = '/var/lib/jenkins/workspace/Arduino ESP32-C3 CI-CD/bin'
     }
 
