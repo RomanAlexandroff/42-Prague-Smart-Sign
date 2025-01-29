@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        ARDUINO_BOARD = 'esp32:esp32:esp32c3'
+        ARDUINO_BOARD = 'esp32:esp32:XIAO_ESP32C3'
         SKETCH = 'src/src.ino'
         SERIAL_PORT = '/dev/ttyUSB0'
         CREDENTIALS_PATH = '/var/lib/jenkins/credentials/credentials.h'
@@ -48,7 +48,7 @@ pipeline {
         }
         stage('Compile Sketch') {
             steps {
-                sh "arduino-cli compile --fqbn ${ARDUINO_BOARD} --libraries ${LIBRARIES_PATH}/GxEPD2-master/src ${SKETCH}"
+                sh "arduino-cli compile --fqbn ${ARDUINO_BOARD} --libraries ${LIBRARIES_PATH} --build-properties build.partitions=min_spiffs,upload.maximum_size=1966080 --verbose ${SKETCH}"
             }
         }
         stage('Upload to Updates Server') {
