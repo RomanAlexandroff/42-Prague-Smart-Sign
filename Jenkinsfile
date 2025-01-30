@@ -46,6 +46,11 @@ pipeline {
                 sh "cp ${CREDENTIALS_PATH} src/"
             }
         }
+        stage('Print Environment Variables') {
+            steps {
+                sh 'printenv'
+            }
+        }
         stage('Compile Sketch') {
             steps {
                 sh "arduino-cli compile --fqbn ${ARDUINO_BOARD} --libraries ${LIBRARIES_PATH} --build-properties build.partitions=min_spiffs,upload.maximum_size=1966080 --verbose ${SKETCH}"
