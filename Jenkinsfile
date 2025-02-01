@@ -6,8 +6,9 @@ pipeline {
         SKETCH = 'src/src.ino'
         CREDENTIALS_PATH = '/var/lib/jenkins/credentials/credentials.h'
         ARDUINO_CLI_PATH = '/var/lib/jenkins/workspace/Arduino ESP32-C3 CI-CD/bin'
-        LIBRARIES_PATH = '/home/roman/Arduino/libraries'
+        LIBRARIES_PATH = '/var/lib/jenkins/Arduino/libraries'
         UPDATES_SERVER_DIR = '/var/www/updates'
+        COMPILED_BINARY_PATH = '/var/lib/jenkins/.cache/arduino/sketches/F7866680E5E7F68088A4CBE4A3C7E26F/src.ino.bin'
     }
 
     stages {
@@ -48,12 +49,12 @@ pipeline {
         }
         stage('Compile Sketch') {
             steps {
-                sh "arduino-cli compile --fqbn ${ARDUINO_BOARD} --libraries ${LIBRARIES_PATH} --build-properties build.partitions=min_spiffs,upload.maximum_size=1966080 --verbose ${SKETCH}"
+                sh "arduino-cli compile --fqbn ${ARDUINO_BOARD} --libraries ${LIBRARIES_PATH} --build-property build.partitions=min_spiffs,upload.maximum_size=1966080 --verbose ${SKETCH}"
             }
         }
         stage('Upload to Updates Server') {
             steps {
-                sh "cp build/${SKETCH}.bin ${UPDATES_SERVER_DIR}/"
+                sh "cp ${COMPILED_BINARY_PATH} ${UPDATES_SERVER_DIR}/"
             }
         }
     }
