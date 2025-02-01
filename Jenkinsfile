@@ -4,10 +4,10 @@ pipeline {
     environment {
         ARDUINO_BOARD = 'esp32:esp32:XIAO_ESP32C3'
         SKETCH = 'src/src.ino'
-        SERIAL_PORT = '/dev/ttyUSB0'
         CREDENTIALS_PATH = '/var/lib/jenkins/credentials/credentials.h'
         ARDUINO_CLI_PATH = '/var/lib/jenkins/workspace/Arduino ESP32-C3 CI-CD/bin'
         LIBRARIES_PATH = '/home/roman/Arduino/libraries'
+        UPDATES_SERVER_DIR = '/var/www/updates'
     }
 
     stages {
@@ -46,11 +46,6 @@ pipeline {
                 sh "cp ${CREDENTIALS_PATH} src/"
             }
         }
-        stage('Print Environment Variables') {
-            steps {
-                sh 'printenv'
-            }
-        }
         stage('Compile Sketch') {
             steps {
                 sh "arduino-cli compile --fqbn ${ARDUINO_BOARD} --libraries ${LIBRARIES_PATH} --build-properties build.partitions=min_spiffs,upload.maximum_size=1966080 --verbose ${SKETCH}"
@@ -58,7 +53,7 @@ pipeline {
         }
         stage('Upload to Updates Server') {
             steps {
-                sh "curl -u username:password -T build/${SKETCH}.bin http://10.0.1.31/updates/"
+                sh "cp build/${SKETCH}.bin ${UPDATES_SERVER_DIR}/"
             }
         }
     }
