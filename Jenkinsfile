@@ -28,7 +28,7 @@ pipeline {
                     }
                 }
             }
-        }        ngrok http 8080        sudo rm /usr/local/bin/ngrok        sudo mv ngrok /usr/local/bin/
+        }
         stage('Configure Arduino CLI') {
             steps {
                 script {
