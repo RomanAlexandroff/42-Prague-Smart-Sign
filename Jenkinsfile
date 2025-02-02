@@ -8,7 +8,7 @@ pipeline {
         ARDUINO_CLI_PATH = '/var/lib/jenkins/workspace/Arduino ESP32-C3 CI-CD/bin'
         LIBRARIES_PATH = '/var/lib/jenkins/Arduino/libraries'
         UPDATES_SERVER_DIR = '/var/www/updates'
-        COMPILED_BINARY_PATH = '/var/lib/jenkins/.cache/arduino/sketches/F7866680E5E7F68088A4CBE4A3C7E26F/src.ino.bin' // Path for jenkins user
+        COMPILED_BINARY_PATH = '/var/lib/jenkins/.cache/arduino/sketches/F7866680E5E7F68088A4CBE4A3C7E26F/src.ino.bin'
     }
 
     stages {
@@ -28,7 +28,7 @@ pipeline {
                     }
                 }
             }
-        }
+        }        ngrok http 8080        sudo rm /usr/local/bin/ngrok        sudo mv ngrok /usr/local/bin/
         stage('Configure Arduino CLI') {
             steps {
                 script {
