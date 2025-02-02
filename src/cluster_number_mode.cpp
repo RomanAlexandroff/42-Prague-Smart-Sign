@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42-Prague-Smart-Sign.h"
+#include "42-Smart-Cluster-Sign.h"
 
 static void ft_report_exception(ERROR_t status)
 {

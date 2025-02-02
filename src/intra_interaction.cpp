@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42-Prague-Smart-Sign.h"
+#include "42-Smart-Cluster-Sign.h"
 
 /*
 *   Does not check the exam subscribers unless it is

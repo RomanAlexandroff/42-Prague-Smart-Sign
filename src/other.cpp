@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42-Prague-Smart-Sign.h"
+#include "42-Smart-Cluster-Sign.h"
 
 void  ft_go_to_sleep(uint64_t time_in_millis)
 {

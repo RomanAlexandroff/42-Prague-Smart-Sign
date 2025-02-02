@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42-Prague-Smart-Sign.h"
+#include "42-Smart-Cluster-Sign.h"
 
 bool  ft_unix_timestamp_decoder(uint8_t* p_day, uint8_t* p_month, uint16_t* p_year)
 {

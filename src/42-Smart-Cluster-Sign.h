@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   42-Prague-Smart-Sign.h                             :+:      :+:    :+:   */
+/*   42-Smart-Cluster-Sign.h                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef _42_PRAGUE_SMART_SIGN_H
-# define _42_PRAGUE_SMART_SIGN_H
+#ifndef _42_SMART_CLUSTER_SIGN_H
+# define _42_SMART_CLUSTER_SIGN_H
 
 # include <Arduino.h>
 # include <LittleFS.h>

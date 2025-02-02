@@ -13,7 +13,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42-Prague-Smart-Sign.h"
+#include "42-Smart-Cluster-Sign.h"
 
 static String ft_about_intra_exams(String output)
 {

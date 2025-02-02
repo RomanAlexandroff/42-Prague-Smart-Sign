@@ -14,7 +14,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/RomanAlexandroff/42-Prague-Smart-Sign.git'
+                git branch: 'main', url: 'https://github.com/RomanAlexandroff/42-Smart-Cluster-Sign.git'
             }
         }
         stage('Install Arduino CLI') {

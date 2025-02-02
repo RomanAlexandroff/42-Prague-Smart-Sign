@@ -1,6 +1,6 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*   42 Prague Smart Sign                                 :::      ::::::::   */
+/*   42 Smart Cluster Sign                                :::      ::::::::   */
 /*   src.ino                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: raleksan <r.aleksandroff@gmail.com>        +#+  +:+       +#+        */
@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "42-Prague-Smart-Sign.h"
+#include "42-Smart-Cluster-Sign.h"
 
 void  setup(void)
 {
